@@ -14,3 +14,28 @@
     margin: 0;
   }
 }
+
+@keyframes slide-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes log-flash {
+  0%   { background-color: rgba(99, 102, 241, 0.12); }
+  60%  { background-color: rgba(99, 102, 241, 0.06); }
+  100% { background-color: transparent; }
+}
+
+.animate-slide-fade {
+  animation: slide-fade 0.25s ease-out both;
+}
+
+.animate-log-flash {
+  animation: log-flash 1.8s ease-out forwards;
+}
