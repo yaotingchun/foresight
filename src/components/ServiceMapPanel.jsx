@@ -23,7 +23,7 @@ export default function ServiceMapPanel() {
       className={
         expanded
           ? 'fixed inset-0 z-50 flex flex-col bg-card p-5'
-          : 'flex min-h-0 flex-1 flex-col rounded-card border border-line bg-card p-5 shadow-card'
+          : 'flex h-full min-h-[500px] flex-1 flex-col rounded-card border border-line bg-card p-5 shadow-card'
       }
     >
       <header className="mb-3 flex shrink-0 items-center">
