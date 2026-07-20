@@ -3,6 +3,7 @@ import AppLayout from './components/AppLayout'
 import OverviewPage from './pages/OverviewPage'
 import TopologyPage from './pages/TopologyPage'
 import LogsPage from './pages/LogsPage'
+import FinancialMonitorPage from './pages/FinancialMonitorPage'
 import ComingSoon from './pages/ComingSoon'
 import { navItems } from './config/navItems'
 
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/overview" element={<OverviewPage />} />
           <Route path="/topology" element={<TopologyPage />} />
           <Route path="/logs" element={<LogsPage />} />
+          <Route path="/financial-monitor" element={<FinancialMonitorPage />} />
 
           {navItems
             .filter((item) => !item.built)
