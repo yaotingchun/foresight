@@ -14,7 +14,7 @@ import {
  * to the Coming Soon placeholder.
  */
 export const navItems = [
-  { path: '/overview', label: 'Overview', icon: LayoutGrid },
+  { path: '/overview', label: 'Overview', icon: LayoutGrid, built: true },
   { path: '/topology', label: 'Topology', icon: Share2, built: true },
   { path: '/logs', label: 'Logs', icon: Logs },
   { path: '/financial-monitor', label: 'Financial Monitor', icon: CircleDollarSign },

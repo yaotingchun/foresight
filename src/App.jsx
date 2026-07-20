@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
+import OverviewPage from './pages/OverviewPage'
 import TopologyPage from './pages/TopologyPage'
 import ComingSoon from './pages/ComingSoon'
 import { navItems } from './config/navItems'
@@ -9,7 +10,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
-          <Route index element={<Navigate to="/topology" replace />} />
+          <Route index element={<Navigate to="/overview" replace />} />
+          <Route path="/overview" element={<OverviewPage />} />
           <Route path="/topology" element={<TopologyPage />} />
 
           {navItems
@@ -22,7 +24,7 @@ export default function App() {
               />
             ))}
 
-          <Route path="*" element={<Navigate to="/topology" replace />} />
+          <Route path="*" element={<Navigate to="/overview" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>
