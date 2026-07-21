@@ -1,45 +1,32 @@
-// ─── Infrastructure Incidents (shared with IT topology) ──────────────────────
-// These are the "known infra events" that we correlate transactions against.
-// Each has a time window (relative to a shared baseline) in seconds from
-// epoch-0, so t=120 means "120 seconds after the session started".
-export const INFRA_INCIDENTS = [
-  {
-    id:      'inc-db-1',
-    service: 'payments_db',
-    label:   'payments_db overload',
-    tStart:  120,
-    tEnd:    150,
-    type:    'db-overload',
-    severity:'critical',
-  },
-  {
-    id:      'inc-mq-1',
-    service: 'message-queue',
-    label:   'message-queue backlog spike',
-    tStart:  310,
-    tEnd:    360,
-    type:    'queue-backlog',
-    severity:'high',
-  },
-  {
-    id:      'inc-gw-1',
-    service: 'api-gateway',
-    label:   'api-gateway timeout storm',
-    tStart:  480,
-    tEnd:    520,
-    type:    'timeout-storm',
-    severity:'critical',
-  },
-  {
-    id:      'inc-cache-1',
-    service: 'redis-cache',
-    label:   'redis-cache eviction cascade',
-    tStart:  640,
-    tEnd:    680,
-    type:    'cache-eviction',
-    severity:'medium',
-  },
-]
+import { incidents, transactions } from './dataSource'
+
+// ─── Infrastructure incidents (shared with IT topology) ──────────────────────
+// Sourced from incidents.json (scripts/generate_synthetic_data.py). Timestamps
+// are kept absolute (unlike the old fake-data hack that faked a "session start"
+// and worked in relative seconds) since transactions and incidents now share
+// the same real 48h timeline — a transaction's timestamp can be compared to an
+// incident's start/end directly.
+export const INFRA_INCIDENTS = incidents.map((inc) => {
+  const startMs = Date.parse(inc.start_time)
+  const endMs   = Date.parse(inc.end_time)
+  return {
+    id:       inc.id,
+    service:  inc.component,
+    label:    inc.description,
+    type:     inc.fault_type,
+    severity: inc.severity,
+    tStart:   0,
+    tEnd:     Math.round((endMs - startMs) / 1000),
+    startMs,
+    endMs,
+  }
+})
+
+const INCIDENTS_BY_ID = Object.fromEntries(INFRA_INCIDENTS.map((inc) => [inc.id, inc]))
+
+export function getInfraCorrelation(timestampMs) {
+  return INFRA_INCIDENTS.find((inc) => timestampMs >= inc.startMs && timestampMs <= inc.endMs) ?? null
+}
 
 // ─── Account pools ────────────────────────────────────────────────────────────
 const ACCOUNTS = [
@@ -60,6 +47,7 @@ export const ANOMALY_FEATURES = [
   { key: 'velocity_spike',      label: 'Velocity spike',       icon: '⚡' },
   { key: 'off_hours',           label: 'Off-hours activity',   icon: '🌙' },
 ]
+const FEATURE_BY_KEY = Object.fromEntries(ANOMALY_FEATURES.map((f) => [f.key, f]))
 
 // ─── Transaction categories ───────────────────────────────────────────────────
 const TX_TYPES = [
@@ -67,121 +55,39 @@ const TX_TYPES = [
   'inter_account', 'crypto_withdrawal', 'p2p_transfer',
 ]
 
-// ─── Seeded PRNG ──────────────────────────────────────────────────────────────
-function seededRand(seed) {
-  const x = Math.sin(seed + 1) * 43758.5453
-  return x - Math.floor(x)
-}
-
-// ─── Infra correlation checker ────────────────────────────────────────────────
-// sessionStart is a fixed reference point (ms). Incidents store times in
-// "session seconds" so we convert.
-const SESSION_START_MS = Date.now() - 900_000 // 15 min ago as baseline
-
-export function getInfraCorrelation(timestampMs) {
-  const tSec = (timestampMs - SESSION_START_MS) / 1000
-  return INFRA_INCIDENTS.find(
-    (inc) => tSec >= inc.tStart && tSec <= inc.tEnd
-  ) ?? null
-}
-
-// ─── Core generator ──────────────────────────────────────────────────────────
-function generateTransactions(count = 300) {
-  const now = Date.now()
-  const txs = []
-
-  for (let i = 0; i < count; i++) {
-    const r1 = seededRand(i * 7)
-    const r2 = seededRand(i * 7 + 1)
-    const r3 = seededRand(i * 7 + 2)
-    const r4 = seededRand(i * 7 + 3)
-    const r5 = seededRand(i * 7 + 4)
-    const r6 = seededRand(i * 7 + 5)
-
-    // Timestamp spread across last 24 hours (with higher weight on recent)
-    const rawR = r1
-    const ageMs = rawR < 0.5
-      ? Math.floor(rawR * 2 * 15 * 60 * 1000) // 50% in last 15 min
-      : Math.floor(rawR * 24 * 60 * 60 * 1000) // 50% across 24 hours
-    const timestamp = now - ageMs
-
-    // Amount: mostly small, occasional large
-    let amount
-    if (r2 < 0.6)       amount = Math.round(r3 * 500 * 100) / 100          // $0–$500
-    else if (r2 < 0.88) amount = Math.round((500 + r3 * 4500) * 100) / 100 // $500–$5k
-    else if (r2 < 0.97) amount = Math.round((5000 + r3 * 45000) * 100) / 100 // $5k–$50k
-    else                amount = Math.round((50000 + r3 * 450000) * 100) / 100 // $50k–$500k
-
-    const txType   = TX_TYPES[Math.floor(r4 * TX_TYPES.length)]
-    const srcIdx   = Math.floor(r5 * INTERNAL.length)
-    const dstPool  = r6 < 0.6 ? INTERNAL : EXTERNAL
-    const dstIdx   = Math.floor(seededRand(i * 7 + 6) * dstPool.length)
-    const src      = INTERNAL[srcIdx]
-    const dst      = dstPool[dstIdx] === src
-      ? dstPool[(dstIdx + 1) % dstPool.length]
-      : dstPool[dstIdx]
-
-    // Anomaly scoring
-    const anomalyScore = computeAnomalyScore(amount, txType, dst, timestamp, i)
-    const infraCorr    = getInfraCorrelation(timestamp)
-
-    // Status
-    let status
-    if      (anomalyScore >= 0.75) status = 'blocked'
-    else if (anomalyScore >= 0.45) status = 'flagged'
-    else                           status = 'normal'
-
-    txs.push({
-      id:          `tx-${i}`,
-      timestamp,
-      amount,
-      currency:    'USD',
-      type:        txType,
-      src,
-      dst,
-      status,
-      anomalyScore: Math.round(anomalyScore * 100) / 100,
-      dominantFeature: anomalyScore >= 0.45
-        ? ANOMALY_FEATURES[Math.floor(seededRand(i * 13) * ANOMALY_FEATURES.length)]
-        : null,
-      infraCorrelation: infraCorr,
-      // For the action log
-      actionHistory: [],
-    })
+// ─── Historical dataset (from scripts/generate_synthetic_data.py) ────────────
+// Maps the pipeline's ground-truth labels (is_fraud / anomaly_type) onto the
+// UI's triage vocabulary (status / dominantFeature / infraCorrelation).
+function classify(t) {
+  if (t.is_fraud) {
+    const feature = FEATURE_BY_KEY[EXTERNAL.includes(t.dst) ? 'unusual_destination' : 'unusual_amount']
+    return { status: 'blocked', anomalyScore: Math.round((0.8 + Math.random() * 0.18) * 100) / 100, feature }
   }
-
-  return txs.sort((a, b) => b.timestamp - a.timestamp)
+  if (t.anomaly_type === 'infra_retry_duplicate') {
+    return { status: 'flagged', anomalyScore: Math.round((0.45 + Math.random() * 0.25) * 100) / 100, feature: FEATURE_BY_KEY.unusual_frequency }
+  }
+  return { status: 'normal', anomalyScore: Math.round(Math.random() * 0.3 * 100) / 100, feature: null }
 }
 
-function computeAnomalyScore(amount, txType, dst, timestamp, seed) {
-  let score = 0
-  const r = seededRand(seed * 17)
-
-  // Large amount signals
-  if (amount > 50000)  score += 0.30
-  else if (amount > 10000) score += 0.15
-  else if (amount > 5000)  score += 0.08
-
-  // External destination
-  if (EXTERNAL.includes(dst)) score += 0.20
-
-  // High-risk types
-  if (txType === 'crypto_withdrawal') score += 0.25
-  if (txType === 'wire_transfer' && amount > 10000) score += 0.15
-  if (txType === 'p2p_transfer' && amount > 2000)   score += 0.10
-
-  // Off-hours (crude: check hour of day)
-  const h = new Date(timestamp).getHours()
-  if (h < 6 || h > 22) score += 0.15
-
-  // Random jitter for realism
-  score += (r - 0.5) * 0.15
-
-  return Math.max(0, Math.min(1, score))
-}
-
-// ─── Pre-generated dataset ────────────────────────────────────────────────────
-export const ALL_TRANSACTIONS = generateTransactions(300)
+export const ALL_TRANSACTIONS = transactions
+  .map((t) => {
+    const { status, anomalyScore, feature } = classify(t)
+    return {
+      id: t.id,
+      timestamp: Date.parse(t.timestamp),
+      amount: t.amount,
+      currency: t.currency,
+      type: t.type,
+      src: t.src,
+      dst: t.dst,
+      status,
+      anomalyScore,
+      dominantFeature: feature,
+      infraCorrelation: t.incident_id ? INCIDENTS_BY_ID[t.incident_id] ?? null : null,
+      actionHistory: [],
+    }
+  })
+  .sort((a, b) => b.timestamp - a.timestamp)
 
 // ─── Summary metrics helpers ──────────────────────────────────────────────────
 export function computeMetrics(txs) {
@@ -206,7 +112,7 @@ export function computeMetrics(txs) {
   }
 }
 
-// ─── Real-time entry generator ────────────────────────────────────────────────
+// ─── Real-time entry generator (live-tick simulation only) ────────────────────
 let _rtSeq = 0
 export function generateRealtimeTx() {
   _rtSeq++
@@ -230,14 +136,23 @@ export function generateRealtimeTx() {
     ? dstPool[(Math.floor(r6 * dstPool.length) + 1) % dstPool.length]
     : dstPool[Math.floor(r6 * dstPool.length)]
 
-  const timestamp    = Date.now()
-  const anomalyScore = computeAnomalyScore(amount, txType, dst, timestamp, _rtSeq)
-  const infraCorr    = getInfraCorrelation(timestamp)
+  const timestamp = Date.now()
 
+  let score = 0
+  if (amount > 50000)  score += 0.30
+  else if (amount > 10000) score += 0.15
+  else if (amount > 5000)  score += 0.08
+  if (EXTERNAL.includes(dst)) score += 0.20
+  if (txType === 'crypto_withdrawal') score += 0.25
+  if (txType === 'wire_transfer' && amount > 10000) score += 0.15
+  score += (Math.random() - 0.5) * 0.15
+  score = Math.max(0, Math.min(1, score))
+
+  const infraCorr = getInfraCorrelation(timestamp)
   let status
-  if      (anomalyScore >= 0.75) status = 'blocked'
-  else if (anomalyScore >= 0.45) status = 'flagged'
-  else                           status = 'normal'
+  if      (score >= 0.75) status = 'blocked'
+  else if (score >= 0.45) status = 'flagged'
+  else                    status = 'normal'
 
   return {
     id:               `rt-tx-${Date.now()}-${_rtSeq}`,
@@ -248,8 +163,8 @@ export function generateRealtimeTx() {
     src,
     dst,
     status,
-    anomalyScore:     Math.round(anomalyScore * 100) / 100,
-    dominantFeature:  anomalyScore >= 0.45
+    anomalyScore:     Math.round(score * 100) / 100,
+    dominantFeature:  score >= 0.45
       ? ANOMALY_FEATURES[Math.floor(Math.random() * ANOMALY_FEATURES.length)]
       : null,
     infraCorrelation: infraCorr,
