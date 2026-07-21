@@ -1,0 +1,213 @@
+{
+  "components": [
+    {
+      "id": "users",
+      "label": "Users",
+      "kind": "Entrypoint",
+      "criticality": "low"
+    },
+    {
+      "id": "load-balancer",
+      "label": "Load Balancer",
+      "kind": "Network",
+      "criticality": "high"
+    },
+    {
+      "id": "web-portal",
+      "label": "Web Portal",
+      "kind": "Frontend",
+      "criticality": "medium"
+    },
+    {
+      "id": "api-gateway",
+      "label": "API Gateway",
+      "kind": "Gateway",
+      "criticality": "critical"
+    },
+    {
+      "id": "auth-service",
+      "label": "Auth Service",
+      "kind": "Service",
+      "criticality": "critical"
+    },
+    {
+      "id": "user-service",
+      "label": "User Service",
+      "kind": "Service",
+      "criticality": "high"
+    },
+    {
+      "id": "order-service",
+      "label": "Order Service",
+      "kind": "Service",
+      "criticality": "high"
+    },
+    {
+      "id": "payment-service",
+      "label": "Payment Service",
+      "kind": "Service",
+      "criticality": "critical"
+    },
+    {
+      "id": "search-service",
+      "label": "Search Service",
+      "kind": "Service",
+      "criticality": "medium"
+    },
+    {
+      "id": "inventory-service",
+      "label": "Inventory Service",
+      "kind": "Service",
+      "criticality": "medium"
+    },
+    {
+      "id": "notification-service",
+      "label": "Notification Service",
+      "kind": "Service",
+      "criticality": "low"
+    },
+    {
+      "id": "redis-cache",
+      "label": "Redis Cache",
+      "kind": "Cache",
+      "criticality": "high"
+    },
+    {
+      "id": "primary-db",
+      "label": "Primary DB",
+      "kind": "Datastore",
+      "criticality": "critical"
+    },
+    {
+      "id": "message-queue",
+      "label": "Message Queue",
+      "kind": "Streaming",
+      "criticality": "high"
+    },
+    {
+      "id": "data-warehouse",
+      "label": "Data Warehouse",
+      "kind": "Datastore",
+      "criticality": "medium"
+    },
+    {
+      "id": "payment-gateway",
+      "label": "Payment Gateway",
+      "kind": "External",
+      "criticality": "critical"
+    },
+    {
+      "id": "email-provider",
+      "label": "Email Provider",
+      "kind": "External",
+      "criticality": "low"
+    }
+  ],
+  "dependencies": [
+    {
+      "source": "users",
+      "target": "load-balancer"
+    },
+    {
+      "source": "load-balancer",
+      "target": "web-portal"
+    },
+    {
+      "source": "load-balancer",
+      "target": "api-gateway"
+    },
+    {
+      "source": "web-portal",
+      "target": "api-gateway"
+    },
+    {
+      "source": "api-gateway",
+      "target": "auth-service"
+    },
+    {
+      "source": "api-gateway",
+      "target": "user-service"
+    },
+    {
+      "source": "api-gateway",
+      "target": "order-service"
+    },
+    {
+      "source": "api-gateway",
+      "target": "payment-service"
+    },
+    {
+      "source": "api-gateway",
+      "target": "search-service"
+    },
+    {
+      "source": "auth-service",
+      "target": "redis-cache"
+    },
+    {
+      "source": "auth-service",
+      "target": "primary-db"
+    },
+    {
+      "source": "user-service",
+      "target": "primary-db"
+    },
+    {
+      "source": "user-service",
+      "target": "redis-cache"
+    },
+    {
+      "source": "user-service",
+      "target": "notification-service"
+    },
+    {
+      "source": "order-service",
+      "target": "inventory-service"
+    },
+    {
+      "source": "order-service",
+      "target": "payment-service"
+    },
+    {
+      "source": "order-service",
+      "target": "message-queue"
+    },
+    {
+      "source": "payment-service",
+      "target": "payment-gateway"
+    },
+    {
+      "source": "payment-service",
+      "target": "primary-db"
+    },
+    {
+      "source": "search-service",
+      "target": "redis-cache"
+    },
+    {
+      "source": "search-service",
+      "target": "primary-db"
+    },
+    {
+      "source": "inventory-service",
+      "target": "primary-db"
+    },
+    {
+      "source": "inventory-service",
+      "target": "message-queue"
+    },
+    {
+      "source": "message-queue",
+      "target": "notification-service"
+    },
+    {
+      "source": "message-queue",
+      "target": "data-warehouse"
+    },
+    {
+      "source": "notification-service",
+      "target": "email-provider"
+    }
+  ],
+  "generated_at": "2026-07-21T14:44:25Z"
+}

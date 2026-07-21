@@ -1,0 +1,6824 @@
+[
+  {
+    "id": "sec-01f4690860",
+    "timestamp": "2026-07-19T14:05:26Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.150.75.139",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cbc92b9b62",
+    "timestamp": "2026-07-19T14:07:55Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.105.204.160",
+    "incident_id": null
+  },
+  {
+    "id": "sec-468efcb69a",
+    "timestamp": "2026-07-19T14:08:17Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.159.29.88",
+    "incident_id": null
+  },
+  {
+    "id": "sec-89bd046410",
+    "timestamp": "2026-07-19T14:09:16Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.89.250.14",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f34e2bdfa0",
+    "timestamp": "2026-07-19T14:10:11Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.201.39.221",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e2588ab2da",
+    "timestamp": "2026-07-19T14:14:54Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.84.96.110",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4f24ffea5f",
+    "timestamp": "2026-07-19T14:16:57Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.155.53.85",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cce75d73b1",
+    "timestamp": "2026-07-19T14:29:42Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.58.15.139",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e087c2277",
+    "timestamp": "2026-07-19T14:31:33Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.165.139.106",
+    "incident_id": null
+  },
+  {
+    "id": "sec-16dcad0d90",
+    "timestamp": "2026-07-19T14:32:42Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.140.119.219",
+    "incident_id": null
+  },
+  {
+    "id": "sec-59ed7d277f",
+    "timestamp": "2026-07-19T14:34:00Z",
+    "component_id": "users",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.116.79.208",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f8fa82c524",
+    "timestamp": "2026-07-19T14:39:10Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.193.227.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-de9a5ac24a",
+    "timestamp": "2026-07-19T14:39:48Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.121.6.167",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7ddadf4176",
+    "timestamp": "2026-07-19T14:47:07Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.224.78.184",
+    "incident_id": null
+  },
+  {
+    "id": "sec-178bf27013",
+    "timestamp": "2026-07-19T14:53:44Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.222.109.222",
+    "incident_id": null
+  },
+  {
+    "id": "sec-49569d9a76",
+    "timestamp": "2026-07-19T15:03:29Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.179.110.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5d3d17d5e4",
+    "timestamp": "2026-07-19T15:03:44Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.204.54.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a8e21ebc40",
+    "timestamp": "2026-07-19T15:07:11Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.154.205.38",
+    "incident_id": null
+  },
+  {
+    "id": "sec-23e31d90ad",
+    "timestamp": "2026-07-19T15:07:22Z",
+    "component_id": "data-warehouse",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.86.127.109",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ae3db557f1",
+    "timestamp": "2026-07-19T15:14:28Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.155.190.46",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c438b26179",
+    "timestamp": "2026-07-19T15:14:49Z",
+    "component_id": "primary-db",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.52.248.103",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6820249e40",
+    "timestamp": "2026-07-19T15:18:30Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.92.207.78",
+    "incident_id": null
+  },
+  {
+    "id": "sec-14842229b0",
+    "timestamp": "2026-07-19T15:29:35Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.225.88.124",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d54871a7dc",
+    "timestamp": "2026-07-19T15:30:10Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.227.182.229",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bb1c3dea25",
+    "timestamp": "2026-07-19T15:34:12Z",
+    "component_id": "data-warehouse",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.253.88.191",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ee68176ac2",
+    "timestamp": "2026-07-19T15:40:48Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.2.90.11",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a3014f2c4d",
+    "timestamp": "2026-07-19T15:45:39Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.124.163.86",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cdfdcee4ea",
+    "timestamp": "2026-07-19T15:48:47Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.218.241.198",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c874c1c138",
+    "timestamp": "2026-07-19T15:50:10Z",
+    "component_id": "search-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.11.234.130",
+    "incident_id": null
+  },
+  {
+    "id": "sec-860a554d4d",
+    "timestamp": "2026-07-19T15:59:31Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.151.76.212",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a639a3a7b6",
+    "timestamp": "2026-07-19T16:03:28Z",
+    "component_id": "payment-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.29.101.147",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1c70086ede",
+    "timestamp": "2026-07-19T16:11:13Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.120.21.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ebedad43de",
+    "timestamp": "2026-07-19T16:15:07Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.88.219.150",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b1a781fec0",
+    "timestamp": "2026-07-19T16:17:31Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.19.42.245",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ad35b5ac70",
+    "timestamp": "2026-07-19T16:18:03Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.26.170.123",
+    "incident_id": null
+  },
+  {
+    "id": "sec-62e5849954",
+    "timestamp": "2026-07-19T16:18:28Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.37.70.223",
+    "incident_id": null
+  },
+  {
+    "id": "sec-34985d21be",
+    "timestamp": "2026-07-19T16:24:34Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.70.24.69",
+    "incident_id": null
+  },
+  {
+    "id": "sec-aac53476c5",
+    "timestamp": "2026-07-19T16:33:18Z",
+    "component_id": "payment-gateway",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.14.169.98",
+    "incident_id": null
+  },
+  {
+    "id": "sec-976b8d5cdb",
+    "timestamp": "2026-07-19T16:36:53Z",
+    "component_id": "redis-cache",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.85.200.124",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2cd981e8f6",
+    "timestamp": "2026-07-19T16:43:40Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.6.206.140",
+    "incident_id": null
+  },
+  {
+    "id": "sec-34ea92c6c6",
+    "timestamp": "2026-07-19T16:44:35Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.164.209.232",
+    "incident_id": null
+  },
+  {
+    "id": "sec-518ca95d2a",
+    "timestamp": "2026-07-19T16:47:25Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.146.136.63",
+    "incident_id": null
+  },
+  {
+    "id": "sec-30ee29cf1b",
+    "timestamp": "2026-07-19T16:54:20Z",
+    "component_id": "notification-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.84.110.16",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0aef78dc0c",
+    "timestamp": "2026-07-19T16:55:50Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.129.77.11",
+    "incident_id": null
+  },
+  {
+    "id": "sec-59e09edb29",
+    "timestamp": "2026-07-19T16:59:49Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.218.215.4",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a0813a46ca",
+    "timestamp": "2026-07-19T17:03:58Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.103.94.199",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fb9f542c7b",
+    "timestamp": "2026-07-19T17:06:43Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.132.12.84",
+    "incident_id": null
+  },
+  {
+    "id": "sec-72aa0536ee",
+    "timestamp": "2026-07-19T17:14:34Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.10.249.254",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d16f830444",
+    "timestamp": "2026-07-19T17:14:58Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.138.27.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-11c22feed6",
+    "timestamp": "2026-07-19T17:16:16Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.207.15.46",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fd2cc19434",
+    "timestamp": "2026-07-19T17:34:48Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.42.15.204",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dc341a0f76",
+    "timestamp": "2026-07-19T17:43:56Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.161.66.28",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f62f2dde43",
+    "timestamp": "2026-07-19T17:49:53Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.107.4.66",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1bb5fcb116",
+    "timestamp": "2026-07-19T17:53:43Z",
+    "component_id": "inventory-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.156.150.68",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1bf5e9e36a",
+    "timestamp": "2026-07-19T17:56:35Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.197.227.215",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8937d82918",
+    "timestamp": "2026-07-19T18:00:17Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.37.97.234",
+    "incident_id": null
+  },
+  {
+    "id": "sec-001f2978e3",
+    "timestamp": "2026-07-19T18:00:51Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.67.147.6",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a18d1ecb31",
+    "timestamp": "2026-07-19T18:07:52Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.114.132.84",
+    "incident_id": null
+  },
+  {
+    "id": "sec-15fc306871",
+    "timestamp": "2026-07-19T18:09:48Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.95.216.28",
+    "incident_id": null
+  },
+  {
+    "id": "sec-18084818ab",
+    "timestamp": "2026-07-19T18:13:09Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.64.115.60",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8f3ea85385",
+    "timestamp": "2026-07-19T18:14:56Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.115.250.6",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dd53ce6955",
+    "timestamp": "2026-07-19T18:15:59Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.118.177.243",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e5675fe93d",
+    "timestamp": "2026-07-19T18:16:19Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.19.103.101",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9e0182c85e",
+    "timestamp": "2026-07-19T18:22:25Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.24.148.48",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0e0e08eaa3",
+    "timestamp": "2026-07-19T18:26:36Z",
+    "component_id": "redis-cache",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.108.96.146",
+    "incident_id": null
+  },
+  {
+    "id": "sec-44eee4c26e",
+    "timestamp": "2026-07-19T18:29:35Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.214.89.88",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2de95edb85",
+    "timestamp": "2026-07-19T18:30:09Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.255.93.220",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2a01a441e3",
+    "timestamp": "2026-07-19T18:32:14Z",
+    "component_id": "api-gateway",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.215.139.43",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c19e3b2ae6",
+    "timestamp": "2026-07-19T18:43:52Z",
+    "component_id": "inventory-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.216.70.114",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4134764520",
+    "timestamp": "2026-07-19T18:47:16Z",
+    "component_id": "auth-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.91.42.68",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1a3029e7f0",
+    "timestamp": "2026-07-19T18:48:26Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.169.95.59",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d07773559",
+    "timestamp": "2026-07-19T18:49:08Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.100.140.183",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f08660f6a9",
+    "timestamp": "2026-07-19T18:51:26Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.172.130.86",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ac255c1db9",
+    "timestamp": "2026-07-19T18:52:16Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.99.156.154",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a04b3d6331",
+    "timestamp": "2026-07-19T18:53:51Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.7.149.246",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5cdb77853f",
+    "timestamp": "2026-07-19T19:07:38Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.104.19.46",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2559684533",
+    "timestamp": "2026-07-19T19:13:07Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.90.216.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-39322ebcda",
+    "timestamp": "2026-07-19T19:13:31Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.1.41.36",
+    "incident_id": null
+  },
+  {
+    "id": "sec-af6a205e44",
+    "timestamp": "2026-07-19T19:21:10Z",
+    "component_id": "data-warehouse",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.91.113.216",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5ad85810d0",
+    "timestamp": "2026-07-19T19:23:49Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.19.212.152",
+    "incident_id": null
+  },
+  {
+    "id": "sec-85aeb17e35",
+    "timestamp": "2026-07-19T19:30:47Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.227.77.215",
+    "incident_id": null
+  },
+  {
+    "id": "sec-95df4cbe68",
+    "timestamp": "2026-07-19T19:31:52Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.170.100.241",
+    "incident_id": null
+  },
+  {
+    "id": "sec-18a93ef939",
+    "timestamp": "2026-07-19T19:42:41Z",
+    "component_id": "search-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.67.54.34",
+    "incident_id": null
+  },
+  {
+    "id": "sec-58f986d0ac",
+    "timestamp": "2026-07-19T19:59:01Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.120.198.9",
+    "incident_id": null
+  },
+  {
+    "id": "sec-58582c668a",
+    "timestamp": "2026-07-19T20:04:14Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.5.145.228",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c91044bf3b",
+    "timestamp": "2026-07-19T20:04:23Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.169.67.216",
+    "incident_id": null
+  },
+  {
+    "id": "sec-77ab0030b0",
+    "timestamp": "2026-07-19T20:07:42Z",
+    "component_id": "api-gateway",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.51.20.16",
+    "incident_id": null
+  },
+  {
+    "id": "sec-db58c550a8",
+    "timestamp": "2026-07-19T20:15:37Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "critical",
+    "source_ip": "10.161.87.151",
+    "incident_id": "inc-da7cc0be"
+  },
+  {
+    "id": "sec-4338b356a2",
+    "timestamp": "2026-07-19T20:16:50Z",
+    "component_id": "auth-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.113.168.117",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0efe9a7fcf",
+    "timestamp": "2026-07-19T20:21:53Z",
+    "component_id": "user-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.179.160.86",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d5e5e92c95",
+    "timestamp": "2026-07-19T20:26:50Z",
+    "component_id": "user-service",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.71.232.234",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a091d371dc",
+    "timestamp": "2026-07-19T20:28:34Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.5.56.228",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2f9915bf36",
+    "timestamp": "2026-07-19T20:29:30Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.44.36.201",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fe85820c29",
+    "timestamp": "2026-07-19T20:30:58Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.49.0.54",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3eeae5e52f",
+    "timestamp": "2026-07-19T20:34:34Z",
+    "component_id": "redis-cache",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.110.146.121",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c42543eb11",
+    "timestamp": "2026-07-19T20:35:52Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.184.87.52",
+    "incident_id": null
+  },
+  {
+    "id": "sec-36878d84ce",
+    "timestamp": "2026-07-19T20:39:35Z",
+    "component_id": "order-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.218.26.237",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3d8647b457",
+    "timestamp": "2026-07-19T20:40:52Z",
+    "component_id": "payment-gateway",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.1.92.104",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8d75571442",
+    "timestamp": "2026-07-19T20:41:49Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.65.254.163",
+    "incident_id": null
+  },
+  {
+    "id": "sec-40f1edcf7a",
+    "timestamp": "2026-07-19T20:45:31Z",
+    "component_id": "primary-db",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.20.27.29",
+    "incident_id": null
+  },
+  {
+    "id": "sec-077e4cfb9a",
+    "timestamp": "2026-07-19T20:46:45Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.195.150.235",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e75aa16ece",
+    "timestamp": "2026-07-19T20:49:46Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.174.44.123",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0234ebda99",
+    "timestamp": "2026-07-19T20:54:04Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.101.251.245",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b93648829a",
+    "timestamp": "2026-07-19T20:54:59Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.142.103.49",
+    "incident_id": null
+  },
+  {
+    "id": "sec-96c213e7ed",
+    "timestamp": "2026-07-19T21:03:37Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.8.150.135",
+    "incident_id": null
+  },
+  {
+    "id": "sec-27214a4d8b",
+    "timestamp": "2026-07-19T21:04:19Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.123.85.231",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dabb4dfb5a",
+    "timestamp": "2026-07-19T21:05:12Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.187.180.153",
+    "incident_id": null
+  },
+  {
+    "id": "sec-acf7003447",
+    "timestamp": "2026-07-19T21:09:41Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.98.43.74",
+    "incident_id": null
+  },
+  {
+    "id": "sec-393824d6f4",
+    "timestamp": "2026-07-19T21:10:11Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.143.159.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-67af23b6ea",
+    "timestamp": "2026-07-19T21:10:23Z",
+    "component_id": "users",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.75.185.80",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc2d46178b",
+    "timestamp": "2026-07-19T21:10:30Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.20.164.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-002e9b2bd8",
+    "timestamp": "2026-07-19T21:12:23Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.181.143.224",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e3765b021",
+    "timestamp": "2026-07-19T21:13:28Z",
+    "component_id": "order-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.165.202.114",
+    "incident_id": null
+  },
+  {
+    "id": "sec-72a3a0b6da",
+    "timestamp": "2026-07-19T21:16:09Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.234.211.2",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8474206f1a",
+    "timestamp": "2026-07-19T21:24:28Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.113.216.207",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5e90d2db0b",
+    "timestamp": "2026-07-19T21:27:00Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.229.245.182",
+    "incident_id": null
+  },
+  {
+    "id": "sec-883dc6b12c",
+    "timestamp": "2026-07-19T21:27:18Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.198.194.233",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cefbe87f9b",
+    "timestamp": "2026-07-19T21:29:03Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.17.73.167",
+    "incident_id": null
+  },
+  {
+    "id": "sec-df4907fcda",
+    "timestamp": "2026-07-19T21:35:18Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.51.83.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-95f7394801",
+    "timestamp": "2026-07-19T21:38:48Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.110.141.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-99ff5987ca",
+    "timestamp": "2026-07-19T21:45:22Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.31.221.40",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c6cb94bc1f",
+    "timestamp": "2026-07-19T21:45:55Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.219.17.35",
+    "incident_id": null
+  },
+  {
+    "id": "sec-eb7b9b7148",
+    "timestamp": "2026-07-19T21:54:53Z",
+    "component_id": "data-warehouse",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.184.116.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ffff874ac0",
+    "timestamp": "2026-07-19T22:01:36Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.251.203.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8c57892672",
+    "timestamp": "2026-07-19T22:15:25Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.232.124.200",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fdceededc1",
+    "timestamp": "2026-07-19T22:22:31Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.88.197.197",
+    "incident_id": null
+  },
+  {
+    "id": "sec-14c5d6d21a",
+    "timestamp": "2026-07-19T22:25:06Z",
+    "component_id": "auth-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.184.41.183",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1b401c5c9b",
+    "timestamp": "2026-07-19T22:28:07Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.222.58.201",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c1f2b09cf1",
+    "timestamp": "2026-07-19T22:28:53Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.7.43.156",
+    "incident_id": null
+  },
+  {
+    "id": "sec-11327a0636",
+    "timestamp": "2026-07-19T22:33:06Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.183.138.242",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0dd020d89b",
+    "timestamp": "2026-07-19T22:35:24Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.24.245.22",
+    "incident_id": null
+  },
+  {
+    "id": "sec-be13661350",
+    "timestamp": "2026-07-19T22:39:10Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.140.83.88",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4628391740",
+    "timestamp": "2026-07-19T22:41:19Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.232.233.206",
+    "incident_id": null
+  },
+  {
+    "id": "sec-360cd8de4b",
+    "timestamp": "2026-07-19T22:47:45Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.157.134.58",
+    "incident_id": null
+  },
+  {
+    "id": "sec-53c7e3767d",
+    "timestamp": "2026-07-19T22:48:28Z",
+    "component_id": "search-service",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.201.125.162",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d3de3e23c6",
+    "timestamp": "2026-07-19T22:48:40Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.204.115.61",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5f0c6986d2",
+    "timestamp": "2026-07-19T22:58:20Z",
+    "component_id": "notification-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.207.158.202",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2f84c74f62",
+    "timestamp": "2026-07-19T23:01:07Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.172.226.27",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8dd433eabd",
+    "timestamp": "2026-07-19T23:01:19Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.85.116.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-78d3db035c",
+    "timestamp": "2026-07-19T23:10:27Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.218.52.243",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d836ac6d5d",
+    "timestamp": "2026-07-19T23:20:30Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.138.171.194",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1203a78916",
+    "timestamp": "2026-07-19T23:21:10Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.78.140.57",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6c3f7c279f",
+    "timestamp": "2026-07-19T23:23:11Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.206.242.199",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bb537f6523",
+    "timestamp": "2026-07-19T23:23:22Z",
+    "component_id": "order-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.160.188.122",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8be6f182cd",
+    "timestamp": "2026-07-19T23:29:34Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.167.69.57",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d5a95a8a3",
+    "timestamp": "2026-07-19T23:34:49Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.69.232.33",
+    "incident_id": null
+  },
+  {
+    "id": "sec-736571181e",
+    "timestamp": "2026-07-19T23:35:01Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.120.166.127",
+    "incident_id": null
+  },
+  {
+    "id": "sec-32e34481e6",
+    "timestamp": "2026-07-19T23:45:00Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.164.180.193",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-1e0466d917",
+    "timestamp": "2026-07-19T23:46:18Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "critical",
+    "source_ip": "10.49.56.20",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-6fa48b2d39",
+    "timestamp": "2026-07-19T23:47:24Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "critical",
+    "source_ip": "10.18.96.214",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-79ff28100a",
+    "timestamp": "2026-07-19T23:48:06Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "critical",
+    "source_ip": "10.168.149.185",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-1cad2569e3",
+    "timestamp": "2026-07-19T23:49:11Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "critical",
+    "source_ip": "10.130.232.195",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-65e313b1d3",
+    "timestamp": "2026-07-19T23:49:39Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.184.66.150",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-ff373f7bba",
+    "timestamp": "2026-07-19T23:50:18Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.135.79.227",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-2a660c1b59",
+    "timestamp": "2026-07-19T23:50:20Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.119.228.6",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d57cad339b",
+    "timestamp": "2026-07-19T23:51:30Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.239.139.75",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-17859a55bc",
+    "timestamp": "2026-07-19T23:51:34Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.1.13.2",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-25ed7cc27b",
+    "timestamp": "2026-07-19T23:54:23Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.16.103.162",
+    "incident_id": "inc-9963851a"
+  },
+  {
+    "id": "sec-fc99df1c5c",
+    "timestamp": "2026-07-19T23:56:31Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.181.4.35",
+    "incident_id": null
+  },
+  {
+    "id": "sec-120a18fea7",
+    "timestamp": "2026-07-19T23:56:54Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.82.237.42",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a5720fd531",
+    "timestamp": "2026-07-20T00:01:35Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.253.57.47",
+    "incident_id": null
+  },
+  {
+    "id": "sec-201e331de8",
+    "timestamp": "2026-07-20T00:05:36Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.82.131.221",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a92d69123f",
+    "timestamp": "2026-07-20T00:12:21Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.131.156.233",
+    "incident_id": null
+  },
+  {
+    "id": "sec-387922f9a5",
+    "timestamp": "2026-07-20T00:14:14Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.171.87.187",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ff76470cf0",
+    "timestamp": "2026-07-20T00:15:29Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.43.113.59",
+    "incident_id": null
+  },
+  {
+    "id": "sec-66fbdb5e3c",
+    "timestamp": "2026-07-20T00:16:57Z",
+    "component_id": "inventory-service",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.200.9.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ab627a281a",
+    "timestamp": "2026-07-20T00:19:29Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.200.233.243",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a2e8f09d54",
+    "timestamp": "2026-07-20T00:22:03Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.235.255.53",
+    "incident_id": null
+  },
+  {
+    "id": "sec-48562b3213",
+    "timestamp": "2026-07-20T00:25:38Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.159.152.194",
+    "incident_id": null
+  },
+  {
+    "id": "sec-14a5917dc9",
+    "timestamp": "2026-07-20T00:26:39Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.253.252.129",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a2e18fe8ea",
+    "timestamp": "2026-07-20T00:47:29Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.151.45.171",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b932949a16",
+    "timestamp": "2026-07-20T00:53:11Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.56.168.224",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b8ff65c4a9",
+    "timestamp": "2026-07-20T00:56:43Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.122.254.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8a995d43bf",
+    "timestamp": "2026-07-20T00:58:39Z",
+    "component_id": "user-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.136.217.130",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d1814b90db",
+    "timestamp": "2026-07-20T00:59:37Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.90.171.250",
+    "incident_id": null
+  },
+  {
+    "id": "sec-23a0eb1a20",
+    "timestamp": "2026-07-20T01:10:36Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.14.70.35",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1039c53a7a",
+    "timestamp": "2026-07-20T01:11:44Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.186.7.211",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e97425a47",
+    "timestamp": "2026-07-20T01:17:37Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.220.72.98",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3d48ae26e6",
+    "timestamp": "2026-07-20T01:24:37Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.22.11.179",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e9c999f0ad",
+    "timestamp": "2026-07-20T01:30:26Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.199.20.89",
+    "incident_id": null
+  },
+  {
+    "id": "sec-11f2e0d531",
+    "timestamp": "2026-07-20T01:30:48Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.122.96.97",
+    "incident_id": null
+  },
+  {
+    "id": "sec-be7b21e9f5",
+    "timestamp": "2026-07-20T01:31:12Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.121.15.115",
+    "incident_id": null
+  },
+  {
+    "id": "sec-74e886a642",
+    "timestamp": "2026-07-20T01:32:33Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.164.10.165",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f147fba0b9",
+    "timestamp": "2026-07-20T01:32:59Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.105.103.16",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a1690536ad",
+    "timestamp": "2026-07-20T01:33:17Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.246.44.131",
+    "incident_id": null
+  },
+  {
+    "id": "sec-927a654939",
+    "timestamp": "2026-07-20T01:34:28Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.116.160.19",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ed31ed3cd9",
+    "timestamp": "2026-07-20T01:35:21Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.169.210.167",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d8a05e4ffa",
+    "timestamp": "2026-07-20T01:36:52Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.254.246.83",
+    "incident_id": null
+  },
+  {
+    "id": "sec-71013f3c67",
+    "timestamp": "2026-07-20T01:40:30Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.75.196.223",
+    "incident_id": null
+  },
+  {
+    "id": "sec-04803efd63",
+    "timestamp": "2026-07-20T01:42:41Z",
+    "component_id": "order-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.22.61.5",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cf69c49bfb",
+    "timestamp": "2026-07-20T01:46:01Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.56.115.123",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0f6077c919",
+    "timestamp": "2026-07-20T01:47:07Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.148.254.209",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d9e2e634ac",
+    "timestamp": "2026-07-20T01:50:32Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.205.86.36",
+    "incident_id": null
+  },
+  {
+    "id": "sec-424e0adca7",
+    "timestamp": "2026-07-20T01:51:06Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.164.222.233",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d2f6e765d",
+    "timestamp": "2026-07-20T01:57:39Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.31.217.147",
+    "incident_id": null
+  },
+  {
+    "id": "sec-727a2412c2",
+    "timestamp": "2026-07-20T02:00:44Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.133.87.117",
+    "incident_id": null
+  },
+  {
+    "id": "sec-66b4bd0ee2",
+    "timestamp": "2026-07-20T02:01:26Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.101.112.135",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6dd07634c4",
+    "timestamp": "2026-07-20T02:01:47Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.132.218.175",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f12dea8b38",
+    "timestamp": "2026-07-20T02:02:43Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.136.106.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-123d4fca67",
+    "timestamp": "2026-07-20T02:04:01Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.191.75.173",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ed7cae15f8",
+    "timestamp": "2026-07-20T02:08:54Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.136.126.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ce26015137",
+    "timestamp": "2026-07-20T02:11:55Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.228.30.179",
+    "incident_id": null
+  },
+  {
+    "id": "sec-71a2a01f0b",
+    "timestamp": "2026-07-20T02:14:16Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.86.24.171",
+    "incident_id": null
+  },
+  {
+    "id": "sec-225c08cc12",
+    "timestamp": "2026-07-20T02:14:26Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.67.23.91",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4fe1c89f7e",
+    "timestamp": "2026-07-20T02:21:18Z",
+    "component_id": "user-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.148.229.64",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7c6aa952d8",
+    "timestamp": "2026-07-20T02:23:56Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.20.183.217",
+    "incident_id": null
+  },
+  {
+    "id": "sec-332f1a4d4a",
+    "timestamp": "2026-07-20T02:24:05Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.173.181.107",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9a3edfe8e5",
+    "timestamp": "2026-07-20T02:25:25Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.254.141.199",
+    "incident_id": null
+  },
+  {
+    "id": "sec-971051e6e9",
+    "timestamp": "2026-07-20T02:29:01Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.51.64.6",
+    "incident_id": null
+  },
+  {
+    "id": "sec-74a5dc0d6a",
+    "timestamp": "2026-07-20T02:30:51Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.6.101.198",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ab5629f182",
+    "timestamp": "2026-07-20T02:31:43Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.246.153.38",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d7d684535e",
+    "timestamp": "2026-07-20T02:32:44Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.23.194.153",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5f15a7b40a",
+    "timestamp": "2026-07-20T02:33:16Z",
+    "component_id": "order-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.171.185.120",
+    "incident_id": null
+  },
+  {
+    "id": "sec-de2a80cb5c",
+    "timestamp": "2026-07-20T02:35:40Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.8.225.56",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c641a362bd",
+    "timestamp": "2026-07-20T02:37:48Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.133.149.101",
+    "incident_id": null
+  },
+  {
+    "id": "sec-67faa6f316",
+    "timestamp": "2026-07-20T02:44:02Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.70.64.100",
+    "incident_id": null
+  },
+  {
+    "id": "sec-efbea307ca",
+    "timestamp": "2026-07-20T02:50:23Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.90.128.185",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc68497416",
+    "timestamp": "2026-07-20T02:53:46Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.70.216.126",
+    "incident_id": null
+  },
+  {
+    "id": "sec-55c97cb452",
+    "timestamp": "2026-07-20T02:54:23Z",
+    "component_id": "redis-cache",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.189.219.73",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8c659b7834",
+    "timestamp": "2026-07-20T02:55:16Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.212.67.123",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1b5c209230",
+    "timestamp": "2026-07-20T03:04:52Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.151.54.186",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d6080d697e",
+    "timestamp": "2026-07-20T03:08:17Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.38.133.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-61ac19b981",
+    "timestamp": "2026-07-20T03:12:39Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.149.56.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-88f3b47fad",
+    "timestamp": "2026-07-20T03:25:03Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.189.2.93",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dc9e20b709",
+    "timestamp": "2026-07-20T03:28:28Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.97.104.232",
+    "incident_id": null
+  },
+  {
+    "id": "sec-93a3606cc3",
+    "timestamp": "2026-07-20T03:29:56Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.40.41.19",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5d8ce1e71a",
+    "timestamp": "2026-07-20T03:48:54Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.87.200.166",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e8ffb63c65",
+    "timestamp": "2026-07-20T03:49:46Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.137.177.231",
+    "incident_id": null
+  },
+  {
+    "id": "sec-81d3243fe5",
+    "timestamp": "2026-07-20T03:54:41Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.27.19.209",
+    "incident_id": null
+  },
+  {
+    "id": "sec-19472e740a",
+    "timestamp": "2026-07-20T04:02:37Z",
+    "component_id": "web-portal",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.165.225.186",
+    "incident_id": null
+  },
+  {
+    "id": "sec-07c7549dcb",
+    "timestamp": "2026-07-20T04:04:15Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.187.128.159",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7bf967cf1a",
+    "timestamp": "2026-07-20T04:05:29Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.253.179.211",
+    "incident_id": null
+  },
+  {
+    "id": "sec-16f020c396",
+    "timestamp": "2026-07-20T04:06:24Z",
+    "component_id": "order-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.22.77.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-780ac94485",
+    "timestamp": "2026-07-20T04:08:37Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.43.34.124",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b2e12caf65",
+    "timestamp": "2026-07-20T04:11:25Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.22.249.170",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b1fc67b496",
+    "timestamp": "2026-07-20T04:13:19Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.183.212.19",
+    "incident_id": null
+  },
+  {
+    "id": "sec-91609dc0ee",
+    "timestamp": "2026-07-20T04:18:23Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.196.190.119",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5af612e472",
+    "timestamp": "2026-07-20T04:20:27Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.174.205.239",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e90dee2b2a",
+    "timestamp": "2026-07-20T04:27:37Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.120.35.173",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7560f633b7",
+    "timestamp": "2026-07-20T04:28:51Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.186.206.193",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7038b70ee5",
+    "timestamp": "2026-07-20T04:47:28Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.122.202.86",
+    "incident_id": null
+  },
+  {
+    "id": "sec-40be8e1f59",
+    "timestamp": "2026-07-20T04:49:54Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.175.202.145",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e5b4939698",
+    "timestamp": "2026-07-20T04:56:16Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.136.191.103",
+    "incident_id": null
+  },
+  {
+    "id": "sec-eba33a5016",
+    "timestamp": "2026-07-20T05:02:08Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.72.34.178",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e2e9b5927b",
+    "timestamp": "2026-07-20T05:02:31Z",
+    "component_id": "notification-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.178.7.139",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bcd6292c9b",
+    "timestamp": "2026-07-20T05:14:14Z",
+    "component_id": "inventory-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.200.28.222",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b1460224f9",
+    "timestamp": "2026-07-20T05:23:38Z",
+    "component_id": "primary-db",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.167.35.216",
+    "incident_id": null
+  },
+  {
+    "id": "sec-36edf7c281",
+    "timestamp": "2026-07-20T05:40:12Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.108.143.102",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0555d49f26",
+    "timestamp": "2026-07-20T05:41:39Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.147.229.3",
+    "incident_id": null
+  },
+  {
+    "id": "sec-671c6b5100",
+    "timestamp": "2026-07-20T05:46:21Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.20.103.223",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8be5a70522",
+    "timestamp": "2026-07-20T05:49:50Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.184.198.30",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ae8fd4820c",
+    "timestamp": "2026-07-20T05:50:37Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.211.34.126",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a12e40b40f",
+    "timestamp": "2026-07-20T05:54:36Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.196.182.5",
+    "incident_id": null
+  },
+  {
+    "id": "sec-59c7291788",
+    "timestamp": "2026-07-20T05:55:25Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.205.91.80",
+    "incident_id": null
+  },
+  {
+    "id": "sec-16325ad1df",
+    "timestamp": "2026-07-20T05:55:28Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.179.46.254",
+    "incident_id": null
+  },
+  {
+    "id": "sec-394be04544",
+    "timestamp": "2026-07-20T05:57:38Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.5.1.73",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c4aeb0e1c4",
+    "timestamp": "2026-07-20T05:59:16Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.66.206.111",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ee95f9344f",
+    "timestamp": "2026-07-20T06:00:30Z",
+    "component_id": "email-provider",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.255.134.98",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ae320d8751",
+    "timestamp": "2026-07-20T06:04:28Z",
+    "component_id": "load-balancer",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.10.161.76",
+    "incident_id": null
+  },
+  {
+    "id": "sec-86d8b4f2d3",
+    "timestamp": "2026-07-20T06:05:50Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.249.130.49",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0da7c9d314",
+    "timestamp": "2026-07-20T06:07:36Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.86.7.203",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9993e682e5",
+    "timestamp": "2026-07-20T06:15:11Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.154.103.39",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4d94e54776",
+    "timestamp": "2026-07-20T06:19:25Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.119.96.6",
+    "incident_id": null
+  },
+  {
+    "id": "sec-653deca3dc",
+    "timestamp": "2026-07-20T06:22:46Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.16.57.177",
+    "incident_id": null
+  },
+  {
+    "id": "sec-11be29e5c8",
+    "timestamp": "2026-07-20T06:30:39Z",
+    "component_id": "notification-service",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.125.142.234",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d832f73b85",
+    "timestamp": "2026-07-20T06:38:28Z",
+    "component_id": "user-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.47.167.222",
+    "incident_id": null
+  },
+  {
+    "id": "sec-32b6d6a31d",
+    "timestamp": "2026-07-20T06:39:23Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.236.200.145",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e1308c7fdc",
+    "timestamp": "2026-07-20T06:43:47Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.142.151.68",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1a5c764655",
+    "timestamp": "2026-07-20T06:50:52Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.120.1.217",
+    "incident_id": null
+  },
+  {
+    "id": "sec-54f435229c",
+    "timestamp": "2026-07-20T06:52:35Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.92.62.217",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3698f3a80b",
+    "timestamp": "2026-07-20T06:53:44Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.183.93.180",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1e4204f366",
+    "timestamp": "2026-07-20T06:57:23Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.127.12.145",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e46c397aad",
+    "timestamp": "2026-07-20T06:58:05Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.99.240.231",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6689bd9d2d",
+    "timestamp": "2026-07-20T07:00:37Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.195.56.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0aec3dcc5a",
+    "timestamp": "2026-07-20T07:00:37Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.174.146.191",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c737514142",
+    "timestamp": "2026-07-20T07:06:38Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.220.88.92",
+    "incident_id": null
+  },
+  {
+    "id": "sec-41a1031ce5",
+    "timestamp": "2026-07-20T07:08:43Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.8.235.202",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0cdfa7572e",
+    "timestamp": "2026-07-20T07:12:31Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.153.59.14",
+    "incident_id": null
+  },
+  {
+    "id": "sec-81463a1ab3",
+    "timestamp": "2026-07-20T07:12:38Z",
+    "component_id": "auth-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.79.103.139",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e0d6a1f7ac",
+    "timestamp": "2026-07-20T07:14:18Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.97.206.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7aa57898ec",
+    "timestamp": "2026-07-20T07:24:41Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.45.248.232",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c68e04774f",
+    "timestamp": "2026-07-20T07:33:41Z",
+    "component_id": "notification-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.9.217.173",
+    "incident_id": null
+  },
+  {
+    "id": "sec-400a5dbf00",
+    "timestamp": "2026-07-20T07:36:48Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.70.19.200",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a49f1db044",
+    "timestamp": "2026-07-20T07:45:28Z",
+    "component_id": "web-portal",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.53.247.121",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c04f30b9b9",
+    "timestamp": "2026-07-20T07:45:49Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.215.174.14",
+    "incident_id": null
+  },
+  {
+    "id": "sec-48d18e7e74",
+    "timestamp": "2026-07-20T07:48:10Z",
+    "component_id": "order-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.170.79.29",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b1d0b4bb22",
+    "timestamp": "2026-07-20T07:56:23Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.235.19.232",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dcacfdf2da",
+    "timestamp": "2026-07-20T08:01:41Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.143.197.189",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c8f339050d",
+    "timestamp": "2026-07-20T08:06:23Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.114.66.53",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4fe9b32e3b",
+    "timestamp": "2026-07-20T08:07:26Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.227.37.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc9baf98dc",
+    "timestamp": "2026-07-20T08:08:57Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.216.218.254",
+    "incident_id": null
+  },
+  {
+    "id": "sec-29e94d5e1d",
+    "timestamp": "2026-07-20T08:21:42Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.125.180.58",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f61ff83fce",
+    "timestamp": "2026-07-20T08:24:58Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.73.62.34",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8895f5ad43",
+    "timestamp": "2026-07-20T08:31:12Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.137.70.183",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e824144197",
+    "timestamp": "2026-07-20T08:32:00Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.67.122.148",
+    "incident_id": null
+  },
+  {
+    "id": "sec-139b2d48b0",
+    "timestamp": "2026-07-20T08:40:59Z",
+    "component_id": "order-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.229.197.3",
+    "incident_id": null
+  },
+  {
+    "id": "sec-527bbaadf3",
+    "timestamp": "2026-07-20T08:43:16Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.126.133.132",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b3437d24e2",
+    "timestamp": "2026-07-20T08:44:58Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.135.245.100",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ca41d6cdcb",
+    "timestamp": "2026-07-20T08:46:18Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.1.228.144",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2c498ee0ea",
+    "timestamp": "2026-07-20T08:48:25Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.179.252.33",
+    "incident_id": null
+  },
+  {
+    "id": "sec-705f087ee1",
+    "timestamp": "2026-07-20T08:49:39Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.214.47.32",
+    "incident_id": null
+  },
+  {
+    "id": "sec-21e52592f0",
+    "timestamp": "2026-07-20T08:50:38Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.75.234.111",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f44fe0b1f2",
+    "timestamp": "2026-07-20T08:51:21Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.88.45.229",
+    "incident_id": null
+  },
+  {
+    "id": "sec-da1f659a64",
+    "timestamp": "2026-07-20T08:56:44Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.227.198.210",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2d6720deb6",
+    "timestamp": "2026-07-20T09:05:18Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.160.35.74",
+    "incident_id": null
+  },
+  {
+    "id": "sec-94df214acc",
+    "timestamp": "2026-07-20T09:06:29Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.145.98.24",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a636ee5f39",
+    "timestamp": "2026-07-20T09:07:23Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.175.182.113",
+    "incident_id": "inc-e036086b"
+  },
+  {
+    "id": "sec-4ef9178287",
+    "timestamp": "2026-07-20T09:11:49Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.70.125.105",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6817dd7eae",
+    "timestamp": "2026-07-20T09:14:20Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.140.190.127",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bd4a0b5d4c",
+    "timestamp": "2026-07-20T09:16:03Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.39.57.167",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d14000309a",
+    "timestamp": "2026-07-20T09:16:32Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.77.242.116",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6ee9141e05",
+    "timestamp": "2026-07-20T09:18:02Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.2.20.2",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a6b25e8bd3",
+    "timestamp": "2026-07-20T09:18:27Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.129.38.126",
+    "incident_id": null
+  },
+  {
+    "id": "sec-69f0d104fd",
+    "timestamp": "2026-07-20T09:24:25Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.9.6.111",
+    "incident_id": null
+  },
+  {
+    "id": "sec-29f6c3f0df",
+    "timestamp": "2026-07-20T09:26:05Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.17.124.74",
+    "incident_id": null
+  },
+  {
+    "id": "sec-22e44a71bf",
+    "timestamp": "2026-07-20T09:26:12Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.178.135.83",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bf4222e3f6",
+    "timestamp": "2026-07-20T09:29:32Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.213.250.155",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9cde62e4de",
+    "timestamp": "2026-07-20T09:45:19Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.91.252.33",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f15d6ec20a",
+    "timestamp": "2026-07-20T09:56:10Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.32.220.188",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e022c7cecc",
+    "timestamp": "2026-07-20T10:10:18Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.238.185.190",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c37ae0e564",
+    "timestamp": "2026-07-20T10:20:32Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.137.43.15",
+    "incident_id": null
+  },
+  {
+    "id": "sec-61d100233e",
+    "timestamp": "2026-07-20T10:21:02Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.229.109.253",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d55e0257a8",
+    "timestamp": "2026-07-20T10:29:07Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.4.44.240",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bc44b047bf",
+    "timestamp": "2026-07-20T10:32:31Z",
+    "component_id": "data-warehouse",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.203.226.47",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ed96e23731",
+    "timestamp": "2026-07-20T10:52:17Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.233.133.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ef89f8f333",
+    "timestamp": "2026-07-20T10:56:44Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.71.183.97",
+    "incident_id": null
+  },
+  {
+    "id": "sec-94c6b82866",
+    "timestamp": "2026-07-20T10:58:28Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.158.243.212",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cac2bb6ddb",
+    "timestamp": "2026-07-20T11:01:35Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.102.31.96",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d784718583",
+    "timestamp": "2026-07-20T11:03:13Z",
+    "component_id": "auth-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.182.248.15",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e6a21e4bae",
+    "timestamp": "2026-07-20T11:04:20Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.31.147.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc6e9b580f",
+    "timestamp": "2026-07-20T11:08:11Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.42.27.201",
+    "incident_id": null
+  },
+  {
+    "id": "sec-25473b2adb",
+    "timestamp": "2026-07-20T11:17:59Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.171.145.200",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d798530033",
+    "timestamp": "2026-07-20T11:19:02Z",
+    "component_id": "api-gateway",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.103.115.70",
+    "incident_id": null
+  },
+  {
+    "id": "sec-479742cb66",
+    "timestamp": "2026-07-20T11:26:04Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.113.142.69",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e71d48a961",
+    "timestamp": "2026-07-20T11:29:38Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.10.108.218",
+    "incident_id": null
+  },
+  {
+    "id": "sec-08bc88d136",
+    "timestamp": "2026-07-20T11:30:37Z",
+    "component_id": "notification-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.194.2.107",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ec90990896",
+    "timestamp": "2026-07-20T11:34:22Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.100.78.219",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ff36da0287",
+    "timestamp": "2026-07-20T11:36:29Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.4.151.37",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bfd0310a20",
+    "timestamp": "2026-07-20T11:42:08Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.189.199.102",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ce4a469aee",
+    "timestamp": "2026-07-20T11:55:21Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.168.48.217",
+    "incident_id": null
+  },
+  {
+    "id": "sec-79e16d194e",
+    "timestamp": "2026-07-20T11:55:58Z",
+    "component_id": "api-gateway",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.137.104.100",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5f15eea101",
+    "timestamp": "2026-07-20T12:00:54Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.251.222.221",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bc3daceb13",
+    "timestamp": "2026-07-20T12:01:40Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.216.132.172",
+    "incident_id": null
+  },
+  {
+    "id": "sec-40d7b3d30c",
+    "timestamp": "2026-07-20T12:09:47Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.245.193.242",
+    "incident_id": null
+  },
+  {
+    "id": "sec-db3dc4db47",
+    "timestamp": "2026-07-20T12:10:37Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.242.142.166",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ddd8b65afc",
+    "timestamp": "2026-07-20T12:11:39Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.99.250.252",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d17a35a0e0",
+    "timestamp": "2026-07-20T12:15:23Z",
+    "component_id": "data-warehouse",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.143.2.132",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ff2f2ea49d",
+    "timestamp": "2026-07-20T12:22:06Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.249.244.200",
+    "incident_id": null
+  },
+  {
+    "id": "sec-741b9f1da1",
+    "timestamp": "2026-07-20T12:25:55Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.33.48.58",
+    "incident_id": null
+  },
+  {
+    "id": "sec-acffda3a7a",
+    "timestamp": "2026-07-20T12:35:18Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.53.192.49",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dcb1bd4688",
+    "timestamp": "2026-07-20T12:37:05Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.164.26.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9b8884b906",
+    "timestamp": "2026-07-20T12:37:47Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.87.104.205",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e1c3a4e291",
+    "timestamp": "2026-07-20T12:39:11Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.123.111.63",
+    "incident_id": null
+  },
+  {
+    "id": "sec-22478b8795",
+    "timestamp": "2026-07-20T12:43:51Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.103.172.129",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dd7a64d92d",
+    "timestamp": "2026-07-20T12:46:56Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.225.205.20",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ea591e4282",
+    "timestamp": "2026-07-20T12:58:29Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.212.181.223",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1f66927003",
+    "timestamp": "2026-07-20T12:58:57Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.113.41.236",
+    "incident_id": null
+  },
+  {
+    "id": "sec-517577fe0e",
+    "timestamp": "2026-07-20T13:08:10Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.196.36.22",
+    "incident_id": null
+  },
+  {
+    "id": "sec-036a1e8c2c",
+    "timestamp": "2026-07-20T13:15:14Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.107.98.230",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a475f89248",
+    "timestamp": "2026-07-20T13:16:42Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.195.98.194",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8e63466996",
+    "timestamp": "2026-07-20T13:21:30Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.49.21.159",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d7b493d70f",
+    "timestamp": "2026-07-20T13:22:53Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.9.113.163",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc2ffd7786",
+    "timestamp": "2026-07-20T13:29:59Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.71.225.125",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e7a7ccc56",
+    "timestamp": "2026-07-20T13:33:11Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.180.113.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d26e784210",
+    "timestamp": "2026-07-20T13:34:11Z",
+    "component_id": "api-gateway",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.114.38.82",
+    "incident_id": null
+  },
+  {
+    "id": "sec-64ee6898ae",
+    "timestamp": "2026-07-20T13:39:50Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.240.64.217",
+    "incident_id": null
+  },
+  {
+    "id": "sec-40b5a975d6",
+    "timestamp": "2026-07-20T13:41:16Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.176.127.189",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0e375a0b81",
+    "timestamp": "2026-07-20T13:41:42Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.30.149.177",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1adaaee238",
+    "timestamp": "2026-07-20T13:42:39Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.30.110.178",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6477ef8c7b",
+    "timestamp": "2026-07-20T13:45:18Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.147.168.127",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7dc29edbcd",
+    "timestamp": "2026-07-20T13:52:03Z",
+    "component_id": "order-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.148.155.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-62358967a1",
+    "timestamp": "2026-07-20T13:58:04Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.148.154.236",
+    "incident_id": null
+  },
+  {
+    "id": "sec-75a977e983",
+    "timestamp": "2026-07-20T14:01:23Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.206.70.103",
+    "incident_id": null
+  },
+  {
+    "id": "sec-245c3c4e43",
+    "timestamp": "2026-07-20T14:03:32Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.55.232.54",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4a1b6aa1c2",
+    "timestamp": "2026-07-20T14:04:35Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.224.164.39",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4f7cebeda8",
+    "timestamp": "2026-07-20T14:05:01Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.195.58.162",
+    "incident_id": null
+  },
+  {
+    "id": "sec-31bdd3abe9",
+    "timestamp": "2026-07-20T14:08:45Z",
+    "component_id": "primary-db",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.36.213.95",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0415bdfb1b",
+    "timestamp": "2026-07-20T14:28:14Z",
+    "component_id": "primary-db",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.146.152.186",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9477609f06",
+    "timestamp": "2026-07-20T14:29:20Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.87.202.75",
+    "incident_id": null
+  },
+  {
+    "id": "sec-219d20847e",
+    "timestamp": "2026-07-20T14:40:59Z",
+    "component_id": "users",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.238.149.1",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2666a6ade4",
+    "timestamp": "2026-07-20T14:41:30Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.165.124.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e17b489767",
+    "timestamp": "2026-07-20T14:43:34Z",
+    "component_id": "message-queue",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.213.117.74",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9584b05207",
+    "timestamp": "2026-07-20T14:46:20Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.153.22.87",
+    "incident_id": null
+  },
+  {
+    "id": "sec-92a9e3833b",
+    "timestamp": "2026-07-20T14:47:13Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.2.204.2",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6ea306b0e4",
+    "timestamp": "2026-07-20T14:58:34Z",
+    "component_id": "data-warehouse",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.54.253.121",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c4cb6bf848",
+    "timestamp": "2026-07-20T14:58:39Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.68.185.79",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ab244ad234",
+    "timestamp": "2026-07-20T15:07:22Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.66.251.112",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f6c81b3177",
+    "timestamp": "2026-07-20T15:10:35Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.23.70.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ee51a81c4c",
+    "timestamp": "2026-07-20T15:17:16Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.32.201.45",
+    "incident_id": null
+  },
+  {
+    "id": "sec-aacad46bfd",
+    "timestamp": "2026-07-20T15:20:33Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.220.251.168",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fc5f109f4a",
+    "timestamp": "2026-07-20T15:21:06Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.122.38.180",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a549bea009",
+    "timestamp": "2026-07-20T15:26:11Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.217.100.219",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e7a1fd7a91",
+    "timestamp": "2026-07-20T15:26:55Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.61.195.141",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e6d9086aac",
+    "timestamp": "2026-07-20T15:28:02Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.26.152.240",
+    "incident_id": null
+  },
+  {
+    "id": "sec-386691cca4",
+    "timestamp": "2026-07-20T15:37:22Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.54.196.47",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a2af22c06c",
+    "timestamp": "2026-07-20T15:39:08Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.103.229.42",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1d56d1dbaa",
+    "timestamp": "2026-07-20T15:46:28Z",
+    "component_id": "notification-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.56.52.203",
+    "incident_id": null
+  },
+  {
+    "id": "sec-36af67f092",
+    "timestamp": "2026-07-20T15:54:03Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.78.35.12",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dd78923840",
+    "timestamp": "2026-07-20T15:55:19Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.73.24.9",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b7e5bb188b",
+    "timestamp": "2026-07-20T16:05:19Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.217.158.23",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc51ac9c30",
+    "timestamp": "2026-07-20T16:18:13Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.24.162.192",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9940a84bce",
+    "timestamp": "2026-07-20T16:23:51Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.12.210.107",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f98ee00492",
+    "timestamp": "2026-07-20T16:25:35Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.42.112.150",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1c9c16edbe",
+    "timestamp": "2026-07-20T16:27:56Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.208.246.122",
+    "incident_id": null
+  },
+  {
+    "id": "sec-02c487363d",
+    "timestamp": "2026-07-20T16:33:05Z",
+    "component_id": "user-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.14.202.51",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6234519ed6",
+    "timestamp": "2026-07-20T16:35:33Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.126.224.61",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc0310e124",
+    "timestamp": "2026-07-20T16:41:57Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.109.217.196",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9e7624b214",
+    "timestamp": "2026-07-20T16:50:48Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.88.111.156",
+    "incident_id": null
+  },
+  {
+    "id": "sec-780eb6e5b8",
+    "timestamp": "2026-07-20T16:52:46Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.182.39.36",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e0d852ab97",
+    "timestamp": "2026-07-20T16:57:06Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.70.253.170",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3a5d9cf91a",
+    "timestamp": "2026-07-20T17:05:00Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.113.149.162",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c39cb9f979",
+    "timestamp": "2026-07-20T17:08:20Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.185.212.48",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dbf2a73aa6",
+    "timestamp": "2026-07-20T17:09:45Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.160.83.251",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b0571d6b35",
+    "timestamp": "2026-07-20T17:10:54Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.57.200.14",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3e95a67230",
+    "timestamp": "2026-07-20T17:11:23Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.160.8.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-930bb776ff",
+    "timestamp": "2026-07-20T17:12:53Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.71.10.193",
+    "incident_id": null
+  },
+  {
+    "id": "sec-51442d3763",
+    "timestamp": "2026-07-20T17:13:45Z",
+    "component_id": "payment-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.21.38.235",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2c0ea45beb",
+    "timestamp": "2026-07-20T17:15:32Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.172.162.58",
+    "incident_id": null
+  },
+  {
+    "id": "sec-48e7d11e3b",
+    "timestamp": "2026-07-20T17:18:49Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.140.167.169",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a953053043",
+    "timestamp": "2026-07-20T17:21:54Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.71.232.217",
+    "incident_id": null
+  },
+  {
+    "id": "sec-25f0e72a8c",
+    "timestamp": "2026-07-20T17:25:06Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.57.6.68",
+    "incident_id": null
+  },
+  {
+    "id": "sec-29999e575b",
+    "timestamp": "2026-07-20T17:26:04Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.76.177.9",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5a4cf32ccc",
+    "timestamp": "2026-07-20T17:34:36Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.44.66.138",
+    "incident_id": null
+  },
+  {
+    "id": "sec-827c2adac3",
+    "timestamp": "2026-07-20T17:35:17Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.75.168.4",
+    "incident_id": null
+  },
+  {
+    "id": "sec-59e455ad06",
+    "timestamp": "2026-07-20T17:35:34Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.217.135.20",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4cd1d4a800",
+    "timestamp": "2026-07-20T17:38:34Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.194.219.184",
+    "incident_id": null
+  },
+  {
+    "id": "sec-94598ca90f",
+    "timestamp": "2026-07-20T17:41:07Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.193.20.209",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ee2f679e31",
+    "timestamp": "2026-07-20T17:45:17Z",
+    "component_id": "api-gateway",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.57.11.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e5b843260e",
+    "timestamp": "2026-07-20T17:57:46Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.141.237.98",
+    "incident_id": null
+  },
+  {
+    "id": "sec-df4168afcb",
+    "timestamp": "2026-07-20T17:57:53Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.130.8.63",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a76cc50b20",
+    "timestamp": "2026-07-20T17:59:48Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.192.10.211",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c7c1264e50",
+    "timestamp": "2026-07-20T18:05:01Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.168.116.11",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ebc6479205",
+    "timestamp": "2026-07-20T18:07:56Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.165.85.107",
+    "incident_id": null
+  },
+  {
+    "id": "sec-282f7122ff",
+    "timestamp": "2026-07-20T18:09:58Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.40.203.3",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6cb01df442",
+    "timestamp": "2026-07-20T18:11:16Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.196.70.170",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ae6b706379",
+    "timestamp": "2026-07-20T18:11:32Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.175.125.116",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7e26a1b0c8",
+    "timestamp": "2026-07-20T18:18:57Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.137.165.20",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8ee2802240",
+    "timestamp": "2026-07-20T18:23:09Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.27.162.60",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9e9d2a4b8e",
+    "timestamp": "2026-07-20T18:24:30Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.197.35.94",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3c02ce8b52",
+    "timestamp": "2026-07-20T18:26:35Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.250.246.243",
+    "incident_id": null
+  },
+  {
+    "id": "sec-420838c248",
+    "timestamp": "2026-07-20T18:29:35Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.203.247.112",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8014eddb78",
+    "timestamp": "2026-07-20T18:36:22Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.172.115.231",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d49925029",
+    "timestamp": "2026-07-20T18:37:07Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.90.153.182",
+    "incident_id": null
+  },
+  {
+    "id": "sec-588f54f218",
+    "timestamp": "2026-07-20T18:38:43Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.239.235.39",
+    "incident_id": null
+  },
+  {
+    "id": "sec-982183b365",
+    "timestamp": "2026-07-20T18:42:28Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.108.119.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c68d6821e1",
+    "timestamp": "2026-07-20T18:43:26Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.159.72.111",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4becb02321",
+    "timestamp": "2026-07-20T18:43:32Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.216.222.251",
+    "incident_id": null
+  },
+  {
+    "id": "sec-124424b27c",
+    "timestamp": "2026-07-20T18:49:06Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.58.158.174",
+    "incident_id": null
+  },
+  {
+    "id": "sec-134afc1c17",
+    "timestamp": "2026-07-20T18:51:45Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.187.241.32",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1c5531ef67",
+    "timestamp": "2026-07-20T18:54:59Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.252.19.227",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5a36c843e7",
+    "timestamp": "2026-07-20T18:56:28Z",
+    "component_id": "user-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.31.168.7",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e38d644d3f",
+    "timestamp": "2026-07-20T19:02:16Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.35.227.18",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f5d8829fc1",
+    "timestamp": "2026-07-20T19:03:57Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.216.96.175",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f707ac3a55",
+    "timestamp": "2026-07-20T19:06:05Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.0.86.135",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b2e58a95b2",
+    "timestamp": "2026-07-20T19:10:00Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.118.156.215",
+    "incident_id": null
+  },
+  {
+    "id": "sec-437000a463",
+    "timestamp": "2026-07-20T19:10:41Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.85.18.148",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7b10c7220b",
+    "timestamp": "2026-07-20T19:17:30Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.89.199.129",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e1f4bba55",
+    "timestamp": "2026-07-20T19:18:51Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.80.48.252",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b676553943",
+    "timestamp": "2026-07-20T19:19:07Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.0.136.4",
+    "incident_id": null
+  },
+  {
+    "id": "sec-67e3b18837",
+    "timestamp": "2026-07-20T19:21:16Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.105.142.94",
+    "incident_id": null
+  },
+  {
+    "id": "sec-58bce44273",
+    "timestamp": "2026-07-20T19:21:46Z",
+    "component_id": "notification-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.174.146.105",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5b81e3f02e",
+    "timestamp": "2026-07-20T19:21:55Z",
+    "component_id": "inventory-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.74.207.59",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b7fc488e63",
+    "timestamp": "2026-07-20T19:22:54Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.154.30.148",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c49348f210",
+    "timestamp": "2026-07-20T19:27:43Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.66.55.161",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e8ae0242ac",
+    "timestamp": "2026-07-20T19:28:17Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.155.57.202",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9fcf3967a8",
+    "timestamp": "2026-07-20T19:32:54Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.87.126.45",
+    "incident_id": null
+  },
+  {
+    "id": "sec-62a9466f07",
+    "timestamp": "2026-07-20T19:33:08Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.142.14.95",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4f02a4a038",
+    "timestamp": "2026-07-20T19:33:31Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.104.29.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cb96d0fe1b",
+    "timestamp": "2026-07-20T19:37:01Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.165.165.37",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c67bac2e9b",
+    "timestamp": "2026-07-20T19:38:40Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.249.81.66",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3d0b5ecd7a",
+    "timestamp": "2026-07-20T19:47:10Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.65.177.77",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4f488d72a2",
+    "timestamp": "2026-07-20T19:47:51Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.51.35.180",
+    "incident_id": null
+  },
+  {
+    "id": "sec-508cda75bf",
+    "timestamp": "2026-07-20T19:57:31Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.233.247.194",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bbf6a0ed94",
+    "timestamp": "2026-07-20T20:00:37Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.148.61.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-235b262c09",
+    "timestamp": "2026-07-20T20:03:02Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.179.35.56",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4c829d619f",
+    "timestamp": "2026-07-20T20:05:07Z",
+    "component_id": "api-gateway",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.220.187.189",
+    "incident_id": null
+  },
+  {
+    "id": "sec-04a168f942",
+    "timestamp": "2026-07-20T20:06:45Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.0.87.157",
+    "incident_id": null
+  },
+  {
+    "id": "sec-086399158c",
+    "timestamp": "2026-07-20T20:11:03Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.115.108.158",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4eecbdd62b",
+    "timestamp": "2026-07-20T20:12:24Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.221.182.119",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1ac7ddfb04",
+    "timestamp": "2026-07-20T20:13:53Z",
+    "component_id": "inventory-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.21.60.7",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0d84003071",
+    "timestamp": "2026-07-20T20:21:35Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.203.3.131",
+    "incident_id": null
+  },
+  {
+    "id": "sec-35a34dbc0d",
+    "timestamp": "2026-07-20T20:26:17Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.241.141.237",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d96e869af",
+    "timestamp": "2026-07-20T20:33:47Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.197.250.106",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6f64a663d2",
+    "timestamp": "2026-07-20T20:35:01Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.230.185.222",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3147b04ffb",
+    "timestamp": "2026-07-20T20:35:55Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.240.123.83",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6ee79fb970",
+    "timestamp": "2026-07-20T20:38:42Z",
+    "component_id": "redis-cache",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.4.26.156",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3c3585bc9a",
+    "timestamp": "2026-07-20T20:41:50Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.169.41.240",
+    "incident_id": null
+  },
+  {
+    "id": "sec-014b9be8d0",
+    "timestamp": "2026-07-20T20:45:34Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.3.10.95",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2b47e29c1a",
+    "timestamp": "2026-07-20T20:46:39Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.41.10.112",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dfd2f2a10d",
+    "timestamp": "2026-07-20T20:51:15Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.248.121.114",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8b4b109721",
+    "timestamp": "2026-07-20T20:54:41Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.22.106.15",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a6e2ff9b29",
+    "timestamp": "2026-07-20T20:56:05Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.199.34.161",
+    "incident_id": null
+  },
+  {
+    "id": "sec-52bc4e3448",
+    "timestamp": "2026-07-20T20:56:42Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.146.231.21",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0ed44761db",
+    "timestamp": "2026-07-20T21:06:22Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.168.89.240",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f69231c917",
+    "timestamp": "2026-07-20T21:09:18Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.188.208.218",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9c52d2ac6d",
+    "timestamp": "2026-07-20T21:10:43Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.22.91.138",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7e8e251dc3",
+    "timestamp": "2026-07-20T21:13:08Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.175.62.251",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fae1b1ba51",
+    "timestamp": "2026-07-20T21:17:02Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.97.169.185",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b888c36b9b",
+    "timestamp": "2026-07-20T21:19:57Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.115.40.39",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d5a6155208",
+    "timestamp": "2026-07-20T21:23:13Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.198.19.241",
+    "incident_id": null
+  },
+  {
+    "id": "sec-51693687ce",
+    "timestamp": "2026-07-20T21:27:05Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.77.63.161",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5538ee3691",
+    "timestamp": "2026-07-20T21:28:28Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.51.202.120",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3647efa8f3",
+    "timestamp": "2026-07-20T21:32:40Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.74.25.129",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c36bc8abb1",
+    "timestamp": "2026-07-20T21:34:32Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.35.135.254",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d0b79ff8c",
+    "timestamp": "2026-07-20T21:35:44Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.100.78.151",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d39191b5c3",
+    "timestamp": "2026-07-20T21:36:19Z",
+    "component_id": "inventory-service",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.69.252.60",
+    "incident_id": null
+  },
+  {
+    "id": "sec-386ba8b306",
+    "timestamp": "2026-07-20T21:38:30Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.14.220.71",
+    "incident_id": null
+  },
+  {
+    "id": "sec-98180d7bb4",
+    "timestamp": "2026-07-20T21:40:11Z",
+    "component_id": "data-warehouse",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.2.199.172",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3424d432fa",
+    "timestamp": "2026-07-20T21:41:28Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.104.6.27",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a1699d9ccf",
+    "timestamp": "2026-07-20T21:47:27Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.129.147.13",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8a97d2f34c",
+    "timestamp": "2026-07-20T21:49:39Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.179.196.49",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1d7d9a44c8",
+    "timestamp": "2026-07-20T21:49:56Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.144.17.93",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ac9f9c32e7",
+    "timestamp": "2026-07-20T22:00:17Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.90.67.160",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6a1c7e889e",
+    "timestamp": "2026-07-20T22:06:45Z",
+    "component_id": "user-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.253.57.161",
+    "incident_id": null
+  },
+  {
+    "id": "sec-db039bdb92",
+    "timestamp": "2026-07-20T22:08:43Z",
+    "component_id": "search-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.59.109.102",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2ef861cf96",
+    "timestamp": "2026-07-20T22:09:23Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.211.102.56",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d2802c86ef",
+    "timestamp": "2026-07-20T22:10:14Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.239.72.241",
+    "incident_id": null
+  },
+  {
+    "id": "sec-672f0e7ca8",
+    "timestamp": "2026-07-20T22:10:23Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.60.207.117",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ef875ed5e1",
+    "timestamp": "2026-07-20T22:11:19Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.14.62.172",
+    "incident_id": null
+  },
+  {
+    "id": "sec-79ab4dcbe0",
+    "timestamp": "2026-07-20T22:13:31Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.29.104.199",
+    "incident_id": null
+  },
+  {
+    "id": "sec-186d186d48",
+    "timestamp": "2026-07-20T22:19:21Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.139.109.115",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ae53e30c27",
+    "timestamp": "2026-07-20T22:21:24Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.82.205.151",
+    "incident_id": null
+  },
+  {
+    "id": "sec-eaa648d17e",
+    "timestamp": "2026-07-20T22:21:57Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.216.205.27",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a02aa84784",
+    "timestamp": "2026-07-20T22:36:44Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.203.72.61",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3cc105058b",
+    "timestamp": "2026-07-20T22:38:44Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.41.162.111",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4d0f73166a",
+    "timestamp": "2026-07-20T22:42:29Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.65.18.156",
+    "incident_id": null
+  },
+  {
+    "id": "sec-45b99d59fb",
+    "timestamp": "2026-07-20T22:43:37Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.167.2.24",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b034bc0cc9",
+    "timestamp": "2026-07-20T22:44:50Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.201.115.242",
+    "incident_id": null
+  },
+  {
+    "id": "sec-425cb1ea30",
+    "timestamp": "2026-07-20T22:49:06Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.22.84.156",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6edac1a9af",
+    "timestamp": "2026-07-20T22:50:14Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.30.102.40",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e5069eea78",
+    "timestamp": "2026-07-20T22:52:21Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.167.114.245",
+    "incident_id": null
+  },
+  {
+    "id": "sec-963f9808dd",
+    "timestamp": "2026-07-20T23:02:22Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.170.117.120",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8410b2ca78",
+    "timestamp": "2026-07-20T23:03:45Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.196.239.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a040a0ea90",
+    "timestamp": "2026-07-20T23:08:28Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.15.214.3",
+    "incident_id": null
+  },
+  {
+    "id": "sec-977be1b9a5",
+    "timestamp": "2026-07-20T23:10:01Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.65.171.119",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5e9031eb5e",
+    "timestamp": "2026-07-20T23:10:01Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.98.73.231",
+    "incident_id": null
+  },
+  {
+    "id": "sec-95c3324eb0",
+    "timestamp": "2026-07-20T23:17:35Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.106.186.206",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2eb4fd7407",
+    "timestamp": "2026-07-20T23:20:46Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.166.184.202",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a4267b0d49",
+    "timestamp": "2026-07-20T23:36:05Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.252.166.30",
+    "incident_id": null
+  },
+  {
+    "id": "sec-63d2a077d4",
+    "timestamp": "2026-07-20T23:42:25Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.184.34.80",
+    "incident_id": null
+  },
+  {
+    "id": "sec-337049ab53",
+    "timestamp": "2026-07-20T23:49:37Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.169.246.60",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b062a76835",
+    "timestamp": "2026-07-20T23:49:44Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.90.36.127",
+    "incident_id": null
+  },
+  {
+    "id": "sec-12a1eda8fa",
+    "timestamp": "2026-07-20T23:50:26Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.232.66.254",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7491c4169b",
+    "timestamp": "2026-07-20T23:53:24Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.154.86.90",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4776fd6b53",
+    "timestamp": "2026-07-20T23:58:17Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.179.150.59",
+    "incident_id": null
+  },
+  {
+    "id": "sec-eedec17fa4",
+    "timestamp": "2026-07-21T00:01:27Z",
+    "component_id": "redis-cache",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.101.57.139",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1b783c785c",
+    "timestamp": "2026-07-21T00:08:48Z",
+    "component_id": "web-portal",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.142.74.194",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3f7408674b",
+    "timestamp": "2026-07-21T00:09:49Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.66.95.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8f3c9ba64e",
+    "timestamp": "2026-07-21T00:19:20Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.8.205.49",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0e4cf9e005",
+    "timestamp": "2026-07-21T00:26:01Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.122.250.10",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7a9ca55f71",
+    "timestamp": "2026-07-21T00:32:26Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.173.247.150",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1903b2ea5d",
+    "timestamp": "2026-07-21T00:37:44Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.196.142.9",
+    "incident_id": null
+  },
+  {
+    "id": "sec-60a5ff1e67",
+    "timestamp": "2026-07-21T00:39:46Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.219.255.120",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7a75aaadc2",
+    "timestamp": "2026-07-21T00:40:55Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.34.54.1",
+    "incident_id": null
+  },
+  {
+    "id": "sec-91e08b3a57",
+    "timestamp": "2026-07-21T00:45:15Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.21.49.30",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b510636a57",
+    "timestamp": "2026-07-21T00:50:25Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.40.7.88",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6c18d4e415",
+    "timestamp": "2026-07-21T00:52:59Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.57.81.104",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fc4f76f4be",
+    "timestamp": "2026-07-21T01:01:32Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.96.25.189",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bb9c31a18c",
+    "timestamp": "2026-07-21T01:12:57Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.28.209.22",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5f33ff762b",
+    "timestamp": "2026-07-21T01:13:28Z",
+    "component_id": "api-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.0.128.84",
+    "incident_id": null
+  },
+  {
+    "id": "sec-167bce7fbe",
+    "timestamp": "2026-07-21T01:17:11Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.136.183.64",
+    "incident_id": null
+  },
+  {
+    "id": "sec-10440f235a",
+    "timestamp": "2026-07-21T01:20:47Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.200.238.27",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5da6b92336",
+    "timestamp": "2026-07-21T01:29:45Z",
+    "component_id": "primary-db",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.195.233.214",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ef2025c599",
+    "timestamp": "2026-07-21T01:33:59Z",
+    "component_id": "user-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.181.146.227",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fd36e3653b",
+    "timestamp": "2026-07-21T01:34:21Z",
+    "component_id": "message-queue",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.12.53.14",
+    "incident_id": null
+  },
+  {
+    "id": "sec-029deff2e2",
+    "timestamp": "2026-07-21T01:34:46Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.182.109.162",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dd601ffb38",
+    "timestamp": "2026-07-21T01:35:22Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.127.121.219",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4015dfdd82",
+    "timestamp": "2026-07-21T01:37:58Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.77.111.3",
+    "incident_id": null
+  },
+  {
+    "id": "sec-32d3067313",
+    "timestamp": "2026-07-21T01:38:40Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.74.209.97",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1c64b6155e",
+    "timestamp": "2026-07-21T01:43:58Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.167.70.160",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0edc93d40a",
+    "timestamp": "2026-07-21T01:44:43Z",
+    "component_id": "users",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.14.46.155",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1e95a879fc",
+    "timestamp": "2026-07-21T01:45:31Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.70.113.99",
+    "incident_id": null
+  },
+  {
+    "id": "sec-88519e8245",
+    "timestamp": "2026-07-21T01:48:34Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.137.107.50",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c45ee5ebb5",
+    "timestamp": "2026-07-21T01:50:31Z",
+    "component_id": "payment-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.193.250.219",
+    "incident_id": null
+  },
+  {
+    "id": "sec-233581cacd",
+    "timestamp": "2026-07-21T01:50:45Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.108.139.188",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0010bc506c",
+    "timestamp": "2026-07-21T01:52:52Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.64.207.229",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3936fc97eb",
+    "timestamp": "2026-07-21T01:56:15Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.230.200.21",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a7a87f7844",
+    "timestamp": "2026-07-21T01:58:42Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.171.198.209",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3fb3dd1cd5",
+    "timestamp": "2026-07-21T02:03:32Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.29.141.145",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dc9fdde4b3",
+    "timestamp": "2026-07-21T02:05:53Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.217.3.160",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e62d6cf24d",
+    "timestamp": "2026-07-21T02:08:06Z",
+    "component_id": "auth-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.80.61.240",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e4c2a9231c",
+    "timestamp": "2026-07-21T02:15:15Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.122.103.75",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f55b1ef551",
+    "timestamp": "2026-07-21T02:15:57Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.150.122.21",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3f57059e7e",
+    "timestamp": "2026-07-21T02:24:09Z",
+    "component_id": "order-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.217.114.253",
+    "incident_id": null
+  },
+  {
+    "id": "sec-93c2b43717",
+    "timestamp": "2026-07-21T02:30:21Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.57.189.249",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c0356635f3",
+    "timestamp": "2026-07-21T02:35:34Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.98.47.44",
+    "incident_id": null
+  },
+  {
+    "id": "sec-437333f99c",
+    "timestamp": "2026-07-21T02:39:06Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.229.37.61",
+    "incident_id": null
+  },
+  {
+    "id": "sec-112f9aa971",
+    "timestamp": "2026-07-21T02:39:18Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.198.24.123",
+    "incident_id": null
+  },
+  {
+    "id": "sec-32f796d5ba",
+    "timestamp": "2026-07-21T02:43:40Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.143.177.52",
+    "incident_id": null
+  },
+  {
+    "id": "sec-37a1a0b10c",
+    "timestamp": "2026-07-21T02:59:40Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.230.170.86",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ba496fb26e",
+    "timestamp": "2026-07-21T03:05:13Z",
+    "component_id": "payment-service",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.7.195.7",
+    "incident_id": null
+  },
+  {
+    "id": "sec-41bc2e274e",
+    "timestamp": "2026-07-21T03:05:23Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.139.8.238",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1e553f4107",
+    "timestamp": "2026-07-21T03:15:02Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.224.212.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-de8c849b51",
+    "timestamp": "2026-07-21T03:19:25Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.81.237.188",
+    "incident_id": null
+  },
+  {
+    "id": "sec-373d90c9c5",
+    "timestamp": "2026-07-21T03:22:49Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.122.69.76",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1365f8282e",
+    "timestamp": "2026-07-21T03:23:14Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.217.178.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ccb26a3379",
+    "timestamp": "2026-07-21T03:24:39Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.56.54.84",
+    "incident_id": null
+  },
+  {
+    "id": "sec-29045608a3",
+    "timestamp": "2026-07-21T03:25:35Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.31.153.131",
+    "incident_id": null
+  },
+  {
+    "id": "sec-874161d01f",
+    "timestamp": "2026-07-21T03:28:43Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.239.98.24",
+    "incident_id": null
+  },
+  {
+    "id": "sec-569c696e34",
+    "timestamp": "2026-07-21T03:32:32Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.226.202.227",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3bca8c7942",
+    "timestamp": "2026-07-21T03:32:38Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.206.47.81",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4d8d497234",
+    "timestamp": "2026-07-21T03:38:25Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.110.171.35",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e427d51e4e",
+    "timestamp": "2026-07-21T03:40:47Z",
+    "component_id": "order-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.214.240.186",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6ad670d52f",
+    "timestamp": "2026-07-21T03:51:13Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.67.208.168",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7266011892",
+    "timestamp": "2026-07-21T03:51:55Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.231.54.52",
+    "incident_id": null
+  },
+  {
+    "id": "sec-94a1fd9fdf",
+    "timestamp": "2026-07-21T04:08:04Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.2.251.55",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3de954c7ba",
+    "timestamp": "2026-07-21T04:20:58Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.194.245.45",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fdfe4c13e1",
+    "timestamp": "2026-07-21T04:21:21Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.155.85.75",
+    "incident_id": null
+  },
+  {
+    "id": "sec-076fe4dac3",
+    "timestamp": "2026-07-21T04:26:28Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.253.192.29",
+    "incident_id": null
+  },
+  {
+    "id": "sec-57b7f0fc60",
+    "timestamp": "2026-07-21T04:29:34Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.50.235.156",
+    "incident_id": null
+  },
+  {
+    "id": "sec-87a656b153",
+    "timestamp": "2026-07-21T04:36:16Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.202.55.15",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2bb7d48b26",
+    "timestamp": "2026-07-21T04:41:09Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.212.216.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dc48ce34f8",
+    "timestamp": "2026-07-21T04:41:42Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.4.87.94",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6d3786c43f",
+    "timestamp": "2026-07-21T04:45:40Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.206.67.232",
+    "incident_id": null
+  },
+  {
+    "id": "sec-971ea4ee88",
+    "timestamp": "2026-07-21T04:47:09Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.30.107.239",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d4f9301401",
+    "timestamp": "2026-07-21T04:56:00Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.31.153.77",
+    "incident_id": null
+  },
+  {
+    "id": "sec-afa9edbd92",
+    "timestamp": "2026-07-21T05:01:34Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.21.122.248",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6d423fd398",
+    "timestamp": "2026-07-21T05:03:53Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.10.141.38",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3074807005",
+    "timestamp": "2026-07-21T05:04:48Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.196.178.166",
+    "incident_id": null
+  },
+  {
+    "id": "sec-95aaf6c347",
+    "timestamp": "2026-07-21T05:10:53Z",
+    "component_id": "notification-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.42.169.155",
+    "incident_id": null
+  },
+  {
+    "id": "sec-28b26bc3e6",
+    "timestamp": "2026-07-21T05:20:35Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.186.213.195",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8480b84c62",
+    "timestamp": "2026-07-21T05:22:06Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.92.116.100",
+    "incident_id": null
+  },
+  {
+    "id": "sec-147b14c5a5",
+    "timestamp": "2026-07-21T05:24:17Z",
+    "component_id": "message-queue",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.187.106.48",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ba30a67cb9",
+    "timestamp": "2026-07-21T05:31:24Z",
+    "component_id": "message-queue",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.129.173.177",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7810ff738d",
+    "timestamp": "2026-07-21T05:36:45Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.54.1.94",
+    "incident_id": null
+  },
+  {
+    "id": "sec-27ab9ccc9b",
+    "timestamp": "2026-07-21T05:37:57Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.97.201.34",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b32a7484be",
+    "timestamp": "2026-07-21T05:40:43Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.82.217.174",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e3bbd93dfe",
+    "timestamp": "2026-07-21T05:42:21Z",
+    "component_id": "payment-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.83.243.238",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f97e29e1f7",
+    "timestamp": "2026-07-21T05:45:16Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.217.67.142",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cc50d23b98",
+    "timestamp": "2026-07-21T05:48:50Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.132.35.29",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e014a0a2e5",
+    "timestamp": "2026-07-21T05:51:43Z",
+    "component_id": "inventory-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.205.178.2",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6bb27aec6d",
+    "timestamp": "2026-07-21T06:01:07Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.49.243.251",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2114a229b0",
+    "timestamp": "2026-07-21T06:06:05Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.134.174.213",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5a3c2f8c90",
+    "timestamp": "2026-07-21T06:08:38Z",
+    "component_id": "inventory-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.0.87.16",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d590994a21",
+    "timestamp": "2026-07-21T06:12:59Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.242.114.30",
+    "incident_id": null
+  },
+  {
+    "id": "sec-23fee9fe52",
+    "timestamp": "2026-07-21T06:15:02Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.190.226.91",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c373ccfa3d",
+    "timestamp": "2026-07-21T06:22:41Z",
+    "component_id": "users",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.151.36.116",
+    "incident_id": null
+  },
+  {
+    "id": "sec-85d18cf036",
+    "timestamp": "2026-07-21T06:22:49Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.56.105.127",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8b25028385",
+    "timestamp": "2026-07-21T06:24:02Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.21.147.164",
+    "incident_id": null
+  },
+  {
+    "id": "sec-929e0e6189",
+    "timestamp": "2026-07-21T06:36:34Z",
+    "component_id": "api-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.222.154.137",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f64659a25c",
+    "timestamp": "2026-07-21T06:37:09Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.83.53.246",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ddea58dc35",
+    "timestamp": "2026-07-21T06:41:14Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.161.20.214",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b68ce58e53",
+    "timestamp": "2026-07-21T06:42:00Z",
+    "component_id": "load-balancer",
+    "event_type": "privilege_change",
+    "severity": "medium",
+    "source_ip": "10.198.131.140",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4e3ef13b59",
+    "timestamp": "2026-07-21T06:45:41Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.48.209.222",
+    "incident_id": null
+  },
+  {
+    "id": "sec-73237d7d56",
+    "timestamp": "2026-07-21T06:59:22Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.64.95.68",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e7f4675b99",
+    "timestamp": "2026-07-21T07:01:12Z",
+    "component_id": "redis-cache",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.122.75.76",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8d2279c06a",
+    "timestamp": "2026-07-21T07:01:41Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.84.217.236",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c66f877f83",
+    "timestamp": "2026-07-21T07:03:03Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.115.233.151",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8ebe421d2b",
+    "timestamp": "2026-07-21T07:03:43Z",
+    "component_id": "search-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.155.143.52",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e3c0abab17",
+    "timestamp": "2026-07-21T07:09:37Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.208.195.12",
+    "incident_id": null
+  },
+  {
+    "id": "sec-00422902cb",
+    "timestamp": "2026-07-21T07:12:29Z",
+    "component_id": "primary-db",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.207.3.242",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9b0e1737ea",
+    "timestamp": "2026-07-21T07:12:39Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.98.117.113",
+    "incident_id": null
+  },
+  {
+    "id": "sec-54ff64f97a",
+    "timestamp": "2026-07-21T07:14:30Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.204.34.4",
+    "incident_id": null
+  },
+  {
+    "id": "sec-12eb2a7875",
+    "timestamp": "2026-07-21T07:19:36Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.186.90.144",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d16355bf98",
+    "timestamp": "2026-07-21T07:29:38Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.111.48.95",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8f864950e0",
+    "timestamp": "2026-07-21T07:29:47Z",
+    "component_id": "search-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.97.250.28",
+    "incident_id": null
+  },
+  {
+    "id": "sec-7696c320be",
+    "timestamp": "2026-07-21T07:35:34Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.137.120.242",
+    "incident_id": null
+  },
+  {
+    "id": "sec-26d517475b",
+    "timestamp": "2026-07-21T07:35:37Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.160.146.78",
+    "incident_id": null
+  },
+  {
+    "id": "sec-423da76673",
+    "timestamp": "2026-07-21T07:37:21Z",
+    "component_id": "redis-cache",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.141.226.225",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0262ef01a7",
+    "timestamp": "2026-07-21T07:40:04Z",
+    "component_id": "payment-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.38.184.9",
+    "incident_id": null
+  },
+  {
+    "id": "sec-10110e2755",
+    "timestamp": "2026-07-21T07:41:32Z",
+    "component_id": "data-warehouse",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.114.181.158",
+    "incident_id": null
+  },
+  {
+    "id": "sec-720c3752b7",
+    "timestamp": "2026-07-21T07:42:22Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.136.188.131",
+    "incident_id": null
+  },
+  {
+    "id": "sec-33b126194f",
+    "timestamp": "2026-07-21T07:42:42Z",
+    "component_id": "inventory-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.147.30.117",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3f94e05ffb",
+    "timestamp": "2026-07-21T07:46:13Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.108.248.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-821d71e46d",
+    "timestamp": "2026-07-21T07:54:54Z",
+    "component_id": "web-portal",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.8.54.37",
+    "incident_id": null
+  },
+  {
+    "id": "sec-441fefee4a",
+    "timestamp": "2026-07-21T07:57:10Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.92.149.230",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f3b6eab8b6",
+    "timestamp": "2026-07-21T08:09:05Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.137.245.187",
+    "incident_id": null
+  },
+  {
+    "id": "sec-67578b5835",
+    "timestamp": "2026-07-21T08:11:23Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.117.63.81",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f7a6942868",
+    "timestamp": "2026-07-21T08:15:02Z",
+    "component_id": "inventory-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.29.237.11",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8dc1341ca7",
+    "timestamp": "2026-07-21T08:17:38Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.86.67.11",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dfa384a007",
+    "timestamp": "2026-07-21T08:19:24Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.71.202.177",
+    "incident_id": null
+  },
+  {
+    "id": "sec-0f582543fd",
+    "timestamp": "2026-07-21T08:23:34Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.179.108.149",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6930ee624f",
+    "timestamp": "2026-07-21T08:24:34Z",
+    "component_id": "notification-service",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.214.225.173",
+    "incident_id": null
+  },
+  {
+    "id": "sec-42470225c8",
+    "timestamp": "2026-07-21T08:27:28Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.217.54.130",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ac97701010",
+    "timestamp": "2026-07-21T08:29:14Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.218.141.124",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fcf2738a26",
+    "timestamp": "2026-07-21T08:29:45Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.53.128.109",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a3537f6974",
+    "timestamp": "2026-07-21T08:42:45Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.150.167.132",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c86cf88a99",
+    "timestamp": "2026-07-21T08:46:07Z",
+    "component_id": "payment-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.112.130.19",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cf15d5a68e",
+    "timestamp": "2026-07-21T08:48:49Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.246.2.210",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3951013c54",
+    "timestamp": "2026-07-21T08:51:14Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.165.18.202",
+    "incident_id": null
+  },
+  {
+    "id": "sec-893e9b0d90",
+    "timestamp": "2026-07-21T08:51:14Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.60.242.54",
+    "incident_id": null
+  },
+  {
+    "id": "sec-bba54b24ac",
+    "timestamp": "2026-07-21T08:55:47Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.143.127.12",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c4c38ad6f3",
+    "timestamp": "2026-07-21T09:00:59Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.126.189.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fbe539482c",
+    "timestamp": "2026-07-21T09:04:02Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.221.201.181",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f6ba07e06d",
+    "timestamp": "2026-07-21T09:06:58Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.159.203.74",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4b4865c4ff",
+    "timestamp": "2026-07-21T09:07:22Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.63.247.188",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b288bc5948",
+    "timestamp": "2026-07-21T09:14:51Z",
+    "component_id": "redis-cache",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.218.3.29",
+    "incident_id": null
+  },
+  {
+    "id": "sec-dcb13ac3f5",
+    "timestamp": "2026-07-21T09:16:21Z",
+    "component_id": "primary-db",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.37.102.200",
+    "incident_id": null
+  },
+  {
+    "id": "sec-667449c5a4",
+    "timestamp": "2026-07-21T09:20:20Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.185.208.133",
+    "incident_id": null
+  },
+  {
+    "id": "sec-13669919dc",
+    "timestamp": "2026-07-21T09:27:02Z",
+    "component_id": "auth-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.197.160.141",
+    "incident_id": null
+  },
+  {
+    "id": "sec-92071da415",
+    "timestamp": "2026-07-21T09:27:32Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.213.83.204",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6c9f300a1a",
+    "timestamp": "2026-07-21T09:34:24Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.17.150.241",
+    "incident_id": null
+  },
+  {
+    "id": "sec-07aab12367",
+    "timestamp": "2026-07-21T09:46:09Z",
+    "component_id": "notification-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.53.190.179",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e932ae5c99",
+    "timestamp": "2026-07-21T09:46:26Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.209.78.70",
+    "incident_id": null
+  },
+  {
+    "id": "sec-9d90f38f5b",
+    "timestamp": "2026-07-21T09:46:35Z",
+    "component_id": "load-balancer",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.56.86.236",
+    "incident_id": null
+  },
+  {
+    "id": "sec-54fe1d3193",
+    "timestamp": "2026-07-21T09:46:43Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.202.206.147",
+    "incident_id": null
+  },
+  {
+    "id": "sec-630974e303",
+    "timestamp": "2026-07-21T09:50:36Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.187.194.128",
+    "incident_id": null
+  },
+  {
+    "id": "sec-1fe4c0b7ad",
+    "timestamp": "2026-07-21T09:51:06Z",
+    "component_id": "payment-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.200.3.103",
+    "incident_id": null
+  },
+  {
+    "id": "sec-93a9281db4",
+    "timestamp": "2026-07-21T09:52:37Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.90.254.121",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e0418504fb",
+    "timestamp": "2026-07-21T09:59:42Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.42.78.3",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f12d8b8489",
+    "timestamp": "2026-07-21T10:02:52Z",
+    "component_id": "message-queue",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.109.191.134",
+    "incident_id": null
+  },
+  {
+    "id": "sec-98c1fd656d",
+    "timestamp": "2026-07-21T10:05:36Z",
+    "component_id": "notification-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.36.55.193",
+    "incident_id": null
+  },
+  {
+    "id": "sec-387ffa2867",
+    "timestamp": "2026-07-21T10:07:58Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.187.45.11",
+    "incident_id": null
+  },
+  {
+    "id": "sec-964727835c",
+    "timestamp": "2026-07-21T10:09:32Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.72.221.73",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5d5928d59b",
+    "timestamp": "2026-07-21T10:16:38Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.58.147.207",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c669d5b044",
+    "timestamp": "2026-07-21T10:19:40Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.46.58.92",
+    "incident_id": null
+  },
+  {
+    "id": "sec-93987d0050",
+    "timestamp": "2026-07-21T10:20:06Z",
+    "component_id": "inventory-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.40.248.37",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3e485415a7",
+    "timestamp": "2026-07-21T10:33:24Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.165.184.191",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d9365d554a",
+    "timestamp": "2026-07-21T10:43:54Z",
+    "component_id": "inventory-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.193.96.238",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d363dba482",
+    "timestamp": "2026-07-21T10:44:01Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.181.44.131",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8db35070cf",
+    "timestamp": "2026-07-21T10:44:53Z",
+    "component_id": "payment-service",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.16.207.70",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c5aaec2bd6",
+    "timestamp": "2026-07-21T10:45:49Z",
+    "component_id": "search-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.32.168.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-542c695b92",
+    "timestamp": "2026-07-21T10:51:30Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.152.243.205",
+    "incident_id": null
+  },
+  {
+    "id": "sec-c64075ca53",
+    "timestamp": "2026-07-21T10:53:12Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.22.202.235",
+    "incident_id": null
+  },
+  {
+    "id": "sec-579b2c07e1",
+    "timestamp": "2026-07-21T10:56:23Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "high",
+    "source_ip": "10.161.115.107",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b76cd2833e",
+    "timestamp": "2026-07-21T10:58:37Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.77.252.139",
+    "incident_id": null
+  },
+  {
+    "id": "sec-66a172b483",
+    "timestamp": "2026-07-21T10:59:38Z",
+    "component_id": "email-provider",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.163.126.126",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d57bf7b4b1",
+    "timestamp": "2026-07-21T11:01:11Z",
+    "component_id": "auth-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.106.93.78",
+    "incident_id": null
+  },
+  {
+    "id": "sec-096d636dd8",
+    "timestamp": "2026-07-21T11:05:47Z",
+    "component_id": "web-portal",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.158.118.19",
+    "incident_id": null
+  },
+  {
+    "id": "sec-83f970e8f9",
+    "timestamp": "2026-07-21T11:11:56Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.67.48.166",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e418d22f92",
+    "timestamp": "2026-07-21T11:16:23Z",
+    "component_id": "payment-gateway",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.146.144.119",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3cdda778f7",
+    "timestamp": "2026-07-21T11:27:59Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.34.43.9",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cec6e407a4",
+    "timestamp": "2026-07-21T11:30:53Z",
+    "component_id": "order-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.146.40.27",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3a3ed13f78",
+    "timestamp": "2026-07-21T11:43:52Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.45.168.245",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e633af648",
+    "timestamp": "2026-07-21T11:45:09Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.136.6.31",
+    "incident_id": null
+  },
+  {
+    "id": "sec-fed22afcbe",
+    "timestamp": "2026-07-21T11:45:14Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.61.9.47",
+    "incident_id": null
+  },
+  {
+    "id": "sec-6a9ad37587",
+    "timestamp": "2026-07-21T11:46:43Z",
+    "component_id": "api-gateway",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.196.180.47",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2f36c33e67",
+    "timestamp": "2026-07-21T11:47:46Z",
+    "component_id": "payment-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.186.21.10",
+    "incident_id": null
+  },
+  {
+    "id": "sec-e35f3fac6b",
+    "timestamp": "2026-07-21T11:51:25Z",
+    "component_id": "load-balancer",
+    "event_type": "privilege_change",
+    "severity": "low",
+    "source_ip": "10.65.55.175",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b5af071f10",
+    "timestamp": "2026-07-21T11:52:46Z",
+    "component_id": "web-portal",
+    "event_type": "unusual_access_pattern",
+    "severity": "medium",
+    "source_ip": "10.243.27.190",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2e556045ac",
+    "timestamp": "2026-07-21T11:55:34Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.165.96.12",
+    "incident_id": null
+  },
+  {
+    "id": "sec-881b0f13f5",
+    "timestamp": "2026-07-21T11:56:05Z",
+    "component_id": "email-provider",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.102.238.174",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f73fccabb1",
+    "timestamp": "2026-07-21T12:05:37Z",
+    "component_id": "notification-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.29.35.64",
+    "incident_id": null
+  },
+  {
+    "id": "sec-d0322cfac3",
+    "timestamp": "2026-07-21T12:06:25Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.42.130.125",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f264fbca3f",
+    "timestamp": "2026-07-21T12:06:40Z",
+    "component_id": "data-warehouse",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.47.31.84",
+    "incident_id": null
+  },
+  {
+    "id": "sec-f86492bacc",
+    "timestamp": "2026-07-21T12:13:00Z",
+    "component_id": "email-provider",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.209.187.252",
+    "incident_id": null
+  },
+  {
+    "id": "sec-644b048491",
+    "timestamp": "2026-07-21T12:20:32Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.74.142.21",
+    "incident_id": null
+  },
+  {
+    "id": "sec-04489187c4",
+    "timestamp": "2026-07-21T12:29:20Z",
+    "component_id": "primary-db",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.135.246.225",
+    "incident_id": null
+  },
+  {
+    "id": "sec-8bdd61580f",
+    "timestamp": "2026-07-21T12:29:48Z",
+    "component_id": "order-service",
+    "event_type": "privilege_change",
+    "severity": "high",
+    "source_ip": "10.31.132.199",
+    "incident_id": null
+  },
+  {
+    "id": "sec-eff23a9ea1",
+    "timestamp": "2026-07-21T12:30:23Z",
+    "component_id": "inventory-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.168.217.69",
+    "incident_id": null
+  },
+  {
+    "id": "sec-cff390135e",
+    "timestamp": "2026-07-21T12:35:05Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.99.34.143",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3595b09a9b",
+    "timestamp": "2026-07-21T12:35:49Z",
+    "component_id": "web-portal",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.225.211.159",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4fbd0781df",
+    "timestamp": "2026-07-21T12:37:28Z",
+    "component_id": "users",
+    "event_type": "firewall_alert",
+    "severity": "high",
+    "source_ip": "10.165.19.74",
+    "incident_id": null
+  },
+  {
+    "id": "sec-01ef91b906",
+    "timestamp": "2026-07-21T12:49:36Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.201.189.170",
+    "incident_id": null
+  },
+  {
+    "id": "sec-2b27b6f1ff",
+    "timestamp": "2026-07-21T12:55:57Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.220.178.240",
+    "incident_id": null
+  },
+  {
+    "id": "sec-75eed92bec",
+    "timestamp": "2026-07-21T12:59:42Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.220.171.196",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5c8104e447",
+    "timestamp": "2026-07-21T13:03:08Z",
+    "component_id": "user-service",
+    "event_type": "failed_login",
+    "severity": "low",
+    "source_ip": "10.170.253.229",
+    "incident_id": null
+  },
+  {
+    "id": "sec-844f5898be",
+    "timestamp": "2026-07-21T13:21:24Z",
+    "component_id": "api-gateway",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.29.131.81",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5256afad95",
+    "timestamp": "2026-07-21T13:25:56Z",
+    "component_id": "auth-service",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.120.71.170",
+    "incident_id": null
+  },
+  {
+    "id": "sec-5bb7fb0e02",
+    "timestamp": "2026-07-21T13:33:07Z",
+    "component_id": "load-balancer",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.89.100.119",
+    "incident_id": null
+  },
+  {
+    "id": "sec-ab1a7ffb45",
+    "timestamp": "2026-07-21T13:33:11Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.120.143.101",
+    "incident_id": null
+  },
+  {
+    "id": "sec-4e740234b2",
+    "timestamp": "2026-07-21T13:38:37Z",
+    "component_id": "notification-service",
+    "event_type": "firewall_alert",
+    "severity": "low",
+    "source_ip": "10.18.134.45",
+    "incident_id": null
+  },
+  {
+    "id": "sec-53be26f09f",
+    "timestamp": "2026-07-21T13:40:11Z",
+    "component_id": "load-balancer",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.211.65.105",
+    "incident_id": null
+  },
+  {
+    "id": "sec-b2740e770c",
+    "timestamp": "2026-07-21T13:45:39Z",
+    "component_id": "payment-service",
+    "event_type": "firewall_alert",
+    "severity": "medium",
+    "source_ip": "10.253.2.239",
+    "incident_id": null
+  },
+  {
+    "id": "sec-3fb0162f42",
+    "timestamp": "2026-07-21T13:45:47Z",
+    "component_id": "payment-gateway",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.144.145.61",
+    "incident_id": null
+  },
+  {
+    "id": "sec-05e2f07fb7",
+    "timestamp": "2026-07-21T13:46:38Z",
+    "component_id": "search-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "high",
+    "source_ip": "10.97.165.7",
+    "incident_id": null
+  },
+  {
+    "id": "sec-a2657253de",
+    "timestamp": "2026-07-21T13:50:10Z",
+    "component_id": "user-service",
+    "event_type": "unusual_access_pattern",
+    "severity": "low",
+    "source_ip": "10.203.73.33",
+    "incident_id": null
+  },
+  {
+    "id": "sec-92e3702183",
+    "timestamp": "2026-07-21T13:58:40Z",
+    "component_id": "redis-cache",
+    "event_type": "failed_login",
+    "severity": "medium",
+    "source_ip": "10.3.205.163",
+    "incident_id": null
+  }
+]
