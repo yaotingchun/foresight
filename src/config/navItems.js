@@ -18,7 +18,7 @@ export const navItems = [
   { path: '/topology', label: 'Topology', icon: Share2, built: true },
   { path: '/logs', label: 'Logs', icon: Logs, built: true },
   { path: '/financial-monitor', label: 'Financial Monitor', icon: CircleDollarSign, built: true },
-  { path: '/incidents', label: 'Incidents', icon: AlertOctagon },
+  { path: '/incidents', label: 'Incidents', icon: AlertOctagon, built: true },
   { path: '/reports', label: 'Reports', icon: FileBarChart },
   { path: '/settings', label: 'Settings', icon: Settings },
 ]

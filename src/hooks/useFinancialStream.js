@@ -13,6 +13,7 @@ function buildSimulatedTx(evt) {
   return {
     ...base,
     id: evt.key,
+    amount: evt.amount,
     status,
     anomalyScore: Math.round(Math.min(0.98, 0.4 + evt.s * 0.55) * 100) / 100,
     dominantFeature: ANOMALY_FEATURES.find((f) => f.key === 'unusual_frequency'),

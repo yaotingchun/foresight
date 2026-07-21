@@ -25,6 +25,162 @@ export const FAULT_EFFECTS = {
 
 export const SEVERITY_MULT = { medium: 0.55, high: 0.8, critical: 1.0 }
 
+// ─── Root-cause / remediation / prevention knowledge base, keyed by fault type.
+// Feeds the Incidents detail breakdown (root cause, remediation plan, flaws,
+// preventive measures) so every incident gets a specific, credible write-up
+// instead of generic boilerplate.
+export const FAULT_ANALYSIS = {
+  db_overload: {
+    rootCause: 'Query volume and connection demand exceeded the database’s available capacity, causing connections to queue and query latency to spike.',
+    action: 'failover_to_replica',
+    remediation: 'Failed over reads to a replica and throttled non-critical queries to relieve the primary.',
+    flaws: [
+      'No automatic read/write splitting to offload read traffic to replicas',
+      'Connection pool sizing was not scaled to peak transaction volume',
+      'Alert threshold for connection saturation was set too close to the failure point',
+    ],
+    preventiveMeasures: [
+      'Introduce read-replica routing for non-critical queries',
+      'Add connection-pool auto-scaling tied to traffic forecasts',
+      'Lower alerting thresholds and add trend-based predictive alerts',
+    ],
+  },
+  connection_pool_exhaustion: {
+    rootCause: 'A burst of concurrent requests held connections open faster than they were released, exhausting the pool.',
+    action: 'restart_service',
+    remediation: 'Restarted the affected service to release stuck connections and temporarily raised the pool limit.',
+    flaws: [
+      'No connection timeout/backpressure policy at the service layer',
+      'Pool size was static rather than scaling with load',
+      'No circuit breaker to shed load once the pool neared exhaustion',
+    ],
+    preventiveMeasures: [
+      'Add request-level timeouts and backpressure before the pool fills',
+      'Make pool size elastic based on concurrent request volume',
+      'Add a circuit breaker to fail fast instead of queuing indefinitely',
+    ],
+  },
+  cpu_spike: {
+    rootCause: 'Compute demand outpaced provisioned capacity, saturating CPU and degrading response times.',
+    action: 'scale_up',
+    remediation: 'Triggered horizontal auto-scaling to add replicas and spread load.',
+    flaws: [
+      'Auto-scaling threshold reacted too late relative to the load ramp',
+      'No pre-warming of new instances, adding cold-start latency during scale-up',
+    ],
+    preventiveMeasures: [
+      'Lower the auto-scaling trigger threshold and add predictive scaling',
+      'Pre-warm standby capacity for known high-traffic windows',
+    ],
+  },
+  memory_leak: {
+    rootCause: 'A gradual memory leak in the application process caused heap usage to climb until garbage collection pauses degraded throughput.',
+    action: 'restart_service',
+    remediation: 'Performed a rolling restart to reclaim leaked memory and restore normal GC behavior.',
+    flaws: [
+      'No memory-usage trend alerting to catch the leak before it became critical',
+      'No scheduled restarts / memory ceilings to bound the blast radius of a leak',
+    ],
+    preventiveMeasures: [
+      'Add heap-growth trend alerts, not just static memory thresholds',
+      'Set memory ceilings with automatic graceful restarts before OOM',
+      'Add a memory-profiling pass to CI for high-risk code paths',
+    ],
+  },
+  network_latency: {
+    rootCause: 'Elevated packet loss and latency on outbound network links degraded inter-service communication.',
+    action: 'rate_limit',
+    remediation: 'Applied rate limiting and rerouted traffic away from the degraded network path.',
+    flaws: [
+      'Single network path with no automatic failover route',
+      'No packet-loss-aware health checks feeding the load balancer',
+    ],
+    preventiveMeasures: [
+      'Provision a redundant network path with automatic failover',
+      'Feed packet-loss/latency signals into load-balancer health checks',
+    ],
+  },
+  external_timeout: {
+    rootCause: 'An external dependency stopped responding within its SLA, and calls to it blocked rather than failing fast.',
+    action: 'escalate_to_oncall',
+    remediation: 'Opened the circuit breaker on the dependency, escalated to on-call, and queued affected requests for retry.',
+    flaws: [
+      'No circuit breaker around the external dependency',
+      'No fallback path (cache / queued retry) when the dependency is unavailable',
+    ],
+    preventiveMeasures: [
+      'Add a circuit breaker with a fast-fail + fallback path for this dependency',
+      'Queue and retry affected requests instead of blocking synchronously',
+      'Negotiate/monitor a stricter SLA with the external provider',
+    ],
+  },
+  queue_backlog: {
+    rootCause: 'Message production outpaced consumer throughput, causing the queue to back up.',
+    action: 'scale_up',
+    remediation: 'Scaled out consumers and increased batch throughput to drain the backlog.',
+    flaws: [
+      'Consumer count was static and did not scale with queue depth',
+      'No backlog-depth alert until the queue was already near capacity',
+    ],
+    preventiveMeasures: [
+      'Auto-scale consumers based on queue depth, not just CPU',
+      'Add early backlog-growth-rate alerting rather than absolute-depth alerting',
+    ],
+  },
+  disk_io_saturation: {
+    rootCause: 'Disk I/O throughput was saturated by write volume, spiking write latency across dependent operations.',
+    action: 'scale_up',
+    remediation: 'Provisioned additional IOPS and moved hot data to a faster storage tier.',
+    flaws: [
+      'Storage tier was undersized for peak write volume',
+      'No IOPS-utilization alerting ahead of saturation',
+    ],
+    preventiveMeasures: [
+      'Move hot paths to a faster storage tier with headroom',
+      'Add IOPS/queue-depth alerting before saturation is reached',
+    ],
+  },
+  traffic_spike: {
+    rootCause: 'A sudden surge in inbound traffic exceeded provisioned edge and gateway capacity.',
+    action: 'rate_limit',
+    remediation: 'Enabled edge rate limiting and triggered auto-scaling across the affected tier.',
+    flaws: [
+      'No pre-emptive rate limiting ahead of known traffic-spike triggers',
+      'Auto-scaling policy lagged behind the speed of the traffic ramp',
+    ],
+    preventiveMeasures: [
+      'Add adaptive rate limiting at the edge for burst protection',
+      'Tune auto-scaling to react faster to short, steep traffic ramps',
+    ],
+  },
+  service_outage: {
+    rootCause: 'Health checks began failing across instances, and the service was marked unavailable faster than it could recover.',
+    action: 'restart_service',
+    remediation: 'Restarted unhealthy instances and redirected traffic to the remaining healthy pool.',
+    flaws: [
+      'No graceful degradation path when a subset of instances is unhealthy',
+      'Health-check sensitivity caused a fast full-service markdown instead of partial routing',
+    ],
+    preventiveMeasures: [
+      'Add partial-outage routing so healthy instances keep serving traffic',
+      'Tune health-check thresholds to avoid all-or-nothing markdowns',
+    ],
+  },
+  transaction_error_spike: {
+    rootCause: 'A statistically abnormal rise in transaction failures was detected, consistent with a downstream processing fault.',
+    action: 'block_transaction',
+    remediation: 'Auto-blocked the anomalous transaction pattern pending manual review.',
+    flaws: [
+      'No automatic correlation between transaction failures and concurrent infra incidents',
+      'Manual review queue introduced delay before transactions were released or confirmed fraudulent',
+    ],
+    preventiveMeasures: [
+      'Auto-correlate transaction failures with active infra incidents to speed up triage',
+      'Add a fast-track review path for infra-correlated (vs. fraud-pattern) anomalies',
+    ],
+  },
+}
+
 // ─── Default stage timing (compressed for a watchable demo) ────────────────
 export const DEFAULT_RAMP_MS = 6000
 export const DEFAULT_HOLD_MS = 10000

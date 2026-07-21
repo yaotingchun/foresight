@@ -1,16 +1,20 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { SCENARIOS, SCENARIOS_BY_ID, FAULT_EFFECTS, SEVERITY_MULT } from '../data/simulationScenarios'
 import {
-  SCENARIOS, SCENARIOS_BY_ID, FAULT_EFFECTS, SEVERITY_MULT,
-  DEFAULT_RAMP_MS, DEFAULT_HOLD_MS, DEFAULT_RESOLVE_MS,
-} from '../data/simulationScenarios'
+  buildStages, stageProgress, healthFromSeverity, peakSeverity,
+  computeEffectMetrics, randomTxAmount,
+} from '../data/simulationEngine'
 import { NODE_BY_ID } from '../data/serviceMapData'
 
 /**
- * Drives the "Simulate Event" drawer: turns a scenario (a chain of
- * component/fault stages) into a live-ticking run whose per-component
- * severity ramps up, holds, then resolves — same ramp/hold/resolve shape as
- * the historical fault generator in scripts/generate_synthetic_data.py, just
- * compressed to tens of seconds so it's watchable.
+ * Drives the "Simulate Event" drawer AND the Incidents page: turns a
+ * scenario (a chain of component/fault stages) into a live-ticking run whose
+ * per-component severity ramps up, holds, then resolves — same ramp/hold/
+ * resolve shape as the historical fault generator in
+ * scripts/generate_synthetic_data.py, just compressed to tens of seconds so
+ * it's watchable. Every run is recorded as an incident (persisted to
+ * localStorage) with a before/peak metrics snapshot and accumulated impact
+ * stats, so the Incidents page has something to show without a backend.
  *
  * Everything downstream (service map health, log stream, transaction stream)
  * reads `componentEffects` rather than owning any simulation logic itself.
@@ -19,34 +23,50 @@ import { NODE_BY_ID } from '../data/serviceMapData'
 const SimulationContext = createContext(null)
 const TICK_MS = 1000
 const PAYMENT_PATH = ['payment-service', 'payment-gateway', 'order-service']
+const INCIDENTS_STORAGE_KEY = 'foresight.incidents'
+const MAX_INCIDENTS = 50
 
-function buildRun(scenario) {
-  const runStart = Date.now()
-  const stages = scenario.stages.map((stage) => {
-    const rampMs = stage.rampMs ?? DEFAULT_RAMP_MS
-    const holdMs = stage.holdMs ?? DEFAULT_HOLD_MS
-    const resolveMs = stage.resolveMs ?? DEFAULT_RESOLVE_MS
-    const stageStart = runStart + stage.offsetMs
-    const rampEnd = stageStart + rampMs
-    const holdEnd = rampEnd + holdMs
-    const endAt = holdEnd + resolveMs
-    return { ...stage, stageStart, rampEnd, holdEnd, endAt }
+function loadStoredIncidents() {
+  try {
+    const raw = localStorage.getItem(INCIDENTS_STORAGE_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function snapshotMetrics(components) {
+  const snap = {}
+  components.forEach((id) => {
+    snap[id] = NODE_BY_ID[id]?.metrics
+      ? { ...NODE_BY_ID[id].metrics, spark: undefined }
+      : { latency: 20, errorRate: 0.2, rps: 100 }
   })
-  return { scenario, runStart, stages, endAt: Math.max(...stages.map((s) => s.endAt)), status: 'running' }
+  return snap
 }
 
-function stageProgress(stage, now) {
-  if (now < stage.stageStart) return 0
-  if (now < stage.rampEnd) return (now - stage.stageStart) / (stage.rampEnd - stage.stageStart)
-  if (now < stage.holdEnd) return 1
-  if (now < stage.endAt) return 1 - (now - stage.holdEnd) / (stage.endAt - stage.holdEnd)
-  return 0
-}
-
-function healthFromSeverity(s) {
-  if (s >= 0.66) return 'critical'
-  if (s >= 0.3) return 'warning'
-  return 'healthy'
+function buildIncidentRecord(scenario, stages, runStart) {
+  const involved = [...new Set(stages.map((s) => s.component))]
+  const before = snapshotMetrics(involved)
+  const peak = {}
+  stages.forEach((stage) => {
+    peak[stage.component] = computeEffectMetrics(before[stage.component], stage.faultType, peakSeverity(stage))
+  })
+  return {
+    id: `${scenario.id}-${runStart}`,
+    scenarioId: scenario.id,
+    title: scenario.title,
+    summary: scenario.summary,
+    chain: scenario.chain,
+    stages,
+    runStart,
+    endAt: Math.max(...stages.map((s) => s.endAt)),
+    frozenStatus: null,
+    stoppedEarly: false,
+    beforeMetrics: before,
+    peakMetrics: peak,
+    impact: { txTotal: 0, txFlagged: 0, txBlocked: 0, valueAtRisk: 0, logTotal: 0, logErrors: 0 },
+  }
 }
 
 export function SimulationProvider({ children }) {
@@ -55,7 +75,17 @@ export function SimulationProvider({ children }) {
   const [tick, setTick] = useState(0)
   const [logEvents, setLogEvents] = useState([])
   const [txEvents, setTxEvents] = useState([])
+  const [incidents, setIncidents] = useState(loadStoredIncidents)
   const rtSeq = useRef(0)
+  const activeIncidentIdRef = useRef(null)
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(INCIDENTS_STORAGE_KEY, JSON.stringify(incidents.slice(0, MAX_INCIDENTS)))
+    } catch {
+      // storage full/unavailable — incident history just won't persist this run
+    }
+  }, [incidents])
 
   useEffect(() => {
     if (!activeRun) return undefined
@@ -72,18 +102,13 @@ export function SimulationProvider({ children }) {
       if (p <= 0) return
       const s = p * (SEVERITY_MULT[stage.severity] ?? 1)
       if (effects[stage.component] && effects[stage.component].s >= s) return
-      const profile = FAULT_EFFECTS[stage.faultType] ?? { latencyMult: 5, errorRate: 3, flavor: 'anomaly detected' }
-      const base = NODE_BY_ID[stage.component]?.metrics ?? { latency: 20, errorRate: 0.2, rps: 100 }
+      const profile = FAULT_EFFECTS[stage.faultType] ?? { flavor: 'anomaly detected' }
       effects[stage.component] = {
         s,
         stage,
         profile,
         health: healthFromSeverity(s),
-        metrics: {
-          latency: Math.round((base.latency + (base.latency * profile.latencyMult - base.latency) * s) * 10) / 10,
-          errorRate: Math.round((base.errorRate + profile.errorRate * s) * 100) / 100,
-          rps: Math.round(base.rps * Math.max(0.3, 1 - 0.5 * s)),
-        },
+        metrics: computeEffectMetrics(NODE_BY_ID[stage.component]?.metrics, stage.faultType, s),
       }
     })
     return effects
@@ -117,6 +142,14 @@ export function SimulationProvider({ children }) {
       }
     })
     setLogEvents(emitted)
+    if (emitted.length > 0 && activeIncidentIdRef.current) {
+      const errCount = emitted.filter((e) => e.status === 'error').length
+      setIncidents((prev) => prev.map((inc) => (
+        inc.id === activeIncidentIdRef.current
+          ? { ...inc, impact: { ...inc.impact, logTotal: inc.impact.logTotal + emitted.length, logErrors: inc.impact.logErrors + errCount } }
+          : inc
+      )))
+    }
   }, [componentEffects, activeRun])
 
   // Emit synthetic flagged/blocked transactions for payment-path components.
@@ -134,33 +167,76 @@ export function SimulationProvider({ children }) {
           key: `sim-tx-${Date.now()}-${rtSeq.current}`,
           componentId,
           s: eff.s,
+          amount: randomTxAmount(),
           scenario: activeRun.scenario,
           runStart: activeRun.runStart,
         })
       }
     })
     setTxEvents(emitted)
+    if (emitted.length > 0 && activeIncidentIdRef.current) {
+      setIncidents((prev) => prev.map((inc) => {
+        if (inc.id !== activeIncidentIdRef.current) return inc
+        let flagged = 0, blocked = 0, addedValue = 0
+        emitted.forEach((e) => {
+          if (e.s > 0.6) blocked += 1
+          else flagged += 1
+          addedValue += e.amount
+        })
+        return {
+          ...inc,
+          impact: {
+            ...inc.impact,
+            txTotal: inc.impact.txTotal + emitted.length,
+            txFlagged: inc.impact.txFlagged + flagged,
+            txBlocked: inc.impact.txBlocked + blocked,
+            valueAtRisk: Math.round((inc.impact.valueAtRisk + addedValue) * 100) / 100,
+          },
+        }
+      }))
+    }
   }, [componentEffects, activeRun])
 
   // Auto-resolve, then auto-dismiss, once every stage has finished.
   useEffect(() => {
     if (!activeRun) return
     const now = Date.now()
+    if (now > activeRun.endAt && activeRun.status !== 'resolved') {
+      const incidentId = activeIncidentIdRef.current
+      if (incidentId) {
+        setIncidents((prev) => prev.map((inc) => (inc.id === incidentId ? { ...inc, frozenStatus: 'resolved' } : inc)))
+      }
+      setActiveRun((r) => (r ? { ...r, status: 'resolved' } : r))
+    }
     if (now > activeRun.endAt + 8000) {
       setActiveRun(null)
-    } else if (now > activeRun.endAt && activeRun.status !== 'resolved') {
-      setActiveRun((r) => (r ? { ...r, status: 'resolved' } : r))
+      activeIncidentIdRef.current = null
     }
   }, [tick, activeRun])
 
   const startScenario = useCallback((scenarioId) => {
     const scenario = SCENARIOS_BY_ID[scenarioId]
     if (!scenario) return
+    const runStart = Date.now()
+    const stages = buildStages(scenario, runStart)
+    const record = buildIncidentRecord(scenario, stages, runStart)
+    activeIncidentIdRef.current = record.id
+    setIncidents((prev) => [record, ...prev].slice(0, MAX_INCIDENTS))
     setTick(0)
-    setActiveRun(buildRun(scenario))
+    setActiveRun({ scenario, runStart, stages, endAt: record.endAt, status: 'running' })
   }, [])
 
-  const stopScenario = useCallback(() => setActiveRun(null), [])
+  const stopScenario = useCallback(() => {
+    const incidentId = activeIncidentIdRef.current
+    if (incidentId) {
+      setIncidents((prev) => prev.map((inc) => (
+        inc.id === incidentId ? { ...inc, frozenStatus: 'resolved', stoppedEarly: true } : inc
+      )))
+    }
+    activeIncidentIdRef.current = null
+    setActiveRun(null)
+  }, [])
+
   const openDrawer = useCallback(() => setDrawerOpen(true), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
   const toggleDrawer = useCallback(() => setDrawerOpen((v) => !v), [])
@@ -171,13 +247,14 @@ export function SimulationProvider({ children }) {
     componentEffects,
     logEvents,
     txEvents,
+    incidents,
     isDrawerOpen,
     startScenario,
     stopScenario,
     openDrawer,
     closeDrawer,
     toggleDrawer,
-  }), [activeRun, componentEffects, logEvents, txEvents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer])
+  }), [activeRun, componentEffects, logEvents, txEvents, incidents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer])
 
   return <SimulationContext.Provider value={value}>{children}</SimulationContext.Provider>
 }

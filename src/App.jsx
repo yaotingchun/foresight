@@ -4,6 +4,8 @@ import OverviewPage from './pages/OverviewPage'
 import TopologyPage from './pages/TopologyPage'
 import LogsPage from './pages/LogsPage'
 import FinancialMonitorPage from './pages/FinancialMonitorPage'
+import IncidentsPage from './pages/IncidentsPage'
+import IncidentDetailPage from './pages/IncidentDetailPage'
 import ComingSoon from './pages/ComingSoon'
 import { navItems } from './config/navItems'
 import { SimulationProvider } from './context/SimulationContext'
@@ -19,6 +21,8 @@ export default function App() {
             <Route path="/topology" element={<TopologyPage />} />
             <Route path="/logs" element={<LogsPage />} />
             <Route path="/financial-monitor" element={<FinancialMonitorPage />} />
+            <Route path="/incidents" element={<IncidentsPage />} />
+            <Route path="/incidents/:id" element={<IncidentDetailPage />} />
 
             {navItems
               .filter((item) => !item.built)
