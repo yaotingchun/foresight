@@ -7,21 +7,23 @@ import { formatCompact } from './chartUtils'
 export default function TopEndpoints({ endpoints, throughput }) {
   const max = Math.max(...endpoints.map((e) => e.share))
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-3.5">
       {endpoints.map((e) => {
         const rps = Math.round((throughput * e.share) / 100)
         return (
-          <li key={e.path}>
-            <div className="mb-1 flex items-center gap-2">
-              <code className="truncate font-mono text-xs text-ink-soft">{e.path}</code>
-              <span className="ml-auto shrink-0 text-xs font-semibold tabular-nums text-ink">
+          <li key={e.path} className="group">
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <code className="max-w-[75%] truncate font-mono text-[10px] font-semibold text-indigo-600 bg-indigo-50/40 border border-indigo-100/30 rounded-lg px-2.5 py-1 transition-colors duration-200 group-hover:bg-indigo-50 group-hover:border-indigo-100/50">
+                {e.path}
+              </code>
+              <span className="shrink-0 text-xs font-bold tabular-nums text-slate-700">
                 {formatCompact(rps)}
-                <span className="font-normal text-ink-faint"> req/s</span>
+                <span className="text-[10px] font-semibold text-slate-400"> req/s</span>
               </span>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100/80 border border-slate-200/25">
               <div
-                className="h-full rounded-full bg-status-indigo transition-[width] duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-[width] duration-500 ease-out"
                 style={{ width: `${(e.share / max) * 100}%` }}
               />
             </div>
