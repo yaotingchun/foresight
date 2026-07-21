@@ -5,7 +5,8 @@ import ServiceMapLegend from './ServiceMapLegend'
 import ServiceMapControls from './ServiceMapControls'
 import ServiceDetailPanel from './ServiceDetailPanel'
 import { useZoomPan } from '../../hooks/useZoomPan'
-import { CANVAS, NODES, NEIGHBORS } from '../../data/serviceMapData'
+import { useSimulatedNodes } from '../../hooks/useSimulatedNodes'
+import { CANVAS, EDGES } from '../../data/serviceMapData'
 
 /**
  * Interactive canvas. Owns hover / selection / search focus and derives the
@@ -15,6 +16,8 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
   const [hoveredId, setHoveredId] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
   const { viewportRef, transform, animated, handlers, controls } = useZoomPan(CANVAS)
+  const nodes = useSimulatedNodes()
+  const nodeById = useMemo(() => Object.fromEntries(nodes.map((n) => [n.id, n])), [nodes])
 
   // Re-fit after the container resizes between windowed and fullscreen. Two
   // rAFs let the fixed-position relayout settle before we measure.
@@ -23,11 +26,21 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
     return () => cancelAnimationFrame(id)
   }, [expanded, controls])
 
+  const NEIGHBORS = useMemo(() => {
+    const map = {}
+    nodes.forEach((n) => { map[n.id] = new Set() })
+    EDGES.forEach((e) => {
+      map[e.source]?.add(e.target)
+      map[e.target]?.add(e.source)
+    })
+    return map
+  }, [nodes])
+
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase()
     if (!q) return null
-    return new Set(NODES.filter((n) => n.label.toLowerCase().includes(q)).map((n) => n.id))
-  }, [query])
+    return new Set(nodes.filter((n) => n.label.toLowerCase().includes(q)).map((n) => n.id))
+  }, [query, nodes])
 
   // Precedence: transient hover > active search > persistent selection.
   const focusId = hoveredId ?? (matches ? null : selectedId)
@@ -65,8 +78,9 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
           transition: animated ? 'transform 260ms ease' : 'none',
         }}
       >
-        <EdgeLayer edgeState={edgeState} />
+        <EdgeLayer edgeState={edgeState} nodeById={nodeById} />
         <NodeLayer
+          nodes={nodes}
           nodeState={nodeState}
           focusId={hoveredId}
           selectedId={selectedId}
@@ -83,7 +97,7 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
         expanded={expanded}
         onToggleExpand={onToggleExpand}
       />
-      <ServiceDetailPanel nodeId={selectedId} onClose={() => setSelectedId(null)} />
+      <ServiceDetailPanel nodeId={selectedId} nodeById={nodeById} onClose={() => setSelectedId(null)} />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import TopBar from './TopBar'
+import SimulationDrawer from './simulation/SimulationDrawer'
 
 export default function AppLayout() {
   return (
@@ -12,6 +13,7 @@ export default function AppLayout() {
           <Outlet />
         </main>
       </div>
+      <SimulationDrawer />
     </div>
   )
 }

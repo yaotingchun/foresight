@@ -1,14 +1,12 @@
 import { buildEdgePath, flowDuration } from './edgeGeometry'
-import { edgeHealth } from '../../data/serviceMapData'
 import { statusOf, EDGE_NEUTRAL } from './statusColors'
 
 /**
  * One directed dependency edge: a bezier path plus animated traffic particles
  * flowing from source to target. `state` is 'active' | 'dim' | 'normal'.
  */
-export default function ServiceEdge({ edge, source, target, state }) {
+export default function ServiceEdge({ edge, source, target, health, state }) {
   const { d } = buildEdgePath(source, target)
-  const health = edgeHealth(edge)
   const { color } = statusOf(health)
   const dur = flowDuration(edge.throughput)
 

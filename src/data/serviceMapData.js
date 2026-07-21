@@ -105,3 +105,13 @@ export function upstreamOf(id) {
 export function downstreamOf(id) {
   return EDGES.filter((e) => e.source === id).map((e) => NODE_BY_ID[e.target])
 }
+
+/** Id-only variants — used where the caller wants to resolve nodes itself
+ *  (e.g. against a live, simulation-merged node list rather than the static one). */
+export function upstreamIdsOf(id) {
+  return EDGES.filter((e) => e.target === id).map((e) => e.source)
+}
+
+export function downstreamIdsOf(id) {
+  return EDGES.filter((e) => e.source === id).map((e) => e.target)
+}

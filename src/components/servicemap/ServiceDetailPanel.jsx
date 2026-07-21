@@ -2,7 +2,7 @@ import { X, ArrowDownLeft, ArrowUpRight } from 'lucide-react'
 import HealthBadge from './HealthBadge'
 import Sparkline from './Sparkline'
 import { statusOf } from './statusColors'
-import { NODE_BY_ID, upstreamOf, downstreamOf } from '../../data/serviceMapData'
+import { upstreamIdsOf, downstreamIdsOf } from '../../data/serviceMapData'
 
 function Metric({ label, value, tone }) {
   return (
@@ -28,13 +28,13 @@ function DepRow({ node, direction }) {
 }
 
 /** Right-hand inspector. Rendered mounted at all times; slides via translate. */
-export default function ServiceDetailPanel({ nodeId, onClose }) {
-  const node = nodeId ? NODE_BY_ID[nodeId] : null
+export default function ServiceDetailPanel({ nodeId, nodeById, onClose }) {
+  const node = nodeId ? nodeById[nodeId] : null
   const open = Boolean(node)
   const status = node ? statusOf(node.health) : null
 
-  const upstream = node ? upstreamOf(node.id) : []
-  const downstream = node ? downstreamOf(node.id) : []
+  const upstream = node ? upstreamIdsOf(node.id).map((id) => nodeById[id]).filter(Boolean) : []
+  const downstream = node ? downstreamIdsOf(node.id).map((id) => nodeById[id]).filter(Boolean) : []
 
   return (
     <div

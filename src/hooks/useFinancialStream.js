@@ -1,8 +1,33 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { ALL_TRANSACTIONS, generateRealtimeTx } from '../data/financialData'
+import { ALL_TRANSACTIONS, generateRealtimeTx, ANOMALY_FEATURES } from '../data/financialData'
+import { useSimulation } from '../context/SimulationContext'
 
 const MAX_TXS     = 600
 const INTERVAL_MS = 2200  // slightly slower than logs — finance is calmer
+
+/** Turns a simulation tx-event into a full transaction row, flagged/blocked
+ *  and correlated to the running scenario instead of a real historical incident. */
+function buildSimulatedTx(evt) {
+  const base = generateRealtimeTx()
+  const status = evt.s > 0.6 ? 'blocked' : 'flagged'
+  return {
+    ...base,
+    id: evt.key,
+    status,
+    anomalyScore: Math.round(Math.min(0.98, 0.4 + evt.s * 0.55) * 100) / 100,
+    dominantFeature: ANOMALY_FEATURES.find((f) => f.key === 'unusual_frequency'),
+    infraCorrelation: {
+      id: evt.scenario.id,
+      service: evt.componentId,
+      label: evt.scenario.title,
+      severity: evt.s > 0.6 ? 'critical' : 'high',
+      tStart: 0,
+      tEnd: Math.round((Date.now() - evt.runStart) / 1000),
+    },
+    simulated: true,
+    scenarioId: evt.scenario.id,
+  }
+}
 
 /**
  * useFinancialStream
@@ -20,6 +45,23 @@ export function useFinancialStream() {
 
   const pausedRef = useRef(false)
   pausedRef.current = isPaused
+
+  const { txEvents } = useSimulation()
+  const lastTxEventsRef = useRef(null)
+
+  // Simulated-scenario transactions feed into the same live stream.
+  // (Guarded against React StrictMode's double-invoke, which would otherwise
+  // reprocess the same tick's events twice and insert duplicate rows.)
+  useEffect(() => {
+    if (txEvents.length === 0 || pausedRef.current) return
+    if (lastTxEventsRef.current === txEvents) return
+    lastTxEventsRef.current = txEvents
+    const batch = txEvents.map(buildSimulatedTx)
+    const ids = new Set(batch.map((t) => t.id))
+    setNewIds(ids)
+    setTxs((prev) => [...batch, ...prev].slice(0, MAX_TXS))
+    setTimeout(() => setNewIds(new Set()), 2400)
+  }, [txEvents])
 
   useEffect(() => {
     const tick = () => {

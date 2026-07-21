@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { ALL_LOGS, generateRealtimeLog } from '../data/logsData'
+import { ALL_LOGS } from '../data/logsData'
+import { useSimulation } from '../context/SimulationContext'
 
-const MAX_LOGS    = 800   // cap total in-memory entries
-const INTERVAL_MS = 1800  // new batch every 1.8 s
+const MAX_LOGS = 800   // cap total in-memory entries
 
 /**
  * useLogsStream
  *
- * Returns a live, ever-growing log array that prepends new entries
- * on every tick, simulating a real-time enterprise log stream.
+ * Returns the historical log baseline plus whatever a running simulation is
+ * currently emitting — no background noise when nothing is happening.
  *
  * @returns {{
  *   logs:     object[],   // full log array, newest first
@@ -25,29 +25,21 @@ export function useLogsStream() {
   const pausedRef = useRef(false)
   pausedRef.current = isPaused
 
+  const { logEvents } = useSimulation()
+  const lastLogEventsRef = useRef(null)
+
+  // Simulated-scenario log lines feed into the same live stream.
+  // (Guarded against React StrictMode's double-invoke, which would otherwise
+  // reprocess the same tick's events twice and insert duplicate rows.)
   useEffect(() => {
-    const tick = () => {
-      if (pausedRef.current) return
-
-      // Occasionally burst (simulate incident) — 15% chance of 4-7 entries
-      const isBurst = Math.random() < 0.15
-      const count   = isBurst
-        ? Math.floor(Math.random() * 4) + 4   // 4-7
-        : Math.floor(Math.random() * 3) + 1   // 1-3
-
-      const batch = Array.from({ length: count }, () => generateRealtimeLog())
-      const ids   = new Set(batch.map((e) => e.id))
-
-      setNewIds(ids)
-      setLogs((prev) => [...batch, ...prev].slice(0, MAX_LOGS))
-
-      // Clear the "new" highlight after animation completes
-      setTimeout(() => setNewIds(new Set()), 2200)
-    }
-
-    const id = setInterval(tick, INTERVAL_MS)
-    return () => clearInterval(id)
-  }, []) // intentionally empty — pausedRef handles the pause gate
+    if (logEvents.length === 0 || pausedRef.current) return
+    if (lastLogEventsRef.current === logEvents) return
+    lastLogEventsRef.current = logEvents
+    const ids = new Set(logEvents.map((e) => e.id))
+    setNewIds(ids)
+    setLogs((prev) => [...logEvents, ...prev].slice(0, MAX_LOGS))
+    setTimeout(() => setNewIds(new Set()), 2200)
+  }, [logEvents])
 
   const togglePause = useCallback(() => setIsPaused((v) => !v), [])
 

@@ -1,5 +1,5 @@
 import ServiceEdge from './ServiceEdge'
-import { CANVAS, EDGES, NODE_BY_ID } from '../../data/serviceMapData'
+import { CANVAS, EDGES } from '../../data/serviceMapData'
 import { STATUS, EDGE_NEUTRAL } from './statusColors'
 
 const ARROWS = [
@@ -11,7 +11,7 @@ const ARROWS = [
 ]
 
 /** SVG surface holding every edge and its traffic particles, behind the nodes. */
-export default function EdgeLayer({ edgeState }) {
+export default function EdgeLayer({ edgeState, nodeById }) {
   return (
     <svg
       className="pointer-events-none absolute inset-0"
@@ -37,15 +37,17 @@ export default function EdgeLayer({ edgeState }) {
       </defs>
 
       {EDGES.map((edge) => {
-        const source = NODE_BY_ID[edge.source]
-        const target = NODE_BY_ID[edge.target]
+        const source = nodeById[edge.source]
+        const target = nodeById[edge.target]
         if (!source || !target) return null
+        const health = edge.health ?? target.health ?? 'healthy'
         return (
           <ServiceEdge
             key={`${edge.source}->${edge.target}`}
             edge={edge}
             source={source}
             target={target}
+            health={health}
             state={edgeState(edge)}
           />
         )
