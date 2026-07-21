@@ -24,23 +24,32 @@ export default function OverviewPage() {
   const healthPct = Math.round((current.nodesHealthy / current.nodesTotal) * 100)
 
   return (
-    <div className="h-full overflow-y-auto">
-      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 pb-6">
+    <div className="h-full overflow-y-auto animate-slide-fade">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-6 pb-8">
         {/* Header */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 pb-2 border-b border-slate-100">
           <div>
-            <div className="flex items-center gap-2.5">
-              <h1 className="text-xl font-semibold tracking-tight text-ink">Overview</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-800">Overview</h1>
               <LiveBadge />
             </div>
-            <p className="mt-0.5 text-sm text-ink-soft">
-              Real-time infrastructure &amp; service health · {current.nodesHealthy}/{current.nodesTotal} nodes healthy
-              <span className="text-ink-faint"> ({healthPct}%)</span>
+            <p className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs font-semibold text-slate-500">
+              <span>Real-time infrastructure &amp; service health</span>
+              <span className="text-slate-300">•</span>
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/50 bg-white/60 px-2 py-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-slate-600 font-bold tabular-nums">{current.nodesHealthy}/{current.nodesTotal}</span>
+                <span className="text-slate-400">nodes healthy</span>
+                <span className="text-emerald-600 font-extrabold">({healthPct}%)</span>
+              </span>
             </p>
           </div>
-          <div className="ml-auto flex items-center gap-3">
-            <span className="hidden text-xs text-ink-faint sm:inline">
-              Updated {clockLabel(series.t[series.t.length - 1])}
+          <div className="flex items-center gap-4">
+            <span className="hidden items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider sm:inline-flex">
+              <svg className="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Updated {clockLabel(series.t[series.t.length - 1])}</span>
             </span>
             <RangeTabs value={range} onChange={setRange} />
           </div>
@@ -51,27 +60,27 @@ export default function OverviewPage() {
           <MetricCard
             icon={Activity}
             tint="#DBEAFE"
-            iconColor="#3B82F6"
+            iconColor="#0EA5E9"
             label="Throughput"
             value={formatCompact(kpis.throughput.value)}
             unit="req/s"
             delta={kpis.throughput.delta}
             polarity="up-good"
             spark={kpis.throughput.spark}
-            sparkColor="#3B82F6"
+            sparkColor="#0EA5E9"
             footnote="vs 5 min ago"
           />
           <MetricCard
             icon={Gauge}
             tint="#EDE9FE"
-            iconColor="#8B5CF6"
+            iconColor="#4F46E5"
             label="p95 Latency"
             value={kpis.latency.value}
             unit="ms"
             delta={kpis.latency.delta}
             polarity="down-good"
             spark={kpis.latency.spark}
-            sparkColor="#8B5CF6"
+            sparkColor="#4F46E5"
             footnote="response time"
           />
           <MetricCard
@@ -90,12 +99,12 @@ export default function OverviewPage() {
           <MetricCard
             icon={ShieldCheck}
             tint="#DCFCE7"
-            iconColor="#22C55E"
+            iconColor="#10B981"
             label="Availability"
             value={kpis.availability.value.toFixed(2)}
             unit="%"
             spark={kpis.availability.spark}
-            sparkColor="#22C55E"
+            sparkColor="#10B981"
             footnote="30-day SLA 99.95%"
           />
         </div>

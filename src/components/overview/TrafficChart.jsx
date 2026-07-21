@@ -63,7 +63,7 @@ export default function TrafficChart({ series, range }) {
       >
         <defs>
           <linearGradient id="traffic-area" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={CURRENT} stopOpacity="0.24" />
+            <stop offset="0%" stopColor={CURRENT} stopOpacity="0.18" />
             <stop offset="100%" stopColor={CURRENT} stopOpacity="0" />
           </linearGradient>
         </defs>
@@ -71,8 +71,8 @@ export default function TrafficChart({ series, range }) {
         {/* horizontal grid + y labels */}
         {gridVals.map((v, i) => (
           <g key={i}>
-            <line x1={PAD.left} x2={VW - PAD.right} y1={y(v)} y2={y(v)} stroke="#EEF1F5" strokeWidth="1" />
-            <text x={PAD.left - 8} y={y(v) + 3.5} textAnchor="end" className="fill-ink-faint" fontSize="10">
+            <line x1={PAD.left} x2={VW - PAD.right} y1={y(v)} y2={y(v)} stroke="rgba(226, 232, 240, 0.45)" strokeWidth="1" />
+            <text x={PAD.left - 8} y={y(v) + 3.5} textAnchor="end" className="fill-slate-400 font-medium" fontSize="9">
               {formatCompact(v)}
             </text>
           </g>
@@ -80,13 +80,13 @@ export default function TrafficChart({ series, range }) {
 
         {/* x labels */}
         {xTickIdx.map((idx) => (
-          <text key={idx} x={x(idx)} y={VH - 8} textAnchor="middle" className="fill-ink-faint" fontSize="10">
+          <text key={idx} x={x(idx)} y={VH - 8} textAnchor="middle" className="fill-slate-400 font-medium" fontSize="9">
             {axisLabel(t[idx], range)}
           </text>
         ))}
 
         {/* previous-period ghost */}
-        <path d={prevLine} fill="none" stroke={PREV} strokeWidth="1.5" strokeDasharray="4 4" strokeLinecap="round" opacity="0.8" />
+        <path d={prevLine} fill="none" stroke={PREV} strokeWidth="1.25" strokeDasharray="3 3" opacity="0.6" />
 
         {/* current series */}
         <path d={curArea} fill="url(#traffic-area)" />
@@ -102,8 +102,8 @@ export default function TrafficChart({ series, range }) {
         {/* hover crosshair */}
         {hover !== null && (
           <g>
-            <line x1={hoverX} x2={hoverX} y1={PAD.top} y2={VH - PAD.bottom} stroke={CURRENT} strokeWidth="1" strokeDasharray="3 3" opacity="0.5" />
-            <circle cx={hoverX} cy={y(requests[hover])} r="4" fill={CURRENT} stroke="#fff" strokeWidth="1.5" />
+            <line x1={hoverX} x2={hoverX} y1={PAD.top} y2={VH - PAD.bottom} stroke={CURRENT} strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+            <circle cx={hoverX} cy={y(requests[hover])} r="4.5" fill={CURRENT} stroke="#fff" strokeWidth="2" shadow="0 0 8px rgba(59,130,246,0.5)" />
           </g>
         )}
       </svg>
@@ -111,14 +111,21 @@ export default function TrafficChart({ series, range }) {
       {/* tooltip */}
       {hover !== null && (
         <div
-          className="pointer-events-none absolute top-2 z-10 -translate-x-1/2 rounded-lg border border-line bg-card px-3 py-2 shadow-md"
+          className="pointer-events-none absolute top-2 z-10 -translate-x-1/2 rounded-xl border border-slate-700/40 bg-slate-900/90 backdrop-blur-md px-3.5 py-2.5 shadow-xl text-white transition-all duration-100"
           style={{ left: `clamp(56px, ${tipLeftPct}%, calc(100% - 56px))` }}
         >
-          <p className="text-[11px] font-medium text-ink-faint">{clockLabel(t[hover], range.withSeconds && range.id === 'live')}</p>
-          <p className="mt-0.5 text-sm font-semibold text-ink tabular-nums">
-            {requests[hover].toLocaleString()} <span className="font-normal text-ink-faint">req/s</span>
+          <p className="text-[10px] font-bold tracking-wider uppercase text-slate-400">
+            {clockLabel(t[hover], range.withSeconds && range.id === 'live')}
           </p>
-          <p className="text-[11px] text-ink-soft tabular-nums">prev {prev[hover].toLocaleString()}</p>
+          <div className="flex items-center gap-1.5 mt-1">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+            <span className="text-xs font-bold text-slate-100 tabular-nums">{requests[hover].toLocaleString()}</span>
+            <span className="text-[10px] text-slate-400">req/s</span>
+          </div>
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-slate-500" />
+            <span className="text-[10px] text-slate-300 tabular-nums">prev {prev[hover].toLocaleString()} req/s</span>
+          </div>
         </div>
       )}
     </div>
