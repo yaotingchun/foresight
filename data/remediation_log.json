@@ -1,92 +1,1082 @@
 [
   {
-    "id": "rem-b2acb0ad",
-    "incident_id": "inc-3e2db6c1",
-    "component_id": "inventory-service",
-    "action": "restart_service",
-    "resolved": true,
-    "time_to_resolution_s": 571,
-    "notes": "Auto-detected memory leak; applied 'restart_service'."
-  },
-  {
-    "id": "rem-511fe748",
-    "incident_id": "inc-da7cc0be",
-    "component_id": "payment-service",
-    "action": "restart_service",
-    "resolved": true,
-    "time_to_resolution_s": 765,
-    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
-  },
-  {
-    "id": "rem-2bcdebf7",
-    "incident_id": "inc-9963851a",
+    "id": "rem-31695057",
+    "incident_id": "inc-1c541111",
     "component_id": "auth-service",
     "action": "block_transaction",
     "resolved": true,
-    "time_to_resolution_s": 684,
+    "time_to_resolution_s": 685,
     "notes": "Auto-detected security brute force; applied 'block_transaction'."
   },
   {
-    "id": "rem-fec42364",
-    "incident_id": "inc-dd4e8569",
-    "component_id": "payment-gateway",
-    "action": "escalate_to_oncall",
+    "id": "rem-7fa0e36e",
+    "incident_id": "inc-03b84d35",
+    "component_id": "api-gateway",
+    "action": "scale_up",
     "resolved": true,
-    "time_to_resolution_s": 719,
-    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+    "time_to_resolution_s": 746,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
   },
   {
-    "id": "rem-621627ec",
-    "incident_id": "inc-e036086b",
+    "id": "rem-e5c94664",
+    "incident_id": "inc-b30daea9",
     "component_id": "primary-db",
-    "action": "scale_up",
+    "action": "failover_to_replica",
     "resolved": true,
-    "time_to_resolution_s": 466,
-    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+    "time_to_resolution_s": 728,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'."
   },
   {
-    "id": "rem-8679757d",
-    "incident_id": "inc-3e5f40b8",
-    "component_id": "web-portal",
-    "action": "scale_up",
-    "resolved": false,
-    "time_to_resolution_s": 892,
-    "notes": "Auto-detected cpu spike; applied 'scale_up'; required manual follow-up."
-  },
-  {
-    "id": "rem-50e388eb",
-    "incident_id": "inc-3d8cdfcf",
-    "component_id": "payment-gateway",
-    "action": "escalate_to_oncall",
+    "id": "rem-55b5c0c6",
+    "incident_id": "inc-fafae709",
+    "component_id": "inventory-service",
+    "action": "restart_service",
     "resolved": true,
-    "time_to_resolution_s": 571,
-    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+    "time_to_resolution_s": 763,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
   },
   {
-    "id": "rem-548f5cc6",
-    "incident_id": "inc-0286cd32",
+    "id": "rem-ae841930",
+    "incident_id": "inc-8a01bdd9",
+    "component_id": "order-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 724,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-6ad06480",
+    "incident_id": "inc-1f2836b0",
     "component_id": "redis-cache",
     "action": "clear_cache",
     "resolved": true,
-    "time_to_resolution_s": 734,
+    "time_to_resolution_s": 688,
     "notes": "Auto-detected cache eviction; applied 'clear_cache'."
   },
   {
-    "id": "rem-e29e1176",
-    "incident_id": "inc-3ef2fba2",
+    "id": "rem-1aaac0fc",
+    "incident_id": "inc-7d061255",
+    "component_id": "primary-db",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 787,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-ba532095",
+    "incident_id": "inc-e4b41848",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 754,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-26df5bd2",
+    "incident_id": "inc-ca9c3344",
+    "component_id": "auth-service",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 411,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-3c30d442",
+    "incident_id": "inc-7ba14e37",
+    "component_id": "api-gateway",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 527,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-200dbb29",
+    "incident_id": "inc-b2405da5",
+    "component_id": "load-balancer",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 618,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-8d49f59a",
+    "incident_id": "inc-4b0a44f7",
+    "component_id": "api-gateway",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 641,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-6eae6281",
+    "incident_id": "inc-17fbbdb0",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 481,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-b47620b6",
+    "incident_id": "inc-5229a8b7",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 871,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-5555c104",
+    "incident_id": "inc-cbef805d",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 534,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-9732b850",
+    "incident_id": "inc-14c3a787",
+    "component_id": "search-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 491,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-c5fafd42",
+    "incident_id": "inc-7ac7804d",
     "component_id": "payment-gateway",
     "action": "escalate_to_oncall",
     "resolved": true,
-    "time_to_resolution_s": 391,
+    "time_to_resolution_s": 552,
     "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
   },
   {
-    "id": "rem-cf2faca9",
-    "incident_id": "inc-44fc7328",
+    "id": "rem-0803c644",
+    "incident_id": "inc-82a965d5",
+    "component_id": "api-gateway",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 493,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-ec75160b",
+    "incident_id": "inc-366eccb4",
+    "component_id": "email-provider",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 804,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-6d9d0b00",
+    "incident_id": "inc-55dd0c8c",
+    "component_id": "email-provider",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 693,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-1a2ecc97",
+    "incident_id": "inc-6ade9dbb",
+    "component_id": "payment-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 616,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-25852c87",
+    "incident_id": "inc-4df57a28",
+    "component_id": "api-gateway",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 928,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-2075cc9a",
+    "incident_id": "inc-28aee72b",
     "component_id": "payment-gateway",
     "action": "escalate_to_oncall",
     "resolved": true,
-    "time_to_resolution_s": 623,
+    "time_to_resolution_s": 544,
     "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-26e3d67a",
+    "incident_id": "inc-4d58b51d",
+    "component_id": "user-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 688,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-3c2ef020",
+    "incident_id": "inc-3b367b8f",
+    "component_id": "auth-service",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 722,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-2541055d",
+    "incident_id": "inc-ada5f01f",
+    "component_id": "user-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 592,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-eb014a74",
+    "incident_id": "inc-cb05a14e",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 557,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-72ce533c",
+    "incident_id": "inc-1bf8d3a0",
+    "component_id": "auth-service",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 846,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-e7c618bb",
+    "incident_id": "inc-ad81c8c0",
+    "component_id": "primary-db",
+    "action": "failover_to_replica",
+    "resolved": true,
+    "time_to_resolution_s": 562,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'."
+  },
+  {
+    "id": "rem-4958b012",
+    "incident_id": "inc-67caf01f",
+    "component_id": "data-warehouse",
+    "action": "scale_up",
+    "resolved": false,
+    "time_to_resolution_s": 737,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'; required manual follow-up."
+  },
+  {
+    "id": "rem-cfa14dc3",
+    "incident_id": "inc-b3e13d6a",
+    "component_id": "payment-gateway",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 865,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-f39e327a",
+    "incident_id": "inc-1206b68a",
+    "component_id": "data-warehouse",
+    "action": "failover_to_replica",
+    "resolved": true,
+    "time_to_resolution_s": 479,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'."
+  },
+  {
+    "id": "rem-1bc1fac0",
+    "incident_id": "inc-6b118905",
+    "component_id": "data-warehouse",
+    "action": "failover_to_replica",
+    "resolved": true,
+    "time_to_resolution_s": 499,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'."
+  },
+  {
+    "id": "rem-edb9879f",
+    "incident_id": "inc-47df03bb",
+    "component_id": "api-gateway",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 686,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-8d43f0a8",
+    "incident_id": "inc-ccfecaf0",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 771,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-5d1e13dd",
+    "incident_id": "inc-12d7d97d",
+    "component_id": "primary-db",
+    "action": "failover_to_replica",
+    "resolved": false,
+    "time_to_resolution_s": 386,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'; required manual follow-up."
+  },
+  {
+    "id": "rem-686ccc6e",
+    "incident_id": "inc-1abc5b1f",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": false,
+    "time_to_resolution_s": 663,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'; required manual follow-up."
+  },
+  {
+    "id": "rem-a262a102",
+    "incident_id": "inc-aefd617d",
+    "component_id": "search-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 741,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-140db413",
+    "incident_id": "inc-53ca605c",
+    "component_id": "data-warehouse",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 646,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-b0c22cf8",
+    "incident_id": "inc-3a666983",
+    "component_id": "api-gateway",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 710,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-c4a2b979",
+    "incident_id": "inc-a14599ca",
+    "component_id": "data-warehouse",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 697,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-cc822e26",
+    "incident_id": "inc-5a94c839",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": false,
+    "time_to_resolution_s": 609,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'; required manual follow-up."
+  },
+  {
+    "id": "rem-fd2363bf",
+    "incident_id": "inc-a106ca54",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 658,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-f13004ff",
+    "incident_id": "inc-6f895c81",
+    "component_id": "load-balancer",
+    "action": "rate_limit",
+    "resolved": false,
+    "time_to_resolution_s": 505,
+    "notes": "Auto-detected network latency; applied 'rate_limit'; required manual follow-up."
+  },
+  {
+    "id": "rem-bb153d8f",
+    "incident_id": "inc-c7b746e4",
+    "component_id": "email-provider",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 679,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-eac04ad3",
+    "incident_id": "inc-54ff551a",
+    "component_id": "auth-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 598,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-3c02fb1f",
+    "incident_id": "inc-bf48b0d9",
+    "component_id": "user-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 705,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-f86bff27",
+    "incident_id": "inc-0152068c",
+    "component_id": "notification-service",
+    "action": "restart_service",
+    "resolved": false,
+    "time_to_resolution_s": 575,
+    "notes": "Auto-detected memory leak; applied 'restart_service'; required manual follow-up."
+  },
+  {
+    "id": "rem-f7068f23",
+    "incident_id": "inc-132911c8",
+    "component_id": "auth-service",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 844,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-20353481",
+    "incident_id": "inc-efbfa252",
+    "component_id": "user-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 732,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-d30222df",
+    "incident_id": "inc-fe6ac16c",
+    "component_id": "auth-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 694,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-7ea0a536",
+    "incident_id": "inc-7592ef21",
+    "component_id": "auth-service",
+    "action": "scale_up",
+    "resolved": false,
+    "time_to_resolution_s": 651,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'; required manual follow-up."
+  },
+  {
+    "id": "rem-bcb33495",
+    "incident_id": "inc-af0fb64d",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": false,
+    "time_to_resolution_s": 620,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'; required manual follow-up."
+  },
+  {
+    "id": "rem-1a646112",
+    "incident_id": "inc-2f1f3938",
+    "component_id": "api-gateway",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 653,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-af1d83c8",
+    "incident_id": "inc-977cc6d4",
+    "component_id": "data-warehouse",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 681,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-d7928ad0",
+    "incident_id": "inc-0367add7",
+    "component_id": "payment-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 717,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-ebf8f230",
+    "incident_id": "inc-0622ffa5",
+    "component_id": "order-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 752,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-7b14a977",
+    "incident_id": "inc-888e4771",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 602,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-654e0e67",
+    "incident_id": "inc-18c3e136",
+    "component_id": "user-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 769,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-7b83fff8",
+    "incident_id": "inc-a2f4c4d6",
+    "component_id": "order-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 723,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-f2ea646e",
+    "incident_id": "inc-be12b0e8",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 755,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-fe50fc4e",
+    "incident_id": "inc-b930779d",
+    "component_id": "web-portal",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 803,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-b601c199",
+    "incident_id": "inc-9b486e43",
+    "component_id": "email-provider",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 579,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-3cbbf1e2",
+    "incident_id": "inc-c04245cb",
+    "component_id": "email-provider",
+    "action": "escalate_to_oncall",
+    "resolved": false,
+    "time_to_resolution_s": 461,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'; required manual follow-up."
+  },
+  {
+    "id": "rem-fca996c6",
+    "incident_id": "inc-83bf32a5",
+    "component_id": "api-gateway",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 541,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-9ee41302",
+    "incident_id": "inc-bbaec1a6",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 668,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-66e05e76",
+    "incident_id": "inc-b9948367",
+    "component_id": "api-gateway",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 581,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-2a225ff4",
+    "incident_id": "inc-10bfedb9",
+    "component_id": "payment-gateway",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 838,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-57ab8bcc",
+    "incident_id": "inc-05f34711",
+    "component_id": "api-gateway",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 693,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-e76cd5dc",
+    "incident_id": "inc-4e9dacd1",
+    "component_id": "auth-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 745,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-26b9c9be",
+    "incident_id": "inc-66043b6d",
+    "component_id": "payment-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 747,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-ddaa350c",
+    "incident_id": "inc-d12db40b",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 606,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-59d79887",
+    "incident_id": "inc-9a372727",
+    "component_id": "load-balancer",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 540,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-6803ccbc",
+    "incident_id": "inc-18cecbc9",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": false,
+    "time_to_resolution_s": 419,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'; required manual follow-up."
+  },
+  {
+    "id": "rem-7be03fce",
+    "incident_id": "inc-8172fc7e",
+    "component_id": "order-service",
+    "action": "restart_service",
+    "resolved": false,
+    "time_to_resolution_s": 740,
+    "notes": "Auto-detected memory leak; applied 'restart_service'; required manual follow-up."
+  },
+  {
+    "id": "rem-3f49d4a4",
+    "incident_id": "inc-299e3bb6",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 640,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-8900098f",
+    "incident_id": "inc-df529b9a",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 510,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-c6505e34",
+    "incident_id": "inc-44f24143",
+    "component_id": "auth-service",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 677,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-2ee55cae",
+    "incident_id": "inc-13300eae",
+    "component_id": "auth-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 603,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-205a3ee6",
+    "incident_id": "inc-34eacb00",
+    "component_id": "api-gateway",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 588,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-7d21324e",
+    "incident_id": "inc-8824addb",
+    "component_id": "inventory-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 439,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-b91f3d4f",
+    "incident_id": "inc-382ad52d",
+    "component_id": "load-balancer",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 667,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-1928472a",
+    "incident_id": "inc-8af66bf2",
+    "component_id": "primary-db",
+    "action": "failover_to_replica",
+    "resolved": false,
+    "time_to_resolution_s": 533,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'; required manual follow-up."
+  },
+  {
+    "id": "rem-e920af42",
+    "incident_id": "inc-a37439b4",
+    "component_id": "data-warehouse",
+    "action": "failover_to_replica",
+    "resolved": true,
+    "time_to_resolution_s": 934,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'."
+  },
+  {
+    "id": "rem-1608fa90",
+    "incident_id": "inc-363c5b2d",
+    "component_id": "web-portal",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 669,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-c5f5af90",
+    "incident_id": "inc-24a3d412",
+    "component_id": "load-balancer",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 716,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
+  },
+  {
+    "id": "rem-410d626c",
+    "incident_id": "inc-bdeffe47",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 555,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-4ea2e1bd",
+    "incident_id": "inc-5e24160d",
+    "component_id": "primary-db",
+    "action": "failover_to_replica",
+    "resolved": true,
+    "time_to_resolution_s": 795,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'."
+  },
+  {
+    "id": "rem-a23d4da6",
+    "incident_id": "inc-9367a1fe",
+    "component_id": "user-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 652,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-2c46b4fb",
+    "incident_id": "inc-850f934c",
+    "component_id": "payment-gateway",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 609,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-49707c12",
+    "incident_id": "inc-c304851a",
+    "component_id": "payment-gateway",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 586,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-00b57fe9",
+    "incident_id": "inc-1201fe2e",
+    "component_id": "data-warehouse",
+    "action": "failover_to_replica",
+    "resolved": false,
+    "time_to_resolution_s": 772,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'; required manual follow-up."
+  },
+  {
+    "id": "rem-74ee0c55",
+    "incident_id": "inc-a8e88a60",
+    "component_id": "auth-service",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 762,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-7951dd10",
+    "incident_id": "inc-b74af506",
+    "component_id": "order-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 819,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-95a617a0",
+    "incident_id": "inc-c2a9916a",
+    "component_id": "user-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 620,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-3ba7684a",
+    "incident_id": "inc-07a534ad",
+    "component_id": "payment-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 749,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-7ef2549e",
+    "incident_id": "inc-1de97d7f",
+    "component_id": "user-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 769,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-1cead695",
+    "incident_id": "inc-e1dd3440",
+    "component_id": "payment-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 646,
+    "notes": "Auto-detected connection pool exhaustion; applied 'restart_service'."
+  },
+  {
+    "id": "rem-895a0aeb",
+    "incident_id": "inc-0428a84b",
+    "component_id": "payment-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 788,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-310419bd",
+    "incident_id": "inc-f295c130",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": false,
+    "time_to_resolution_s": 593,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'; required manual follow-up."
+  },
+  {
+    "id": "rem-d8090fba",
+    "incident_id": "inc-497497c2",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 614,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-afe51d3b",
+    "incident_id": "inc-0af3c41f",
+    "component_id": "data-warehouse",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 780,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-ff313264",
+    "incident_id": "inc-36b19dfb",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 622,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-6e95a803",
+    "incident_id": "inc-076a350f",
+    "component_id": "auth-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 724,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-876e144a",
+    "incident_id": "inc-c183bdbb",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 648,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-aa63726f",
+    "incident_id": "inc-56993a71",
+    "component_id": "api-gateway",
+    "action": "block_transaction",
+    "resolved": true,
+    "time_to_resolution_s": 637,
+    "notes": "Auto-detected security brute force; applied 'block_transaction'."
+  },
+  {
+    "id": "rem-e2d1e26d",
+    "incident_id": "inc-c0664975",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 708,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-444bce48",
+    "incident_id": "inc-2054550b",
+    "component_id": "data-warehouse",
+    "action": "failover_to_replica",
+    "resolved": false,
+    "time_to_resolution_s": 622,
+    "notes": "Auto-detected db overload; applied 'failover_to_replica'; required manual follow-up."
+  },
+  {
+    "id": "rem-7a6f51d8",
+    "incident_id": "inc-8545ee8a",
+    "component_id": "payment-gateway",
+    "action": "escalate_to_oncall",
+    "resolved": true,
+    "time_to_resolution_s": 514,
+    "notes": "Auto-detected external timeout; applied 'escalate_to_oncall'."
+  },
+  {
+    "id": "rem-4e1c2703",
+    "incident_id": "inc-345dfd0c",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 636,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-feb6ef4a",
+    "incident_id": "inc-56a319fc",
+    "component_id": "message-queue",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 771,
+    "notes": "Auto-detected queue backlog; applied 'scale_up'."
+  },
+  {
+    "id": "rem-03307674",
+    "incident_id": "inc-ea1f3142",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 553,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-0c868c8d",
+    "incident_id": "inc-f1605c22",
+    "component_id": "data-warehouse",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 610,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-2f00f491",
+    "incident_id": "inc-b598b551",
+    "component_id": "primary-db",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 734,
+    "notes": "Auto-detected disk io saturation; applied 'scale_up'."
+  },
+  {
+    "id": "rem-4f362f74",
+    "incident_id": "inc-e2dac31c",
+    "component_id": "search-service",
+    "action": "restart_service",
+    "resolved": true,
+    "time_to_resolution_s": 663,
+    "notes": "Auto-detected memory leak; applied 'restart_service'."
+  },
+  {
+    "id": "rem-8699b5cd",
+    "incident_id": "inc-bf878453",
+    "component_id": "notification-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 652,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-115dec28",
+    "incident_id": "inc-5373bc52",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": false,
+    "time_to_resolution_s": 575,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'; required manual follow-up."
+  },
+  {
+    "id": "rem-a5bc1d4f",
+    "incident_id": "inc-8ac68ed6",
+    "component_id": "inventory-service",
+    "action": "scale_up",
+    "resolved": true,
+    "time_to_resolution_s": 816,
+    "notes": "Auto-detected cpu spike; applied 'scale_up'."
+  },
+  {
+    "id": "rem-035bf413",
+    "incident_id": "inc-809a5b4e",
+    "component_id": "redis-cache",
+    "action": "clear_cache",
+    "resolved": true,
+    "time_to_resolution_s": 714,
+    "notes": "Auto-detected cache eviction; applied 'clear_cache'."
+  },
+  {
+    "id": "rem-27e875e4",
+    "incident_id": "inc-3c68052c",
+    "component_id": "load-balancer",
+    "action": "rate_limit",
+    "resolved": true,
+    "time_to_resolution_s": 693,
+    "notes": "Auto-detected network latency; applied 'rate_limit'."
   }
 ]

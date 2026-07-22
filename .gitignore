@@ -28,3 +28,4 @@ credentials*
 
 # Generated synthetic dataset (regenerate with scripts/generate_synthetic_data.py)
 # /data
+*pycache*

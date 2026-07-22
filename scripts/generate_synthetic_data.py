@@ -1,11 +1,21 @@
 """
-Part 2 — 48-hour synthetic IT-system data generator.
+Part 2 — synthetic IT-system data generator (default: 7-day window).
 
 Produces one internally-consistent dataset (shared topology, shared incident
 schedule) across topology / infra metrics / network metrics / security events /
 app logs / financial transactions / incident ground truth / remediation log.
 Everything is written as plain files under ./data — CSV for tabular numeric
 data, JSON for structured/nested records. No DB, no Parquet.
+
+Sizing rationale: the ML layer (ml/outage_predictor.py) trains a classifier
+with a train/test split BY INCIDENT, so it needs several occurrences of each
+fault type to have any chance of generalizing — one example per fault type
+(the old 48h/10-incident window) means the model memorizes 10 specific ramps
+and fails on anything held out. SIM_HOURS and INCIDENT_COUNT below are sized
+to give every fault type multiple examples while keeping public/data/ (what
+the browser actually fetches — see scripts/sync_public_data.py) small; the
+large infra_metrics.csv only ever feeds the ML layer and gets reduced to a
+tiny sparkline summary before it reaches the app.
 
 Run: python scripts/generate_synthetic_data.py
 """
@@ -16,6 +26,7 @@ import math
 import os
 import random
 import uuid
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 
 random.seed(42)
@@ -70,8 +81,9 @@ def dependents_of(component_id):
 # Timeline
 # ─────────────────────────────────────────────────────────────────────────────
 
+SIM_HOURS = 168  # 7 days — long enough to fit multiple occurrences per fault type
 END = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
-START = END - timedelta(hours=48)
+START = END - timedelta(hours=SIM_HOURS)
 
 def iso(dt):
     return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -168,29 +180,57 @@ def diurnal_factor(dt):
 # Incident schedule
 # ─────────────────────────────────────────────────────────────────────────────
 
-def build_incidents(n=10):
-    incidents = []
+def build_incidents(n=120, min_per_fault=10):
+    """Schedule `n` incidents across the window.
+
+    Two-phase construction:
+      1. A deterministic (fault_type, component) schedule guaranteeing at
+         least `min_per_fault` occurrences of every fault type — spread
+         across whichever components that fault applies to — plus a few
+         extra pinned payment-path hits so the infra-correlated transaction
+         demo (retry-storm duplicates) always has something to attach to.
+         Without this, a purely random draw tends to give most fault types
+         zero or one occurrence, which is too few for outage_predictor.py's
+         per-incident train/test split to learn a generalizable pattern
+         instead of just memorizing individual ramps.
+      2. Random fill up to `n` total from the full fault-type catalog.
+
+    Each scheduled (fault_type, component) pair is then assigned a
+    non-overlapping start offset (`min_gap_s` apart) within the window.
+    """
+    schedule = []
+    for fault_type, spec in FAULT_TYPES.items():
+        applicable = spec["applicable"]
+        for i in range(min_per_fault):
+            schedule.append((fault_type, applicable[i % len(applicable)]))
+
+    # Extra guaranteed payment-path hits, on top of whatever min_per_fault
+    # already placed there.
+    schedule += [("connection_pool_exhaustion", "payment-service")] * 2
+    schedule += [("external_timeout", "payment-gateway")] * 2
+
+    while len(schedule) < n:
+        fault_type = random.choice(list(FAULT_TYPES.keys()))
+        component = random.choice(FAULT_TYPES[fault_type]["applicable"])
+        schedule.append((fault_type, component))
+
+    random.shuffle(schedule)
+
     total_seconds = int((END - START).total_seconds())
-    min_gap_s = 3 * 3600
-    attempts = 0
+    min_gap_s = 45 * 60  # 45 min between incident starts
     starts_taken = []
-    while len(incidents) < n and attempts < 500:
-        attempts += 1
-        offset_s = random.randint(3600, total_seconds - 3600)
-        if any(abs(offset_s - t) < min_gap_s for t in starts_taken):
-            continue
+    incidents = []
+    for fault_type, component in schedule:
+        offset_s = None
+        for _ in range(300):
+            candidate = random.randint(3600, total_seconds - 3600)
+            if not any(abs(candidate - t) < min_gap_s for t in starts_taken):
+                offset_s = candidate
+                break
+        if offset_s is None:
+            continue  # window is full; drop rather than let incidents overlap
         starts_taken.append(offset_s)
 
-        # Guarantee the payment path gets hit at least twice, so the
-        # infra-correlated transaction anomaly (retry-storm duplicates) has
-        # something to attach to on every run rather than depending on luck.
-        if len(incidents) == 2:
-            fault_type, component = "connection_pool_exhaustion", "payment-service"
-        elif len(incidents) == 6:
-            fault_type, component = "external_timeout", "payment-gateway"
-        else:
-            fault_type = random.choice(list(FAULT_TYPES.keys()))
-            component = random.choice(FAULT_TYPES[fault_type]["applicable"])
         severity = random.choices(SEVERITIES, weights=[0.4, 0.4, 0.2])[0]
 
         ramp_s = random.randint(120, 300)      # 2–5 min gradual ramp-up
@@ -229,11 +269,10 @@ def build_incidents(n=10):
             "description": f"{fault_type.replace('_', ' ')} on {component} ({severity})",
             "_start_dt": start_dt, "_ramp_end": ramp_end, "_hold_end": hold_end, "_end_dt": end_dt,
         })
-        attempts = 0  # reset local pressure once we land one
     incidents.sort(key=lambda i: i["_start_dt"])
     return incidents
 
-INCIDENTS = build_incidents(n=10)
+INCIDENTS = build_incidents(n=120, min_per_fault=10)
 
 def parse_iso(s):
     return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
@@ -353,13 +392,20 @@ def generate_metrics():
         def in_dense(dt):
             return any(a <= dt <= b for a, b, _ in dense_windows)
 
-        # sparse baseline pass, skipping timestamps inside dense windows
+        # Baseline pass, skipping timestamps inside dense windows. Sampled at a
+        # ~15s scrape interval (Prometheus-typical) rather than 30-60s: the ML
+        # layer's rolling-window features (outage_predictor.py, default
+        # window_s=30) need several real samples per window everywhere, not
+        # just inside incident regions — a coarser baseline interval left most
+        # negative-class windows with a single degenerate sample (std=0),
+        # which the classifier could exploit as a "dense region" shortcut
+        # instead of learning genuine pre-failure shape.
         t = START
         while t <= END:
             if not in_dense(t):
                 infra_rows.append(metric_row(cid, t))
                 net_rows.append(network_row(cid, t))
-            t += timedelta(seconds=random.randint(30, 60))
+            t += timedelta(seconds=random.randint(10, 20))
 
         # dense pass for each incident window touching this component: the ±5min
         # lead-up/aftermath buffer and the ramp/resolve edges run at 1 Hz (this is
@@ -511,13 +557,62 @@ def generate_transactions(hist):
         is_fraud = False
         anomaly_type = None
 
-        # true fraud pattern: rare, unusual amount/destination/frequency, independent of infra state
-        if random.random() < 0.02:
+        # True fraud: rare, and only PARTIALLY separable by amount alone — a
+        # classifier that only learns "big amount = fraud" would be trivially
+        # accurate on unrealistic data but useless in practice. Three patterns,
+        # each leaning on a different feature the fraud model actually computes
+        # (amount_z, dest_is_new, seconds_since_last):
+        if random.random() < 0.03:
             is_fraud = True
-            anomaly_type = "fraud"
-            amount = round(avg * random.uniform(15, 60), 2)
-            dst = random.choice(ACCOUNTS_EXTERNAL)
-            tx_type = random.choice(["wire_transfer", "crypto_withdrawal"])
+            pattern = random.choices(
+                ["large_transfer", "small_test", "structuring_burst"],
+                weights=[0.5, 0.25, 0.25],
+            )[0]
+            # A genuinely fresh destination ID, not drawn from the small,
+            # already-exhausted ACCOUNTS_EXTERNAL pool. With only 18 total
+            # accounts shared by 10 sources, every (src, dst) pair gets used
+            # at least once within the first ~200 transactions — long before
+            # fraud starts appearing later in the timeline — so reusing that
+            # pool made "new destination" a dead feature (measured: fraud
+            # hit an unseen pair *less* often than legit traffic, 3.5% vs
+            # 4.9%). Real fraud/money-mule payouts go to disposable,
+            # never-seen-before accounts, which this now actually models.
+            new_dst = f"EXT-{random.choice(['US', 'EU', 'APAC', 'LATAM'])}-{uuid.uuid4().hex[:6].upper()}"
+
+            if pattern == "large_transfer":
+                # Still amount-driven, but a lower multiplier than before so
+                # the upper tail overlaps high-average accounts' normal range
+                # instead of sitting in a completely separate band.
+                anomaly_type = "fraud_large_transfer"
+                amount = round(avg * random.uniform(3, 12), 2)
+                dst = new_dst
+                tx_type = random.choice(["wire_transfer", "crypto_withdrawal"])
+            elif pattern == "small_test":
+                # Card-testing / account-takeover probe: a small charge to a
+                # brand-new destination — amount alone looks completely normal.
+                anomaly_type = "fraud_small_test"
+                amount = round(random.uniform(1, 15), 2)
+                dst = new_dst
+                tx_type = "card_charge"
+            else:
+                # Structuring: 2-4 near-baseline-sized transfers to the same
+                # new destination in rapid succession. Amount matches the
+                # account's own history; the tell is velocity + destination
+                # novelty, not size.
+                anomaly_type = "fraud_structuring"
+                amount = round(avg * random.uniform(0.7, 1.4), 2)
+                dst = new_dst
+                tx_type = random.choice(["ach_payment", "p2p_transfer"])
+                for _ in range(random.randint(1, 3)):
+                    t += timedelta(seconds=random.randint(5, 30))
+                    burst_amount = round(avg * random.uniform(0.7, 1.4), 2)
+                    txs.append({
+                        "id": f"tx-{uuid.uuid4().hex[:10]}", "timestamp": iso(t),
+                        "amount": burst_amount, "currency": "USD", "type": tx_type,
+                        "src": src, "dst": dst, "component_id": component,
+                        "is_fraud": True, "anomaly_type": anomaly_type,
+                        "incident_id": None,
+                    })
 
         # infra-correlated anomaly: duplicate/retry-storm charges while a payment-path incident is active
         ev, s = active_event(component, t)
@@ -622,15 +717,19 @@ def main():
     remediation = generate_remediation_log()
     write_json(os.path.join(out_dir, "remediation_log.json"), remediation)
 
+    fault_type_counts = Counter(inc["fault_type"] for inc in INCIDENTS)
+    fraud_type_counts = Counter(x["anomaly_type"] for x in txs if x["is_fraud"])
+
     print("=== Synthetic data generation summary ===")
-    print(f"Window:              {iso(START)} -> {iso(END)}")
+    print(f"Window:              {iso(START)} -> {iso(END)}  ({SIM_HOURS}h)")
     print(f"Components:          {len(COMPONENTS)}")
-    print(f"Incidents injected:  {len(INCIDENTS)}")
+    print(f"Incidents injected:  {len(INCIDENTS)}  (per fault type: {dict(fault_type_counts)})")
     print(f"infra_metrics.csv:   {len(infra_rows):>8,} rows")
     print(f"network_metrics.csv: {len(net_rows):>8,} rows")
     print(f"security_events.json:{len(security_events):>8,} records")
     print(f"app_logs.json:       {len(logs):>8,} records")
     print(f"transactions.csv:    {len(txs):>8,} rows  (fraud={sum(1 for x in txs if x['is_fraud'])}, "
+          f"by pattern: {dict(fraud_type_counts)}, "
           f"infra_retry_duplicate={sum(1 for x in txs if x['anomaly_type']=='infra_retry_duplicate')})")
     print(f"incidents.json:      {len(incidents_out):>8,} records")
     print(f"remediation_log.json:{len(remediation):>8,} records")

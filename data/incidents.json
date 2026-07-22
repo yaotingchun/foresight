@@ -1,220 +1,2528 @@
 [
   {
-    "id": "inc-3e2db6c1",
-    "component": "inventory-service",
-    "fault_type": "memory_leak",
-    "severity": "high",
-    "pre_incident_window_start": "2026-07-19T15:26:25Z",
-    "start_time": "2026-07-19T15:31:25Z",
-    "ramp_end_time": "2026-07-19T15:34:23Z",
-    "hold_end_time": "2026-07-19T15:36:40Z",
-    "end_time": "2026-07-19T15:38:18Z",
-    "post_incident_window_end": "2026-07-19T15:43:18Z",
-    "cascade": [],
-    "description": "memory leak on inventory-service (high)"
+    "id": "inc-1c541111",
+    "component": "auth-service",
+    "fault_type": "security_brute_force",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T06:44:33Z",
+    "start_time": "2026-07-15T06:49:33Z",
+    "ramp_end_time": "2026-07-15T06:52:10Z",
+    "hold_end_time": "2026-07-15T06:54:43Z",
+    "end_time": "2026-07-15T06:58:31Z",
+    "post_incident_window_end": "2026-07-15T07:03:31Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 74,
+        "magnitude": 0.28,
+        "start": "2026-07-15T06:50:47Z",
+        "end": "2026-07-15T06:59:45Z"
+      }
+    ],
+    "description": "security brute force on auth-service (medium)"
   },
   {
-    "id": "inc-da7cc0be",
+    "id": "inc-03b84d35",
+    "component": "api-gateway",
+    "fault_type": "cpu_spike",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-15T08:39:13Z",
+    "start_time": "2026-07-15T08:44:13Z",
+    "ramp_end_time": "2026-07-15T08:48:12Z",
+    "hold_end_time": "2026-07-15T08:54:02Z",
+    "end_time": "2026-07-15T08:56:45Z",
+    "post_incident_window_end": "2026-07-15T09:01:45Z",
+    "cascade": [
+      {
+        "component": "web-portal",
+        "delay_s": 143,
+        "magnitude": 0.49,
+        "start": "2026-07-15T08:46:36Z",
+        "end": "2026-07-15T08:59:08Z"
+      }
+    ],
+    "description": "cpu spike on api-gateway (critical)"
+  },
+  {
+    "id": "inc-b30daea9",
+    "component": "primary-db",
+    "fault_type": "db_overload",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T10:14:42Z",
+    "start_time": "2026-07-15T10:19:42Z",
+    "ramp_end_time": "2026-07-15T10:22:42Z",
+    "hold_end_time": "2026-07-15T10:27:12Z",
+    "end_time": "2026-07-15T10:30:04Z",
+    "post_incident_window_end": "2026-07-15T10:35:04Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 97,
+        "magnitude": 0.26,
+        "start": "2026-07-15T10:21:19Z",
+        "end": "2026-07-15T10:31:41Z"
+      }
+    ],
+    "description": "db overload on primary-db (medium)"
+  },
+  {
+    "id": "inc-fafae709",
+    "component": "inventory-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-15T11:57:33Z",
+    "start_time": "2026-07-15T12:02:33Z",
+    "ramp_end_time": "2026-07-15T12:07:25Z",
+    "hold_end_time": "2026-07-15T12:12:55Z",
+    "end_time": "2026-07-15T12:15:33Z",
+    "post_incident_window_end": "2026-07-15T12:20:33Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 225,
+        "magnitude": 0.44,
+        "start": "2026-07-15T12:06:18Z",
+        "end": "2026-07-15T12:19:18Z"
+      }
+    ],
+    "description": "connection pool exhaustion on inventory-service (critical)"
+  },
+  {
+    "id": "inc-8a01bdd9",
+    "component": "order-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T13:01:51Z",
+    "start_time": "2026-07-15T13:06:51Z",
+    "ramp_end_time": "2026-07-15T13:10:52Z",
+    "hold_end_time": "2026-07-15T13:15:28Z",
+    "end_time": "2026-07-15T13:17:16Z",
+    "post_incident_window_end": "2026-07-15T13:22:16Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 191,
+        "magnitude": 0.39,
+        "start": "2026-07-15T13:10:02Z",
+        "end": "2026-07-15T13:20:27Z"
+      }
+    ],
+    "description": "connection pool exhaustion on order-service (medium)"
+  },
+  {
+    "id": "inc-1f2836b0",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T13:48:38Z",
+    "start_time": "2026-07-15T13:53:38Z",
+    "ramp_end_time": "2026-07-15T13:57:27Z",
+    "hold_end_time": "2026-07-15T14:00:01Z",
+    "end_time": "2026-07-15T14:03:29Z",
+    "post_incident_window_end": "2026-07-15T14:08:29Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 96,
+        "magnitude": 0.34,
+        "start": "2026-07-15T13:55:14Z",
+        "end": "2026-07-15T14:05:05Z"
+      },
+      {
+        "component": "user-service",
+        "delay_s": 113,
+        "magnitude": 0.33,
+        "start": "2026-07-15T13:55:31Z",
+        "end": "2026-07-15T14:05:22Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (medium)"
+  },
+  {
+    "id": "inc-7d061255",
+    "component": "primary-db",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T14:50:46Z",
+    "start_time": "2026-07-15T14:55:46Z",
+    "ramp_end_time": "2026-07-15T15:00:01Z",
+    "hold_end_time": "2026-07-15T15:02:56Z",
+    "end_time": "2026-07-15T15:06:02Z",
+    "post_incident_window_end": "2026-07-15T15:11:02Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 117,
+        "magnitude": 0.29,
+        "start": "2026-07-15T14:57:43Z",
+        "end": "2026-07-15T15:07:59Z"
+      },
+      {
+        "component": "user-service",
+        "delay_s": 113,
+        "magnitude": 0.44,
+        "start": "2026-07-15T14:57:39Z",
+        "end": "2026-07-15T15:07:55Z"
+      }
+    ],
+    "description": "connection pool exhaustion on primary-db (medium)"
+  },
+  {
+    "id": "inc-e4b41848",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-15T16:22:22Z",
+    "start_time": "2026-07-15T16:27:22Z",
+    "ramp_end_time": "2026-07-15T16:30:22Z",
+    "hold_end_time": "2026-07-15T16:35:03Z",
+    "end_time": "2026-07-15T16:37:46Z",
+    "post_incident_window_end": "2026-07-15T16:42:46Z",
+    "cascade": [],
+    "description": "queue backlog on message-queue (high)"
+  },
+  {
+    "id": "inc-ca9c3344",
+    "component": "auth-service",
+    "fault_type": "security_brute_force",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-15T17:38:33Z",
+    "start_time": "2026-07-15T17:43:33Z",
+    "ramp_end_time": "2026-07-15T17:46:36Z",
+    "hold_end_time": "2026-07-15T17:49:27Z",
+    "end_time": "2026-07-15T17:51:02Z",
+    "post_incident_window_end": "2026-07-15T17:56:02Z",
+    "cascade": [],
+    "description": "security brute force on auth-service (high)"
+  },
+  {
+    "id": "inc-7ba14e37",
+    "component": "api-gateway",
+    "fault_type": "security_brute_force",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-15T19:10:26Z",
+    "start_time": "2026-07-15T19:15:26Z",
+    "ramp_end_time": "2026-07-15T19:19:47Z",
+    "hold_end_time": "2026-07-15T19:23:01Z",
+    "end_time": "2026-07-15T19:25:03Z",
+    "post_incident_window_end": "2026-07-15T19:30:03Z",
+    "cascade": [],
+    "description": "security brute force on api-gateway (critical)"
+  },
+  {
+    "id": "inc-b2405da5",
+    "component": "load-balancer",
+    "fault_type": "network_latency",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T20:52:52Z",
+    "start_time": "2026-07-15T20:57:52Z",
+    "ramp_end_time": "2026-07-15T21:01:54Z",
+    "hold_end_time": "2026-07-15T21:04:23Z",
+    "end_time": "2026-07-15T21:06:09Z",
+    "post_incident_window_end": "2026-07-15T21:11:09Z",
+    "cascade": [
+      {
+        "component": "users",
+        "delay_s": 48,
+        "magnitude": 0.39,
+        "start": "2026-07-15T20:58:40Z",
+        "end": "2026-07-15T21:06:57Z"
+      }
+    ],
+    "description": "network latency on load-balancer (medium)"
+  },
+  {
+    "id": "inc-4b0a44f7",
+    "component": "api-gateway",
+    "fault_type": "cpu_spike",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-15T21:52:23Z",
+    "start_time": "2026-07-15T21:57:23Z",
+    "ramp_end_time": "2026-07-15T22:00:40Z",
+    "hold_end_time": "2026-07-15T22:03:34Z",
+    "end_time": "2026-07-15T22:05:39Z",
+    "post_incident_window_end": "2026-07-15T22:10:39Z",
+    "cascade": [
+      {
+        "component": "web-portal",
+        "delay_s": 60,
+        "magnitude": 0.25,
+        "start": "2026-07-15T21:58:23Z",
+        "end": "2026-07-15T22:06:39Z"
+      }
+    ],
+    "description": "cpu spike on api-gateway (medium)"
+  },
+  {
+    "id": "inc-17fbbdb0",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-16T01:57:12Z",
+    "start_time": "2026-07-16T02:02:12Z",
+    "ramp_end_time": "2026-07-16T02:05:46Z",
+    "hold_end_time": "2026-07-16T02:08:58Z",
+    "end_time": "2026-07-16T02:11:08Z",
+    "post_incident_window_end": "2026-07-16T02:16:08Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 169,
+        "magnitude": 0.43,
+        "start": "2026-07-16T02:05:01Z",
+        "end": "2026-07-16T02:13:57Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (critical)"
+  },
+  {
+    "id": "inc-5229a8b7",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-16T03:50:57Z",
+    "start_time": "2026-07-16T03:55:57Z",
+    "ramp_end_time": "2026-07-16T03:58:54Z",
+    "hold_end_time": "2026-07-16T04:04:34Z",
+    "end_time": "2026-07-16T04:07:45Z",
+    "post_incident_window_end": "2026-07-16T04:12:45Z",
+    "cascade": [],
+    "description": "queue backlog on message-queue (medium)"
+  },
+  {
+    "id": "inc-cbef805d",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-16T05:26:54Z",
+    "start_time": "2026-07-16T05:31:54Z",
+    "ramp_end_time": "2026-07-16T05:34:31Z",
+    "hold_end_time": "2026-07-16T05:36:47Z",
+    "end_time": "2026-07-16T05:38:49Z",
+    "post_incident_window_end": "2026-07-16T05:43:49Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 192,
+        "magnitude": 0.4,
+        "start": "2026-07-16T05:35:06Z",
+        "end": "2026-07-16T05:42:01Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (medium)"
+  },
+  {
+    "id": "inc-14c3a787",
+    "component": "search-service",
+    "fault_type": "cpu_spike",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-16T06:39:43Z",
+    "start_time": "2026-07-16T06:44:43Z",
+    "ramp_end_time": "2026-07-16T06:47:22Z",
+    "hold_end_time": "2026-07-16T06:50:02Z",
+    "end_time": "2026-07-16T06:51:44Z",
+    "post_incident_window_end": "2026-07-16T06:56:44Z",
+    "cascade": [],
+    "description": "cpu spike on search-service (critical)"
+  },
+  {
+    "id": "inc-7ac7804d",
+    "component": "payment-gateway",
+    "fault_type": "external_timeout",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-16T08:29:34Z",
+    "start_time": "2026-07-16T08:34:34Z",
+    "ramp_end_time": "2026-07-16T08:38:18Z",
+    "hold_end_time": "2026-07-16T08:41:43Z",
+    "end_time": "2026-07-16T08:44:35Z",
+    "post_incident_window_end": "2026-07-16T08:49:35Z",
+    "cascade": [],
+    "description": "external timeout on payment-gateway (high)"
+  },
+  {
+    "id": "inc-82a965d5",
+    "component": "api-gateway",
+    "fault_type": "network_latency",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-16T10:57:35Z",
+    "start_time": "2026-07-16T11:02:35Z",
+    "ramp_end_time": "2026-07-16T11:06:31Z",
+    "hold_end_time": "2026-07-16T11:08:34Z",
+    "end_time": "2026-07-16T11:10:40Z",
+    "post_incident_window_end": "2026-07-16T11:15:40Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 197,
+        "magnitude": 0.49,
+        "start": "2026-07-16T11:05:52Z",
+        "end": "2026-07-16T11:13:57Z"
+      },
+      {
+        "component": "web-portal",
+        "delay_s": 230,
+        "magnitude": 0.49,
+        "start": "2026-07-16T11:06:25Z",
+        "end": "2026-07-16T11:14:30Z"
+      }
+    ],
+    "description": "network latency on api-gateway (high)"
+  },
+  {
+    "id": "inc-366eccb4",
+    "component": "email-provider",
+    "fault_type": "external_timeout",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-16T11:47:50Z",
+    "start_time": "2026-07-16T11:52:50Z",
+    "ramp_end_time": "2026-07-16T11:57:16Z",
+    "hold_end_time": "2026-07-16T12:00:28Z",
+    "end_time": "2026-07-16T12:03:58Z",
+    "post_incident_window_end": "2026-07-16T12:08:58Z",
+    "cascade": [
+      {
+        "component": "notification-service",
+        "delay_s": 117,
+        "magnitude": 0.3,
+        "start": "2026-07-16T11:54:47Z",
+        "end": "2026-07-16T12:05:55Z"
+      }
+    ],
+    "description": "external timeout on email-provider (critical)"
+  },
+  {
+    "id": "inc-55dd0c8c",
+    "component": "email-provider",
+    "fault_type": "external_timeout",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-16T13:24:06Z",
+    "start_time": "2026-07-16T13:29:06Z",
+    "ramp_end_time": "2026-07-16T13:31:15Z",
+    "hold_end_time": "2026-07-16T13:36:54Z",
+    "end_time": "2026-07-16T13:40:24Z",
+    "post_incident_window_end": "2026-07-16T13:45:24Z",
+    "cascade": [
+      {
+        "component": "notification-service",
+        "delay_s": 239,
+        "magnitude": 0.48,
+        "start": "2026-07-16T13:33:05Z",
+        "end": "2026-07-16T13:44:23Z"
+      }
+    ],
+    "description": "external timeout on email-provider (medium)"
+  },
+  {
+    "id": "inc-6ade9dbb",
     "component": "payment-service",
     "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-16T15:36:03Z",
+    "start_time": "2026-07-16T15:41:03Z",
+    "ramp_end_time": "2026-07-16T15:45:30Z",
+    "hold_end_time": "2026-07-16T15:48:18Z",
+    "end_time": "2026-07-16T15:50:53Z",
+    "post_incident_window_end": "2026-07-16T15:55:53Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 141,
+        "magnitude": 0.25,
+        "start": "2026-07-16T15:43:24Z",
+        "end": "2026-07-16T15:53:14Z"
+      }
+    ],
+    "description": "connection pool exhaustion on payment-service (medium)"
+  },
+  {
+    "id": "inc-4df57a28",
+    "component": "api-gateway",
+    "fault_type": "security_brute_force",
     "severity": "high",
-    "pre_incident_window_start": "2026-07-19T20:04:34Z",
-    "start_time": "2026-07-19T20:09:34Z",
-    "ramp_end_time": "2026-07-19T20:12:45Z",
-    "hold_end_time": "2026-07-19T20:17:36Z",
-    "end_time": "2026-07-19T20:21:10Z",
-    "post_incident_window_end": "2026-07-19T20:26:10Z",
+    "pre_incident_window_start": "2026-07-16T17:15:53Z",
+    "start_time": "2026-07-16T17:20:53Z",
+    "ramp_end_time": "2026-07-16T17:24:51Z",
+    "hold_end_time": "2026-07-16T17:29:41Z",
+    "end_time": "2026-07-16T17:33:26Z",
+    "post_incident_window_end": "2026-07-16T17:38:26Z",
+    "cascade": [
+      {
+        "component": "web-portal",
+        "delay_s": 223,
+        "magnitude": 0.47,
+        "start": "2026-07-16T17:24:36Z",
+        "end": "2026-07-16T17:37:09Z"
+      }
+    ],
+    "description": "security brute force on api-gateway (high)"
+  },
+  {
+    "id": "inc-28aee72b",
+    "component": "payment-gateway",
+    "fault_type": "external_timeout",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-16T18:40:52Z",
+    "start_time": "2026-07-16T18:45:52Z",
+    "ramp_end_time": "2026-07-16T18:48:21Z",
+    "hold_end_time": "2026-07-16T18:52:45Z",
+    "end_time": "2026-07-16T18:55:10Z",
+    "post_incident_window_end": "2026-07-16T19:00:10Z",
+    "cascade": [
+      {
+        "component": "payment-service",
+        "delay_s": 95,
+        "magnitude": 0.44,
+        "start": "2026-07-16T18:47:27Z",
+        "end": "2026-07-16T18:56:45Z"
+      }
+    ],
+    "description": "external timeout on payment-gateway (high)"
+  },
+  {
+    "id": "inc-4d58b51d",
+    "component": "user-service",
+    "fault_type": "memory_leak",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-16T20:11:35Z",
+    "start_time": "2026-07-16T20:16:35Z",
+    "ramp_end_time": "2026-07-16T20:19:50Z",
+    "hold_end_time": "2026-07-16T20:23:13Z",
+    "end_time": "2026-07-16T20:26:29Z",
+    "post_incident_window_end": "2026-07-16T20:31:29Z",
     "cascade": [
       {
         "component": "api-gateway",
         "delay_s": 63,
-        "magnitude": 0.43,
-        "start": "2026-07-19T20:10:37Z",
-        "end": "2026-07-19T20:22:13Z"
+        "magnitude": 0.45,
+        "start": "2026-07-16T20:17:38Z",
+        "end": "2026-07-16T20:27:32Z"
       }
     ],
-    "description": "connection pool exhaustion on payment-service (high)"
+    "description": "memory leak on user-service (medium)"
   },
   {
-    "id": "inc-9963851a",
+    "id": "inc-3b367b8f",
     "component": "auth-service",
     "fault_type": "security_brute_force",
     "severity": "high",
-    "pre_incident_window_start": "2026-07-19T23:38:47Z",
-    "start_time": "2026-07-19T23:43:47Z",
-    "ramp_end_time": "2026-07-19T23:45:57Z",
-    "hold_end_time": "2026-07-19T23:50:35Z",
-    "end_time": "2026-07-19T23:52:25Z",
-    "post_incident_window_end": "2026-07-19T23:57:25Z",
+    "pre_incident_window_start": "2026-07-16T21:45:23Z",
+    "start_time": "2026-07-16T21:50:23Z",
+    "ramp_end_time": "2026-07-16T21:55:03Z",
+    "hold_end_time": "2026-07-16T21:59:48Z",
+    "end_time": "2026-07-16T22:01:28Z",
+    "post_incident_window_end": "2026-07-16T22:06:28Z",
     "cascade": [
       {
         "component": "api-gateway",
-        "delay_s": 179,
-        "magnitude": 0.39,
-        "start": "2026-07-19T23:46:46Z",
-        "end": "2026-07-19T23:55:24Z"
+        "delay_s": 142,
+        "magnitude": 0.26,
+        "start": "2026-07-16T21:52:45Z",
+        "end": "2026-07-16T22:03:50Z"
       }
     ],
     "description": "security brute force on auth-service (high)"
   },
   {
-    "id": "inc-dd4e8569",
-    "component": "payment-gateway",
-    "fault_type": "external_timeout",
-    "severity": "high",
-    "pre_incident_window_start": "2026-07-20T03:01:37Z",
-    "start_time": "2026-07-20T03:06:37Z",
-    "ramp_end_time": "2026-07-20T03:10:40Z",
-    "hold_end_time": "2026-07-20T03:13:34Z",
-    "end_time": "2026-07-20T03:16:46Z",
-    "post_incident_window_end": "2026-07-20T03:21:46Z",
-    "cascade": [],
-    "description": "external timeout on payment-gateway (high)"
+    "id": "inc-ada5f01f",
+    "component": "user-service",
+    "fault_type": "cpu_spike",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-16T23:20:45Z",
+    "start_time": "2026-07-16T23:25:45Z",
+    "ramp_end_time": "2026-07-16T23:28:27Z",
+    "hold_end_time": "2026-07-16T23:33:49Z",
+    "end_time": "2026-07-16T23:36:37Z",
+    "post_incident_window_end": "2026-07-16T23:41:37Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 175,
+        "magnitude": 0.48,
+        "start": "2026-07-16T23:28:40Z",
+        "end": "2026-07-16T23:39:32Z"
+      }
+    ],
+    "description": "cpu spike on user-service (medium)"
   },
   {
-    "id": "inc-e036086b",
+    "id": "inc-cb05a14e",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T00:34:17Z",
+    "start_time": "2026-07-17T00:39:17Z",
+    "ramp_end_time": "2026-07-17T00:42:01Z",
+    "hold_end_time": "2026-07-17T00:46:35Z",
+    "end_time": "2026-07-17T00:48:44Z",
+    "post_incident_window_end": "2026-07-17T00:53:44Z",
+    "cascade": [],
+    "description": "queue backlog on message-queue (medium)"
+  },
+  {
+    "id": "inc-1bf8d3a0",
+    "component": "auth-service",
+    "fault_type": "security_brute_force",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T01:19:54Z",
+    "start_time": "2026-07-17T01:24:54Z",
+    "ramp_end_time": "2026-07-17T01:28:28Z",
+    "hold_end_time": "2026-07-17T01:32:57Z",
+    "end_time": "2026-07-17T01:36:48Z",
+    "post_incident_window_end": "2026-07-17T01:41:48Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 62,
+        "magnitude": 0.26,
+        "start": "2026-07-17T01:25:56Z",
+        "end": "2026-07-17T01:37:50Z"
+      }
+    ],
+    "description": "security brute force on auth-service (high)"
+  },
+  {
+    "id": "inc-ad81c8c0",
     "component": "primary-db",
+    "fault_type": "db_overload",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T02:06:37Z",
+    "start_time": "2026-07-17T02:11:37Z",
+    "ramp_end_time": "2026-07-17T02:16:01Z",
+    "hold_end_time": "2026-07-17T02:19:18Z",
+    "end_time": "2026-07-17T02:21:09Z",
+    "post_incident_window_end": "2026-07-17T02:26:09Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 225,
+        "magnitude": 0.35,
+        "start": "2026-07-17T02:15:22Z",
+        "end": "2026-07-17T02:24:54Z"
+      }
+    ],
+    "description": "db overload on primary-db (medium)"
+  },
+  {
+    "id": "inc-67caf01f",
+    "component": "data-warehouse",
     "fault_type": "disk_io_saturation",
     "severity": "high",
-    "pre_incident_window_start": "2026-07-20T09:01:23Z",
-    "start_time": "2026-07-20T09:06:23Z",
-    "ramp_end_time": "2026-07-20T09:08:58Z",
-    "hold_end_time": "2026-07-20T09:12:46Z",
-    "end_time": "2026-07-20T09:15:02Z",
-    "post_incident_window_end": "2026-07-20T09:20:02Z",
+    "pre_incident_window_start": "2026-07-17T02:59:06Z",
+    "start_time": "2026-07-17T03:04:06Z",
+    "ramp_end_time": "2026-07-17T03:07:03Z",
+    "hold_end_time": "2026-07-17T03:12:39Z",
+    "end_time": "2026-07-17T03:14:36Z",
+    "post_incident_window_end": "2026-07-17T03:19:36Z",
+    "cascade": [
+      {
+        "component": "message-queue",
+        "delay_s": 172,
+        "magnitude": 0.34,
+        "start": "2026-07-17T03:06:58Z",
+        "end": "2026-07-17T03:17:28Z"
+      }
+    ],
+    "description": "disk io saturation on data-warehouse (high)"
+  },
+  {
+    "id": "inc-b3e13d6a",
+    "component": "payment-gateway",
+    "fault_type": "external_timeout",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T04:45:37Z",
+    "start_time": "2026-07-17T04:50:37Z",
+    "ramp_end_time": "2026-07-17T04:55:34Z",
+    "hold_end_time": "2026-07-17T04:59:40Z",
+    "end_time": "2026-07-17T05:02:23Z",
+    "post_incident_window_end": "2026-07-17T05:07:23Z",
+    "cascade": [],
+    "description": "external timeout on payment-gateway (medium)"
+  },
+  {
+    "id": "inc-1206b68a",
+    "component": "data-warehouse",
+    "fault_type": "db_overload",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-17T05:37:00Z",
+    "start_time": "2026-07-17T05:42:00Z",
+    "ramp_end_time": "2026-07-17T05:44:27Z",
+    "hold_end_time": "2026-07-17T05:48:55Z",
+    "end_time": "2026-07-17T05:50:31Z",
+    "post_incident_window_end": "2026-07-17T05:55:31Z",
+    "cascade": [],
+    "description": "db overload on data-warehouse (critical)"
+  },
+  {
+    "id": "inc-6b118905",
+    "component": "data-warehouse",
+    "fault_type": "db_overload",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T06:22:26Z",
+    "start_time": "2026-07-17T06:27:26Z",
+    "ramp_end_time": "2026-07-17T06:29:33Z",
+    "hold_end_time": "2026-07-17T06:31:44Z",
+    "end_time": "2026-07-17T06:34:37Z",
+    "post_incident_window_end": "2026-07-17T06:39:37Z",
+    "cascade": [],
+    "description": "db overload on data-warehouse (high)"
+  },
+  {
+    "id": "inc-47df03bb",
+    "component": "api-gateway",
+    "fault_type": "security_brute_force",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T07:20:34Z",
+    "start_time": "2026-07-17T07:25:34Z",
+    "ramp_end_time": "2026-07-17T07:28:46Z",
+    "hold_end_time": "2026-07-17T07:32:57Z",
+    "end_time": "2026-07-17T07:35:52Z",
+    "post_incident_window_end": "2026-07-17T07:40:52Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 222,
+        "magnitude": 0.31,
+        "start": "2026-07-17T07:29:16Z",
+        "end": "2026-07-17T07:39:34Z"
+      },
+      {
+        "component": "web-portal",
+        "delay_s": 236,
+        "magnitude": 0.3,
+        "start": "2026-07-17T07:29:30Z",
+        "end": "2026-07-17T07:39:48Z"
+      }
+    ],
+    "description": "security brute force on api-gateway (high)"
+  },
+  {
+    "id": "inc-ccfecaf0",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T09:05:29Z",
+    "start_time": "2026-07-17T09:10:29Z",
+    "ramp_end_time": "2026-07-17T09:14:45Z",
+    "hold_end_time": "2026-07-17T09:19:45Z",
+    "end_time": "2026-07-17T09:22:13Z",
+    "post_incident_window_end": "2026-07-17T09:27:13Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 201,
+        "magnitude": 0.45,
+        "start": "2026-07-17T09:13:50Z",
+        "end": "2026-07-17T09:25:34Z"
+      },
+      {
+        "component": "inventory-service",
+        "delay_s": 219,
+        "magnitude": 0.26,
+        "start": "2026-07-17T09:14:08Z",
+        "end": "2026-07-17T09:25:52Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (medium)"
+  },
+  {
+    "id": "inc-12d7d97d",
+    "component": "primary-db",
+    "fault_type": "db_overload",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T09:55:41Z",
+    "start_time": "2026-07-17T10:00:41Z",
+    "ramp_end_time": "2026-07-17T10:03:48Z",
+    "hold_end_time": "2026-07-17T10:05:57Z",
+    "end_time": "2026-07-17T10:07:54Z",
+    "post_incident_window_end": "2026-07-17T10:12:54Z",
     "cascade": [
       {
         "component": "auth-service",
-        "delay_s": 93,
-        "magnitude": 0.47,
-        "start": "2026-07-20T09:07:56Z",
-        "end": "2026-07-20T09:16:35Z"
+        "delay_s": 118,
+        "magnitude": 0.43,
+        "start": "2026-07-17T10:02:39Z",
+        "end": "2026-07-17T10:09:52Z"
       },
       {
         "component": "user-service",
-        "delay_s": 236,
-        "magnitude": 0.47,
-        "start": "2026-07-20T09:10:19Z",
-        "end": "2026-07-20T09:18:58Z"
+        "delay_s": 185,
+        "magnitude": 0.5,
+        "start": "2026-07-17T10:03:46Z",
+        "end": "2026-07-17T10:10:59Z"
+      }
+    ],
+    "description": "db overload on primary-db (high)"
+  },
+  {
+    "id": "inc-1abc5b1f",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T11:50:43Z",
+    "start_time": "2026-07-17T11:55:43Z",
+    "ramp_end_time": "2026-07-17T11:59:46Z",
+    "hold_end_time": "2026-07-17T12:02:56Z",
+    "end_time": "2026-07-17T12:06:56Z",
+    "post_incident_window_end": "2026-07-17T12:11:56Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 102,
+        "magnitude": 0.5,
+        "start": "2026-07-17T11:57:25Z",
+        "end": "2026-07-17T12:08:38Z"
+      }
+    ],
+    "description": "disk io saturation on primary-db (medium)"
+  },
+  {
+    "id": "inc-aefd617d",
+    "component": "search-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T12:44:43Z",
+    "start_time": "2026-07-17T12:49:43Z",
+    "ramp_end_time": "2026-07-17T12:53:44Z",
+    "hold_end_time": "2026-07-17T12:57:52Z",
+    "end_time": "2026-07-17T13:00:00Z",
+    "post_incident_window_end": "2026-07-17T13:05:00Z",
+    "cascade": [],
+    "description": "connection pool exhaustion on search-service (medium)"
+  },
+  {
+    "id": "inc-53ca605c",
+    "component": "data-warehouse",
+    "fault_type": "disk_io_saturation",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T13:47:38Z",
+    "start_time": "2026-07-17T13:52:38Z",
+    "ramp_end_time": "2026-07-17T13:56:15Z",
+    "hold_end_time": "2026-07-17T14:01:08Z",
+    "end_time": "2026-07-17T14:03:22Z",
+    "post_incident_window_end": "2026-07-17T14:08:22Z",
+    "cascade": [],
+    "description": "disk io saturation on data-warehouse (high)"
+  },
+  {
+    "id": "inc-3a666983",
+    "component": "api-gateway",
+    "fault_type": "network_latency",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-17T15:56:34Z",
+    "start_time": "2026-07-17T16:01:34Z",
+    "ramp_end_time": "2026-07-17T16:05:37Z",
+    "hold_end_time": "2026-07-17T16:08:04Z",
+    "end_time": "2026-07-17T16:10:34Z",
+    "post_incident_window_end": "2026-07-17T16:15:34Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 121,
+        "magnitude": 0.39,
+        "start": "2026-07-17T16:03:35Z",
+        "end": "2026-07-17T16:12:35Z"
+      }
+    ],
+    "description": "network latency on api-gateway (critical)"
+  },
+  {
+    "id": "inc-a14599ca",
+    "component": "data-warehouse",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-17T17:12:26Z",
+    "start_time": "2026-07-17T17:17:26Z",
+    "ramp_end_time": "2026-07-17T17:19:59Z",
+    "hold_end_time": "2026-07-17T17:25:56Z",
+    "end_time": "2026-07-17T17:28:39Z",
+    "post_incident_window_end": "2026-07-17T17:33:39Z",
+    "cascade": [
+      {
+        "component": "message-queue",
+        "delay_s": 208,
+        "magnitude": 0.37,
+        "start": "2026-07-17T17:20:54Z",
+        "end": "2026-07-17T17:32:07Z"
+      }
+    ],
+    "description": "disk io saturation on data-warehouse (medium)"
+  },
+  {
+    "id": "inc-5a94c839",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T18:26:21Z",
+    "start_time": "2026-07-17T18:31:21Z",
+    "ramp_end_time": "2026-07-17T18:34:28Z",
+    "hold_end_time": "2026-07-17T18:39:17Z",
+    "end_time": "2026-07-17T18:41:07Z",
+    "post_incident_window_end": "2026-07-17T18:46:07Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 74,
+        "magnitude": 0.39,
+        "start": "2026-07-17T18:32:35Z",
+        "end": "2026-07-17T18:42:21Z"
+      },
+      {
+        "component": "user-service",
+        "delay_s": 134,
+        "magnitude": 0.36,
+        "start": "2026-07-17T18:33:35Z",
+        "end": "2026-07-17T18:43:21Z"
       }
     ],
     "description": "disk io saturation on primary-db (high)"
   },
   {
-    "id": "inc-3e5f40b8",
-    "component": "web-portal",
+    "id": "inc-a106ca54",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T19:41:49Z",
+    "start_time": "2026-07-17T19:46:49Z",
+    "ramp_end_time": "2026-07-17T19:51:21Z",
+    "hold_end_time": "2026-07-17T19:53:26Z",
+    "end_time": "2026-07-17T19:55:08Z",
+    "post_incident_window_end": "2026-07-17T20:00:08Z",
+    "cascade": [
+      {
+        "component": "inventory-service",
+        "delay_s": 62,
+        "magnitude": 0.45,
+        "start": "2026-07-17T19:47:51Z",
+        "end": "2026-07-17T19:56:10Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (high)"
+  },
+  {
+    "id": "inc-6f895c81",
+    "component": "load-balancer",
+    "fault_type": "network_latency",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-17T20:49:01Z",
+    "start_time": "2026-07-17T20:54:01Z",
+    "ramp_end_time": "2026-07-17T20:57:00Z",
+    "hold_end_time": "2026-07-17T21:00:24Z",
+    "end_time": "2026-07-17T21:02:31Z",
+    "post_incident_window_end": "2026-07-17T21:07:31Z",
+    "cascade": [],
+    "description": "network latency on load-balancer (critical)"
+  },
+  {
+    "id": "inc-c7b746e4",
+    "component": "email-provider",
+    "fault_type": "external_timeout",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T22:09:11Z",
+    "start_time": "2026-07-17T22:14:11Z",
+    "ramp_end_time": "2026-07-17T22:17:20Z",
+    "hold_end_time": "2026-07-17T22:21:11Z",
+    "end_time": "2026-07-17T22:24:45Z",
+    "post_incident_window_end": "2026-07-17T22:29:45Z",
+    "cascade": [
+      {
+        "component": "notification-service",
+        "delay_s": 116,
+        "magnitude": 0.42,
+        "start": "2026-07-17T22:16:07Z",
+        "end": "2026-07-17T22:26:41Z"
+      }
+    ],
+    "description": "external timeout on email-provider (high)"
+  },
+  {
+    "id": "inc-54ff551a",
+    "component": "auth-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-17T23:39:10Z",
+    "start_time": "2026-07-17T23:44:10Z",
+    "ramp_end_time": "2026-07-17T23:47:47Z",
+    "hold_end_time": "2026-07-17T23:51:42Z",
+    "end_time": "2026-07-17T23:55:05Z",
+    "post_incident_window_end": "2026-07-18T00:00:05Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 180,
+        "magnitude": 0.5,
+        "start": "2026-07-17T23:47:10Z",
+        "end": "2026-07-17T23:58:05Z"
+      }
+    ],
+    "description": "connection pool exhaustion on auth-service (high)"
+  },
+  {
+    "id": "inc-bf48b0d9",
+    "component": "user-service",
     "fault_type": "cpu_spike",
     "severity": "high",
-    "pre_incident_window_start": "2026-07-20T13:45:09Z",
-    "start_time": "2026-07-20T13:50:09Z",
-    "ramp_end_time": "2026-07-20T13:54:17Z",
-    "hold_end_time": "2026-07-20T14:00:12Z",
-    "end_time": "2026-07-20T14:03:57Z",
-    "post_incident_window_end": "2026-07-20T14:08:57Z",
+    "pre_incident_window_start": "2026-07-18T00:28:12Z",
+    "start_time": "2026-07-18T00:33:12Z",
+    "ramp_end_time": "2026-07-18T00:37:08Z",
+    "hold_end_time": "2026-07-18T00:40:50Z",
+    "end_time": "2026-07-18T00:44:06Z",
+    "post_incident_window_end": "2026-07-18T00:49:06Z",
+    "cascade": [],
+    "description": "cpu spike on user-service (high)"
+  },
+  {
+    "id": "inc-0152068c",
+    "component": "notification-service",
+    "fault_type": "memory_leak",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T01:16:35Z",
+    "start_time": "2026-07-18T01:21:35Z",
+    "ramp_end_time": "2026-07-18T01:24:14Z",
+    "hold_end_time": "2026-07-18T01:29:14Z",
+    "end_time": "2026-07-18T01:31:38Z",
+    "post_incident_window_end": "2026-07-18T01:36:38Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 134,
+        "magnitude": 0.33,
+        "start": "2026-07-18T01:23:49Z",
+        "end": "2026-07-18T01:33:52Z"
+      },
+      {
+        "component": "message-queue",
+        "delay_s": 45,
+        "magnitude": 0.3,
+        "start": "2026-07-18T01:22:20Z",
+        "end": "2026-07-18T01:32:23Z"
+      }
+    ],
+    "description": "memory leak on notification-service (medium)"
+  },
+  {
+    "id": "inc-132911c8",
+    "component": "auth-service",
+    "fault_type": "security_brute_force",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-18T02:52:17Z",
+    "start_time": "2026-07-18T02:57:17Z",
+    "ramp_end_time": "2026-07-18T03:00:02Z",
+    "hold_end_time": "2026-07-18T03:05:47Z",
+    "end_time": "2026-07-18T03:09:02Z",
+    "post_incident_window_end": "2026-07-18T03:14:02Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 218,
+        "magnitude": 0.48,
+        "start": "2026-07-18T03:00:55Z",
+        "end": "2026-07-18T03:12:40Z"
+      }
+    ],
+    "description": "security brute force on auth-service (critical)"
+  },
+  {
+    "id": "inc-efbfa252",
+    "component": "user-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T04:03:48Z",
+    "start_time": "2026-07-18T04:08:48Z",
+    "ramp_end_time": "2026-07-18T04:13:17Z",
+    "hold_end_time": "2026-07-18T04:15:53Z",
+    "end_time": "2026-07-18T04:18:22Z",
+    "post_incident_window_end": "2026-07-18T04:23:22Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 95,
+        "magnitude": 0.36,
+        "start": "2026-07-18T04:10:23Z",
+        "end": "2026-07-18T04:19:57Z"
+      }
+    ],
+    "description": "memory leak on user-service (high)"
+  },
+  {
+    "id": "inc-fe6ac16c",
+    "component": "auth-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-18T05:25:20Z",
+    "start_time": "2026-07-18T05:30:20Z",
+    "ramp_end_time": "2026-07-18T05:32:42Z",
+    "hold_end_time": "2026-07-18T05:35:53Z",
+    "end_time": "2026-07-18T05:39:18Z",
+    "post_incident_window_end": "2026-07-18T05:44:18Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 148,
+        "magnitude": 0.39,
+        "start": "2026-07-18T05:32:48Z",
+        "end": "2026-07-18T05:41:46Z"
+      }
+    ],
+    "description": "connection pool exhaustion on auth-service (critical)"
+  },
+  {
+    "id": "inc-7592ef21",
+    "component": "auth-service",
+    "fault_type": "cpu_spike",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-18T07:23:45Z",
+    "start_time": "2026-07-18T07:28:45Z",
+    "ramp_end_time": "2026-07-18T07:32:45Z",
+    "hold_end_time": "2026-07-18T07:34:49Z",
+    "end_time": "2026-07-18T07:38:37Z",
+    "post_incident_window_end": "2026-07-18T07:43:37Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 119,
+        "magnitude": 0.31,
+        "start": "2026-07-18T07:30:44Z",
+        "end": "2026-07-18T07:40:36Z"
+      }
+    ],
+    "description": "cpu spike on auth-service (critical)"
+  },
+  {
+    "id": "inc-af0fb64d",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T08:09:31Z",
+    "start_time": "2026-07-18T08:14:31Z",
+    "ramp_end_time": "2026-07-18T08:17:10Z",
+    "hold_end_time": "2026-07-18T08:22:05Z",
+    "end_time": "2026-07-18T08:25:36Z",
+    "post_incident_window_end": "2026-07-18T08:30:36Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 51,
+        "magnitude": 0.27,
+        "start": "2026-07-18T08:15:22Z",
+        "end": "2026-07-18T08:26:27Z"
+      },
+      {
+        "component": "inventory-service",
+        "delay_s": 219,
+        "magnitude": 0.34,
+        "start": "2026-07-18T08:18:10Z",
+        "end": "2026-07-18T08:29:15Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (medium)"
+  },
+  {
+    "id": "inc-2f1f3938",
+    "component": "api-gateway",
+    "fault_type": "security_brute_force",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T10:13:00Z",
+    "start_time": "2026-07-18T10:18:00Z",
+    "ramp_end_time": "2026-07-18T10:21:53Z",
+    "hold_end_time": "2026-07-18T10:26:14Z",
+    "end_time": "2026-07-18T10:29:33Z",
+    "post_incident_window_end": "2026-07-18T10:34:33Z",
     "cascade": [
       {
         "component": "load-balancer",
-        "delay_s": 160,
+        "delay_s": 58,
         "magnitude": 0.27,
-        "start": "2026-07-20T13:52:49Z",
-        "end": "2026-07-20T14:06:37Z"
+        "start": "2026-07-18T10:18:58Z",
+        "end": "2026-07-18T10:30:31Z"
       }
     ],
+    "description": "security brute force on api-gateway (medium)"
+  },
+  {
+    "id": "inc-977cc6d4",
+    "component": "data-warehouse",
+    "fault_type": "disk_io_saturation",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T10:58:25Z",
+    "start_time": "2026-07-18T11:03:25Z",
+    "ramp_end_time": "2026-07-18T11:08:05Z",
+    "hold_end_time": "2026-07-18T11:12:35Z",
+    "end_time": "2026-07-18T11:14:55Z",
+    "post_incident_window_end": "2026-07-18T11:19:55Z",
+    "cascade": [
+      {
+        "component": "message-queue",
+        "delay_s": 169,
+        "magnitude": 0.31,
+        "start": "2026-07-18T11:06:14Z",
+        "end": "2026-07-18T11:17:44Z"
+      }
+    ],
+    "description": "disk io saturation on data-warehouse (high)"
+  },
+  {
+    "id": "inc-0367add7",
+    "component": "payment-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T11:48:59Z",
+    "start_time": "2026-07-18T11:53:59Z",
+    "ramp_end_time": "2026-07-18T11:57:08Z",
+    "hold_end_time": "2026-07-18T12:02:07Z",
+    "end_time": "2026-07-18T12:04:56Z",
+    "post_incident_window_end": "2026-07-18T12:09:56Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 76,
+        "magnitude": 0.47,
+        "start": "2026-07-18T11:55:15Z",
+        "end": "2026-07-18T12:06:12Z"
+      }
+    ],
+    "description": "connection pool exhaustion on payment-service (medium)"
+  },
+  {
+    "id": "inc-0622ffa5",
+    "component": "order-service",
+    "fault_type": "cpu_spike",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T12:35:01Z",
+    "start_time": "2026-07-18T12:40:01Z",
+    "ramp_end_time": "2026-07-18T12:44:18Z",
+    "hold_end_time": "2026-07-18T12:49:36Z",
+    "end_time": "2026-07-18T12:53:09Z",
+    "post_incident_window_end": "2026-07-18T12:58:09Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 217,
+        "magnitude": 0.4,
+        "start": "2026-07-18T12:43:38Z",
+        "end": "2026-07-18T12:56:46Z"
+      }
+    ],
+    "description": "cpu spike on order-service (high)"
+  },
+  {
+    "id": "inc-888e4771",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T14:23:08Z",
+    "start_time": "2026-07-18T14:28:08Z",
+    "ramp_end_time": "2026-07-18T14:32:20Z",
+    "hold_end_time": "2026-07-18T14:35:08Z",
+    "end_time": "2026-07-18T14:36:59Z",
+    "post_incident_window_end": "2026-07-18T14:41:59Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 134,
+        "magnitude": 0.37,
+        "start": "2026-07-18T14:30:22Z",
+        "end": "2026-07-18T14:39:13Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (high)"
+  },
+  {
+    "id": "inc-18c3e136",
+    "component": "user-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T15:13:03Z",
+    "start_time": "2026-07-18T15:18:03Z",
+    "ramp_end_time": "2026-07-18T15:22:13Z",
+    "hold_end_time": "2026-07-18T15:25:55Z",
+    "end_time": "2026-07-18T15:29:42Z",
+    "post_incident_window_end": "2026-07-18T15:34:42Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 37,
+        "magnitude": 0.28,
+        "start": "2026-07-18T15:18:40Z",
+        "end": "2026-07-18T15:30:19Z"
+      }
+    ],
+    "description": "connection pool exhaustion on user-service (medium)"
+  },
+  {
+    "id": "inc-a2f4c4d6",
+    "component": "order-service",
+    "fault_type": "memory_leak",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T16:18:55Z",
+    "start_time": "2026-07-18T16:23:55Z",
+    "ramp_end_time": "2026-07-18T16:27:21Z",
+    "hold_end_time": "2026-07-18T16:32:14Z",
+    "end_time": "2026-07-18T16:33:57Z",
+    "post_incident_window_end": "2026-07-18T16:38:57Z",
+    "cascade": [],
+    "description": "memory leak on order-service (medium)"
+  },
+  {
+    "id": "inc-be12b0e8",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T17:16:36Z",
+    "start_time": "2026-07-18T17:21:36Z",
+    "ramp_end_time": "2026-07-18T17:24:34Z",
+    "hold_end_time": "2026-07-18T17:29:09Z",
+    "end_time": "2026-07-18T17:32:09Z",
+    "post_incident_window_end": "2026-07-18T17:37:09Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 78,
+        "magnitude": 0.41,
+        "start": "2026-07-18T17:22:54Z",
+        "end": "2026-07-18T17:33:27Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (high)"
+  },
+  {
+    "id": "inc-b930779d",
+    "component": "web-portal",
+    "fault_type": "cpu_spike",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T18:55:39Z",
+    "start_time": "2026-07-18T19:00:39Z",
+    "ramp_end_time": "2026-07-18T19:03:48Z",
+    "hold_end_time": "2026-07-18T19:07:34Z",
+    "end_time": "2026-07-18T19:11:07Z",
+    "post_incident_window_end": "2026-07-18T19:16:07Z",
+    "cascade": [],
     "description": "cpu spike on web-portal (high)"
   },
   {
-    "id": "inc-3d8cdfcf",
-    "component": "payment-gateway",
+    "id": "inc-9b486e43",
+    "component": "email-provider",
     "fault_type": "external_timeout",
-    "severity": "high",
-    "pre_incident_window_start": "2026-07-20T20:51:07Z",
-    "start_time": "2026-07-20T20:56:07Z",
-    "ramp_end_time": "2026-07-20T21:00:52Z",
-    "hold_end_time": "2026-07-20T21:03:17Z",
-    "end_time": "2026-07-20T21:05:02Z",
-    "post_incident_window_end": "2026-07-20T21:10:02Z",
-    "cascade": [
-      {
-        "component": "payment-service",
-        "delay_s": 116,
-        "magnitude": 0.45,
-        "start": "2026-07-20T20:58:03Z",
-        "end": "2026-07-20T21:06:58Z"
-      }
-    ],
-    "description": "external timeout on payment-gateway (high)"
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T20:12:16Z",
+    "start_time": "2026-07-18T20:17:16Z",
+    "ramp_end_time": "2026-07-18T20:20:01Z",
+    "hold_end_time": "2026-07-18T20:23:18Z",
+    "end_time": "2026-07-18T20:24:51Z",
+    "post_incident_window_end": "2026-07-18T20:29:51Z",
+    "cascade": [],
+    "description": "external timeout on email-provider (medium)"
   },
   {
-    "id": "inc-0286cd32",
+    "id": "inc-c04245cb",
+    "component": "email-provider",
+    "fault_type": "external_timeout",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-18T21:34:28Z",
+    "start_time": "2026-07-18T21:39:28Z",
+    "ramp_end_time": "2026-07-18T21:41:28Z",
+    "hold_end_time": "2026-07-18T21:44:45Z",
+    "end_time": "2026-07-18T21:47:28Z",
+    "post_incident_window_end": "2026-07-18T21:52:28Z",
+    "cascade": [
+      {
+        "component": "notification-service",
+        "delay_s": 231,
+        "magnitude": 0.39,
+        "start": "2026-07-18T21:43:19Z",
+        "end": "2026-07-18T21:51:19Z"
+      }
+    ],
+    "description": "external timeout on email-provider (high)"
+  },
+  {
+    "id": "inc-83bf32a5",
+    "component": "api-gateway",
+    "fault_type": "network_latency",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-18T23:13:37Z",
+    "start_time": "2026-07-18T23:18:37Z",
+    "ramp_end_time": "2026-07-18T23:21:07Z",
+    "hold_end_time": "2026-07-18T23:26:11Z",
+    "end_time": "2026-07-18T23:28:30Z",
+    "post_incident_window_end": "2026-07-18T23:33:30Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 220,
+        "magnitude": 0.38,
+        "start": "2026-07-18T23:22:17Z",
+        "end": "2026-07-18T23:32:10Z"
+      }
+    ],
+    "description": "network latency on api-gateway (medium)"
+  },
+  {
+    "id": "inc-bbaec1a6",
     "component": "redis-cache",
     "fault_type": "cache_eviction",
     "severity": "high",
-    "pre_incident_window_start": "2026-07-21T00:02:57Z",
-    "start_time": "2026-07-21T00:07:57Z",
-    "ramp_end_time": "2026-07-21T00:12:19Z",
-    "hold_end_time": "2026-07-21T00:17:08Z",
-    "end_time": "2026-07-21T00:20:42Z",
-    "post_incident_window_end": "2026-07-21T00:25:42Z",
+    "pre_incident_window_start": "2026-07-19T00:25:45Z",
+    "start_time": "2026-07-19T00:30:45Z",
+    "ramp_end_time": "2026-07-19T00:35:06Z",
+    "hold_end_time": "2026-07-19T00:38:50Z",
+    "end_time": "2026-07-19T00:40:43Z",
+    "post_incident_window_end": "2026-07-19T00:45:43Z",
     "cascade": [
       {
         "component": "auth-service",
-        "delay_s": 105,
-        "magnitude": 0.3,
-        "start": "2026-07-21T00:09:42Z",
-        "end": "2026-07-21T00:22:27Z"
+        "delay_s": 59,
+        "magnitude": 0.37,
+        "start": "2026-07-19T00:31:44Z",
+        "end": "2026-07-19T00:41:42Z"
       },
       {
         "component": "user-service",
-        "delay_s": 218,
-        "magnitude": 0.39,
-        "start": "2026-07-21T00:11:35Z",
-        "end": "2026-07-21T00:24:20Z"
+        "delay_s": 69,
+        "magnitude": 0.37,
+        "start": "2026-07-19T00:31:54Z",
+        "end": "2026-07-19T00:41:52Z"
       }
     ],
     "description": "cache eviction on redis-cache (high)"
   },
   {
-    "id": "inc-3ef2fba2",
+    "id": "inc-b9948367",
+    "component": "api-gateway",
+    "fault_type": "network_latency",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T01:21:04Z",
+    "start_time": "2026-07-19T01:26:04Z",
+    "ramp_end_time": "2026-07-19T01:28:35Z",
+    "hold_end_time": "2026-07-19T01:33:39Z",
+    "end_time": "2026-07-19T01:36:25Z",
+    "post_incident_window_end": "2026-07-19T01:41:25Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 200,
+        "magnitude": 0.35,
+        "start": "2026-07-19T01:29:24Z",
+        "end": "2026-07-19T01:39:45Z"
+      },
+      {
+        "component": "web-portal",
+        "delay_s": 105,
+        "magnitude": 0.39,
+        "start": "2026-07-19T01:27:49Z",
+        "end": "2026-07-19T01:38:10Z"
+      }
+    ],
+    "description": "network latency on api-gateway (high)"
+  },
+  {
+    "id": "inc-10bfedb9",
     "component": "payment-gateway",
     "fault_type": "external_timeout",
-    "severity": "medium",
-    "pre_incident_window_start": "2026-07-21T04:36:19Z",
-    "start_time": "2026-07-21T04:41:19Z",
-    "ramp_end_time": "2026-07-21T04:43:35Z",
-    "hold_end_time": "2026-07-21T04:47:01Z",
-    "end_time": "2026-07-21T04:48:36Z",
-    "post_incident_window_end": "2026-07-21T04:53:36Z",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T02:35:32Z",
+    "start_time": "2026-07-19T02:40:32Z",
+    "ramp_end_time": "2026-07-19T02:45:32Z",
+    "hold_end_time": "2026-07-19T02:51:25Z",
+    "end_time": "2026-07-19T02:54:32Z",
+    "post_incident_window_end": "2026-07-19T02:59:32Z",
     "cascade": [
       {
         "component": "payment-service",
-        "delay_s": 88,
+        "delay_s": 199,
+        "magnitude": 0.45,
+        "start": "2026-07-19T02:43:51Z",
+        "end": "2026-07-19T02:57:51Z"
+      }
+    ],
+    "description": "external timeout on payment-gateway (high)"
+  },
+  {
+    "id": "inc-05f34711",
+    "component": "api-gateway",
+    "fault_type": "network_latency",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T03:46:42Z",
+    "start_time": "2026-07-19T03:51:42Z",
+    "ramp_end_time": "2026-07-19T03:55:35Z",
+    "hold_end_time": "2026-07-19T04:00:27Z",
+    "end_time": "2026-07-19T04:02:51Z",
+    "post_incident_window_end": "2026-07-19T04:07:51Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 233,
+        "magnitude": 0.48,
+        "start": "2026-07-19T03:55:35Z",
+        "end": "2026-07-19T04:06:44Z"
+      }
+    ],
+    "description": "network latency on api-gateway (high)"
+  },
+  {
+    "id": "inc-4e9dacd1",
+    "component": "auth-service",
+    "fault_type": "memory_leak",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-19T05:27:19Z",
+    "start_time": "2026-07-19T05:32:19Z",
+    "ramp_end_time": "2026-07-19T05:35:15Z",
+    "hold_end_time": "2026-07-19T05:40:00Z",
+    "end_time": "2026-07-19T05:41:46Z",
+    "post_incident_window_end": "2026-07-19T05:46:46Z",
+    "cascade": [],
+    "description": "memory leak on auth-service (critical)"
+  },
+  {
+    "id": "inc-66043b6d",
+    "component": "payment-service",
+    "fault_type": "cpu_spike",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T07:53:57Z",
+    "start_time": "2026-07-19T07:58:57Z",
+    "ramp_end_time": "2026-07-19T08:02:20Z",
+    "hold_end_time": "2026-07-19T08:05:06Z",
+    "end_time": "2026-07-19T08:08:40Z",
+    "post_incident_window_end": "2026-07-19T08:13:40Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 234,
+        "magnitude": 0.31,
+        "start": "2026-07-19T08:02:51Z",
+        "end": "2026-07-19T08:12:34Z"
+      },
+      {
+        "component": "order-service",
+        "delay_s": 182,
+        "magnitude": 0.43,
+        "start": "2026-07-19T08:01:59Z",
+        "end": "2026-07-19T08:11:42Z"
+      }
+    ],
+    "description": "cpu spike on payment-service (medium)"
+  },
+  {
+    "id": "inc-d12db40b",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T08:48:25Z",
+    "start_time": "2026-07-19T08:53:25Z",
+    "ramp_end_time": "2026-07-19T08:56:08Z",
+    "hold_end_time": "2026-07-19T08:58:27Z",
+    "end_time": "2026-07-19T09:02:07Z",
+    "post_incident_window_end": "2026-07-19T09:07:07Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 79,
+        "magnitude": 0.48,
+        "start": "2026-07-19T08:54:44Z",
+        "end": "2026-07-19T09:03:26Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (medium)"
+  },
+  {
+    "id": "inc-9a372727",
+    "component": "load-balancer",
+    "fault_type": "network_latency",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-19T09:57:00Z",
+    "start_time": "2026-07-19T10:02:00Z",
+    "ramp_end_time": "2026-07-19T10:04:21Z",
+    "hold_end_time": "2026-07-19T10:08:30Z",
+    "end_time": "2026-07-19T10:10:44Z",
+    "post_incident_window_end": "2026-07-19T10:15:44Z",
+    "cascade": [
+      {
+        "component": "users",
+        "delay_s": 211,
+        "magnitude": 0.36,
+        "start": "2026-07-19T10:05:31Z",
+        "end": "2026-07-19T10:14:15Z"
+      }
+    ],
+    "description": "network latency on load-balancer (critical)"
+  },
+  {
+    "id": "inc-18cecbc9",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T11:45:43Z",
+    "start_time": "2026-07-19T11:50:43Z",
+    "ramp_end_time": "2026-07-19T11:53:41Z",
+    "hold_end_time": "2026-07-19T11:56:38Z",
+    "end_time": "2026-07-19T11:58:14Z",
+    "post_incident_window_end": "2026-07-19T12:03:14Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 101,
+        "magnitude": 0.47,
+        "start": "2026-07-19T11:52:24Z",
+        "end": "2026-07-19T11:59:55Z"
+      }
+    ],
+    "description": "disk io saturation on primary-db (medium)"
+  },
+  {
+    "id": "inc-8172fc7e",
+    "component": "order-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T12:55:58Z",
+    "start_time": "2026-07-19T13:00:58Z",
+    "ramp_end_time": "2026-07-19T13:04:42Z",
+    "hold_end_time": "2026-07-19T13:09:20Z",
+    "end_time": "2026-07-19T13:11:29Z",
+    "post_incident_window_end": "2026-07-19T13:16:29Z",
+    "cascade": [],
+    "description": "memory leak on order-service (high)"
+  },
+  {
+    "id": "inc-299e3bb6",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T14:19:36Z",
+    "start_time": "2026-07-19T14:24:36Z",
+    "ramp_end_time": "2026-07-19T14:27:13Z",
+    "hold_end_time": "2026-07-19T14:30:15Z",
+    "end_time": "2026-07-19T14:34:00Z",
+    "post_incident_window_end": "2026-07-19T14:39:00Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 204,
+        "magnitude": 0.45,
+        "start": "2026-07-19T14:28:00Z",
+        "end": "2026-07-19T14:37:24Z"
+      },
+      {
+        "component": "user-service",
+        "delay_s": 50,
         "magnitude": 0.4,
-        "start": "2026-07-21T04:42:47Z",
-        "end": "2026-07-21T04:50:04Z"
+        "start": "2026-07-19T14:25:26Z",
+        "end": "2026-07-19T14:34:50Z"
+      }
+    ],
+    "description": "disk io saturation on primary-db (medium)"
+  },
+  {
+    "id": "inc-df529b9a",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T15:18:50Z",
+    "start_time": "2026-07-19T15:23:50Z",
+    "ramp_end_time": "2026-07-19T15:26:17Z",
+    "hold_end_time": "2026-07-19T15:29:19Z",
+    "end_time": "2026-07-19T15:32:40Z",
+    "post_incident_window_end": "2026-07-19T15:37:40Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 164,
+        "magnitude": 0.27,
+        "start": "2026-07-19T15:26:34Z",
+        "end": "2026-07-19T15:35:24Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (medium)"
+  },
+  {
+    "id": "inc-44f24143",
+    "component": "auth-service",
+    "fault_type": "security_brute_force",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-19T16:07:44Z",
+    "start_time": "2026-07-19T16:12:44Z",
+    "ramp_end_time": "2026-07-19T16:14:54Z",
+    "hold_end_time": "2026-07-19T16:20:44Z",
+    "end_time": "2026-07-19T16:23:45Z",
+    "post_incident_window_end": "2026-07-19T16:28:45Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 93,
+        "magnitude": 0.42,
+        "start": "2026-07-19T16:14:17Z",
+        "end": "2026-07-19T16:25:18Z"
+      }
+    ],
+    "description": "security brute force on auth-service (critical)"
+  },
+  {
+    "id": "inc-13300eae",
+    "component": "auth-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T16:54:38Z",
+    "start_time": "2026-07-19T16:59:38Z",
+    "ramp_end_time": "2026-07-19T17:04:23Z",
+    "hold_end_time": "2026-07-19T17:07:54Z",
+    "end_time": "2026-07-19T17:09:39Z",
+    "post_incident_window_end": "2026-07-19T17:14:39Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 78,
+        "magnitude": 0.49,
+        "start": "2026-07-19T17:00:56Z",
+        "end": "2026-07-19T17:10:57Z"
+      }
+    ],
+    "description": "memory leak on auth-service (high)"
+  },
+  {
+    "id": "inc-34eacb00",
+    "component": "api-gateway",
+    "fault_type": "security_brute_force",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T18:06:58Z",
+    "start_time": "2026-07-19T18:11:58Z",
+    "ramp_end_time": "2026-07-19T18:14:57Z",
+    "hold_end_time": "2026-07-19T18:18:57Z",
+    "end_time": "2026-07-19T18:20:33Z",
+    "post_incident_window_end": "2026-07-19T18:25:33Z",
+    "cascade": [],
+    "description": "security brute force on api-gateway (medium)"
+  },
+  {
+    "id": "inc-8824addb",
+    "component": "inventory-service",
+    "fault_type": "memory_leak",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-19T19:13:57Z",
+    "start_time": "2026-07-19T19:18:57Z",
+    "ramp_end_time": "2026-07-19T19:21:47Z",
+    "hold_end_time": "2026-07-19T19:24:06Z",
+    "end_time": "2026-07-19T19:26:38Z",
+    "post_incident_window_end": "2026-07-19T19:31:38Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 227,
+        "magnitude": 0.33,
+        "start": "2026-07-19T19:22:44Z",
+        "end": "2026-07-19T19:30:25Z"
+      }
+    ],
+    "description": "memory leak on inventory-service (medium)"
+  },
+  {
+    "id": "inc-382ad52d",
+    "component": "load-balancer",
+    "fault_type": "network_latency",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T20:42:38Z",
+    "start_time": "2026-07-19T20:47:38Z",
+    "ramp_end_time": "2026-07-19T20:51:08Z",
+    "hold_end_time": "2026-07-19T20:54:24Z",
+    "end_time": "2026-07-19T20:57:33Z",
+    "post_incident_window_end": "2026-07-19T21:02:33Z",
+    "cascade": [],
+    "description": "network latency on load-balancer (high)"
+  },
+  {
+    "id": "inc-8af66bf2",
+    "component": "primary-db",
+    "fault_type": "db_overload",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T21:45:30Z",
+    "start_time": "2026-07-19T21:50:30Z",
+    "ramp_end_time": "2026-07-19T21:53:32Z",
+    "hold_end_time": "2026-07-19T21:56:09Z",
+    "end_time": "2026-07-19T21:57:40Z",
+    "post_incident_window_end": "2026-07-19T22:02:40Z",
+    "cascade": [],
+    "description": "db overload on primary-db (high)"
+  },
+  {
+    "id": "inc-a37439b4",
+    "component": "data-warehouse",
+    "fault_type": "db_overload",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-19T23:07:04Z",
+    "start_time": "2026-07-19T23:12:04Z",
+    "ramp_end_time": "2026-07-19T23:16:55Z",
+    "hold_end_time": "2026-07-19T23:22:05Z",
+    "end_time": "2026-07-19T23:25:53Z",
+    "post_incident_window_end": "2026-07-19T23:30:53Z",
+    "cascade": [
+      {
+        "component": "message-queue",
+        "delay_s": 220,
+        "magnitude": 0.43,
+        "start": "2026-07-19T23:15:44Z",
+        "end": "2026-07-19T23:29:33Z"
+      }
+    ],
+    "description": "db overload on data-warehouse (high)"
+  },
+  {
+    "id": "inc-363c5b2d",
+    "component": "web-portal",
+    "fault_type": "cpu_spike",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-20T00:50:41Z",
+    "start_time": "2026-07-20T00:55:41Z",
+    "ramp_end_time": "2026-07-20T00:59:58Z",
+    "hold_end_time": "2026-07-20T01:02:29Z",
+    "end_time": "2026-07-20T01:05:55Z",
+    "post_incident_window_end": "2026-07-20T01:10:55Z",
+    "cascade": [
+      {
+        "component": "load-balancer",
+        "delay_s": 221,
+        "magnitude": 0.42,
+        "start": "2026-07-20T00:59:22Z",
+        "end": "2026-07-20T01:09:36Z"
+      }
+    ],
+    "description": "cpu spike on web-portal (medium)"
+  },
+  {
+    "id": "inc-24a3d412",
+    "component": "load-balancer",
+    "fault_type": "network_latency",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T01:41:31Z",
+    "start_time": "2026-07-20T01:46:31Z",
+    "ramp_end_time": "2026-07-20T01:49:55Z",
+    "hold_end_time": "2026-07-20T01:55:33Z",
+    "end_time": "2026-07-20T01:59:19Z",
+    "post_incident_window_end": "2026-07-20T02:04:19Z",
+    "cascade": [
+      {
+        "component": "users",
+        "delay_s": 111,
+        "magnitude": 0.41,
+        "start": "2026-07-20T01:48:22Z",
+        "end": "2026-07-20T02:01:10Z"
+      }
+    ],
+    "description": "network latency on load-balancer (high)"
+  },
+  {
+    "id": "inc-bdeffe47",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T02:33:24Z",
+    "start_time": "2026-07-20T02:38:24Z",
+    "ramp_end_time": "2026-07-20T02:42:44Z",
+    "hold_end_time": "2026-07-20T02:44:53Z",
+    "end_time": "2026-07-20T02:48:19Z",
+    "post_incident_window_end": "2026-07-20T02:53:19Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 94,
+        "magnitude": 0.33,
+        "start": "2026-07-20T02:39:58Z",
+        "end": "2026-07-20T02:49:53Z"
+      }
+    ],
+    "description": "disk io saturation on primary-db (critical)"
+  },
+  {
+    "id": "inc-5e24160d",
+    "component": "primary-db",
+    "fault_type": "db_overload",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T03:40:56Z",
+    "start_time": "2026-07-20T03:45:56Z",
+    "ramp_end_time": "2026-07-20T03:49:55Z",
+    "hold_end_time": "2026-07-20T03:55:50Z",
+    "end_time": "2026-07-20T03:57:52Z",
+    "post_incident_window_end": "2026-07-20T04:02:52Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 130,
+        "magnitude": 0.4,
+        "start": "2026-07-20T03:48:06Z",
+        "end": "2026-07-20T04:00:02Z"
+      }
+    ],
+    "description": "db overload on primary-db (high)"
+  },
+  {
+    "id": "inc-9367a1fe",
+    "component": "user-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T04:47:20Z",
+    "start_time": "2026-07-20T04:52:20Z",
+    "ramp_end_time": "2026-07-20T04:55:31Z",
+    "hold_end_time": "2026-07-20T04:57:39Z",
+    "end_time": "2026-07-20T05:00:43Z",
+    "post_incident_window_end": "2026-07-20T05:05:43Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 143,
+        "magnitude": 0.49,
+        "start": "2026-07-20T04:54:43Z",
+        "end": "2026-07-20T05:03:06Z"
+      }
+    ],
+    "description": "connection pool exhaustion on user-service (critical)"
+  },
+  {
+    "id": "inc-850f934c",
+    "component": "payment-gateway",
+    "fault_type": "external_timeout",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T05:50:12Z",
+    "start_time": "2026-07-20T05:55:12Z",
+    "ramp_end_time": "2026-07-20T05:58:15Z",
+    "hold_end_time": "2026-07-20T06:01:23Z",
+    "end_time": "2026-07-20T06:03:33Z",
+    "post_incident_window_end": "2026-07-20T06:08:33Z",
+    "cascade": [],
+    "description": "external timeout on payment-gateway (critical)"
+  },
+  {
+    "id": "inc-c304851a",
+    "component": "payment-gateway",
+    "fault_type": "external_timeout",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-20T06:46:38Z",
+    "start_time": "2026-07-20T06:51:38Z",
+    "ramp_end_time": "2026-07-20T06:55:47Z",
+    "hold_end_time": "2026-07-20T06:58:55Z",
+    "end_time": "2026-07-20T07:00:25Z",
+    "post_incident_window_end": "2026-07-20T07:05:25Z",
+    "cascade": [
+      {
+        "component": "payment-service",
+        "delay_s": 106,
+        "magnitude": 0.46,
+        "start": "2026-07-20T06:53:24Z",
+        "end": "2026-07-20T07:02:11Z"
       }
     ],
     "description": "external timeout on payment-gateway (medium)"
   },
   {
-    "id": "inc-44fc7328",
-    "component": "payment-gateway",
-    "fault_type": "external_timeout",
-    "severity": "high",
-    "pre_incident_window_start": "2026-07-21T08:52:30Z",
-    "start_time": "2026-07-21T08:57:30Z",
-    "ramp_end_time": "2026-07-21T09:01:14Z",
-    "hold_end_time": "2026-07-21T09:04:02Z",
-    "end_time": "2026-07-21T09:05:56Z",
-    "post_incident_window_end": "2026-07-21T09:10:56Z",
+    "id": "inc-1201fe2e",
+    "component": "data-warehouse",
+    "fault_type": "db_overload",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-20T08:17:32Z",
+    "start_time": "2026-07-20T08:22:32Z",
+    "ramp_end_time": "2026-07-20T08:27:01Z",
+    "hold_end_time": "2026-07-20T08:31:59Z",
+    "end_time": "2026-07-20T08:33:34Z",
+    "post_incident_window_end": "2026-07-20T08:38:34Z",
+    "cascade": [],
+    "description": "db overload on data-warehouse (medium)"
+  },
+  {
+    "id": "inc-a8e88a60",
+    "component": "auth-service",
+    "fault_type": "security_brute_force",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-20T09:44:58Z",
+    "start_time": "2026-07-20T09:49:58Z",
+    "ramp_end_time": "2026-07-20T09:54:56Z",
+    "hold_end_time": "2026-07-20T09:59:08Z",
+    "end_time": "2026-07-20T10:02:36Z",
+    "post_incident_window_end": "2026-07-20T10:07:36Z",
     "cascade": [
       {
-        "component": "payment-service",
-        "delay_s": 140,
-        "magnitude": 0.34,
-        "start": "2026-07-21T08:59:50Z",
-        "end": "2026-07-21T09:08:16Z"
+        "component": "api-gateway",
+        "delay_s": 93,
+        "magnitude": 0.48,
+        "start": "2026-07-20T09:51:31Z",
+        "end": "2026-07-20T10:04:09Z"
       }
     ],
-    "description": "external timeout on payment-gateway (high)"
+    "description": "security brute force on auth-service (medium)"
+  },
+  {
+    "id": "inc-b74af506",
+    "component": "order-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T10:54:16Z",
+    "start_time": "2026-07-20T10:59:16Z",
+    "ramp_end_time": "2026-07-20T11:03:55Z",
+    "hold_end_time": "2026-07-20T11:08:32Z",
+    "end_time": "2026-07-20T11:12:24Z",
+    "post_incident_window_end": "2026-07-20T11:17:24Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 198,
+        "magnitude": 0.46,
+        "start": "2026-07-20T11:02:34Z",
+        "end": "2026-07-20T11:15:42Z"
+      }
+    ],
+    "description": "connection pool exhaustion on order-service (critical)"
+  },
+  {
+    "id": "inc-c2a9916a",
+    "component": "user-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T11:45:14Z",
+    "start_time": "2026-07-20T11:50:14Z",
+    "ramp_end_time": "2026-07-20T11:54:48Z",
+    "hold_end_time": "2026-07-20T11:57:52Z",
+    "end_time": "2026-07-20T11:59:28Z",
+    "post_incident_window_end": "2026-07-20T12:04:28Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 202,
+        "magnitude": 0.46,
+        "start": "2026-07-20T11:53:36Z",
+        "end": "2026-07-20T12:02:50Z"
+      }
+    ],
+    "description": "memory leak on user-service (high)"
+  },
+  {
+    "id": "inc-07a534ad",
+    "component": "payment-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-20T13:49:45Z",
+    "start_time": "2026-07-20T13:54:45Z",
+    "ramp_end_time": "2026-07-20T13:59:41Z",
+    "hold_end_time": "2026-07-20T14:02:58Z",
+    "end_time": "2026-07-20T14:06:11Z",
+    "post_incident_window_end": "2026-07-20T14:11:11Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 156,
+        "magnitude": 0.36,
+        "start": "2026-07-20T13:57:21Z",
+        "end": "2026-07-20T14:08:47Z"
+      }
+    ],
+    "description": "connection pool exhaustion on payment-service (medium)"
+  },
+  {
+    "id": "inc-1de97d7f",
+    "component": "user-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T14:43:31Z",
+    "start_time": "2026-07-20T14:48:31Z",
+    "ramp_end_time": "2026-07-20T14:51:17Z",
+    "hold_end_time": "2026-07-20T14:55:46Z",
+    "end_time": "2026-07-20T14:59:07Z",
+    "post_incident_window_end": "2026-07-20T15:04:07Z",
+    "cascade": [],
+    "description": "connection pool exhaustion on user-service (critical)"
+  },
+  {
+    "id": "inc-e1dd3440",
+    "component": "payment-service",
+    "fault_type": "connection_pool_exhaustion",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T15:58:58Z",
+    "start_time": "2026-07-20T16:03:58Z",
+    "ramp_end_time": "2026-07-20T16:07:26Z",
+    "hold_end_time": "2026-07-20T16:10:51Z",
+    "end_time": "2026-07-20T16:14:42Z",
+    "post_incident_window_end": "2026-07-20T16:19:42Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 112,
+        "magnitude": 0.47,
+        "start": "2026-07-20T16:05:50Z",
+        "end": "2026-07-20T16:16:34Z"
+      }
+    ],
+    "description": "connection pool exhaustion on payment-service (high)"
+  },
+  {
+    "id": "inc-0428a84b",
+    "component": "payment-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T17:34:22Z",
+    "start_time": "2026-07-20T17:39:22Z",
+    "ramp_end_time": "2026-07-20T17:43:59Z",
+    "hold_end_time": "2026-07-20T17:46:10Z",
+    "end_time": "2026-07-20T17:49:53Z",
+    "post_incident_window_end": "2026-07-20T17:54:53Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 194,
+        "magnitude": 0.49,
+        "start": "2026-07-20T17:42:36Z",
+        "end": "2026-07-20T17:53:07Z"
+      },
+      {
+        "component": "order-service",
+        "delay_s": 152,
+        "magnitude": 0.46,
+        "start": "2026-07-20T17:41:54Z",
+        "end": "2026-07-20T17:52:25Z"
+      }
+    ],
+    "description": "memory leak on payment-service (high)"
+  },
+  {
+    "id": "inc-f295c130",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T18:57:55Z",
+    "start_time": "2026-07-20T19:02:55Z",
+    "ramp_end_time": "2026-07-20T19:06:33Z",
+    "hold_end_time": "2026-07-20T19:09:21Z",
+    "end_time": "2026-07-20T19:13:01Z",
+    "post_incident_window_end": "2026-07-20T19:18:01Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 47,
+        "magnitude": 0.32,
+        "start": "2026-07-20T19:03:42Z",
+        "end": "2026-07-20T19:13:48Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (high)"
+  },
+  {
+    "id": "inc-497497c2",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T19:49:47Z",
+    "start_time": "2026-07-20T19:54:47Z",
+    "ramp_end_time": "2026-07-20T19:58:07Z",
+    "hold_end_time": "2026-07-20T20:02:34Z",
+    "end_time": "2026-07-20T20:05:53Z",
+    "post_incident_window_end": "2026-07-20T20:10:53Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 211,
+        "magnitude": 0.41,
+        "start": "2026-07-20T19:58:18Z",
+        "end": "2026-07-20T20:09:24Z"
+      },
+      {
+        "component": "inventory-service",
+        "delay_s": 133,
+        "magnitude": 0.26,
+        "start": "2026-07-20T19:57:00Z",
+        "end": "2026-07-20T20:08:06Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (critical)"
+  },
+  {
+    "id": "inc-0af3c41f",
+    "component": "data-warehouse",
+    "fault_type": "disk_io_saturation",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-20T21:08:39Z",
+    "start_time": "2026-07-20T21:13:39Z",
+    "ramp_end_time": "2026-07-20T21:16:56Z",
+    "hold_end_time": "2026-07-20T21:21:42Z",
+    "end_time": "2026-07-20T21:24:56Z",
+    "post_incident_window_end": "2026-07-20T21:29:56Z",
+    "cascade": [
+      {
+        "component": "message-queue",
+        "delay_s": 41,
+        "magnitude": 0.49,
+        "start": "2026-07-20T21:14:20Z",
+        "end": "2026-07-20T21:25:37Z"
+      }
+    ],
+    "description": "disk io saturation on data-warehouse (critical)"
+  },
+  {
+    "id": "inc-36b19dfb",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-20T22:47:18Z",
+    "start_time": "2026-07-20T22:52:18Z",
+    "ramp_end_time": "2026-07-20T22:55:17Z",
+    "hold_end_time": "2026-07-20T22:58:30Z",
+    "end_time": "2026-07-20T23:01:12Z",
+    "post_incident_window_end": "2026-07-20T23:06:12Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 205,
+        "magnitude": 0.31,
+        "start": "2026-07-20T22:55:43Z",
+        "end": "2026-07-20T23:04:37Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (medium)"
+  },
+  {
+    "id": "inc-076a350f",
+    "component": "auth-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-20T23:45:49Z",
+    "start_time": "2026-07-20T23:50:49Z",
+    "ramp_end_time": "2026-07-20T23:54:17Z",
+    "hold_end_time": "2026-07-20T23:58:05Z",
+    "end_time": "2026-07-21T00:01:55Z",
+    "post_incident_window_end": "2026-07-21T00:06:55Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 209,
+        "magnitude": 0.36,
+        "start": "2026-07-20T23:54:18Z",
+        "end": "2026-07-21T00:05:24Z"
+      }
+    ],
+    "description": "memory leak on auth-service (high)"
+  },
+  {
+    "id": "inc-c183bdbb",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-21T00:35:19Z",
+    "start_time": "2026-07-21T00:40:19Z",
+    "ramp_end_time": "2026-07-21T00:44:24Z",
+    "hold_end_time": "2026-07-21T00:48:18Z",
+    "end_time": "2026-07-21T00:49:52Z",
+    "post_incident_window_end": "2026-07-21T00:54:52Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 86,
+        "magnitude": 0.35,
+        "start": "2026-07-21T00:41:45Z",
+        "end": "2026-07-21T00:51:18Z"
+      },
+      {
+        "component": "inventory-service",
+        "delay_s": 199,
+        "magnitude": 0.4,
+        "start": "2026-07-21T00:43:38Z",
+        "end": "2026-07-21T00:53:11Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (high)"
+  },
+  {
+    "id": "inc-56993a71",
+    "component": "api-gateway",
+    "fault_type": "security_brute_force",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-21T03:22:33Z",
+    "start_time": "2026-07-21T03:27:33Z",
+    "ramp_end_time": "2026-07-21T03:31:19Z",
+    "hold_end_time": "2026-07-21T03:34:28Z",
+    "end_time": "2026-07-21T03:36:53Z",
+    "post_incident_window_end": "2026-07-21T03:41:53Z",
+    "cascade": [
+      {
+        "component": "web-portal",
+        "delay_s": 140,
+        "magnitude": 0.28,
+        "start": "2026-07-21T03:29:53Z",
+        "end": "2026-07-21T03:39:13Z"
+      }
+    ],
+    "description": "security brute force on api-gateway (high)"
+  },
+  {
+    "id": "inc-c0664975",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-21T04:41:53Z",
+    "start_time": "2026-07-21T04:46:53Z",
+    "ramp_end_time": "2026-07-21T04:50:25Z",
+    "hold_end_time": "2026-07-21T04:55:07Z",
+    "end_time": "2026-07-21T04:58:34Z",
+    "post_incident_window_end": "2026-07-21T05:03:34Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 217,
+        "magnitude": 0.38,
+        "start": "2026-07-21T04:50:30Z",
+        "end": "2026-07-21T05:02:11Z"
+      }
+    ],
+    "description": "disk io saturation on primary-db (medium)"
+  },
+  {
+    "id": "inc-2054550b",
+    "component": "data-warehouse",
+    "fault_type": "db_overload",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-21T06:11:29Z",
+    "start_time": "2026-07-21T06:16:29Z",
+    "ramp_end_time": "2026-07-21T06:19:01Z",
+    "hold_end_time": "2026-07-21T06:23:09Z",
+    "end_time": "2026-07-21T06:26:03Z",
+    "post_incident_window_end": "2026-07-21T06:31:03Z",
+    "cascade": [],
+    "description": "db overload on data-warehouse (critical)"
+  },
+  {
+    "id": "inc-8545ee8a",
+    "component": "payment-gateway",
+    "fault_type": "external_timeout",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-21T08:04:29Z",
+    "start_time": "2026-07-21T08:09:29Z",
+    "ramp_end_time": "2026-07-21T08:12:11Z",
+    "hold_end_time": "2026-07-21T08:15:16Z",
+    "end_time": "2026-07-21T08:18:49Z",
+    "post_incident_window_end": "2026-07-21T08:23:49Z",
+    "cascade": [],
+    "description": "external timeout on payment-gateway (critical)"
+  },
+  {
+    "id": "inc-345dfd0c",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-21T09:07:39Z",
+    "start_time": "2026-07-21T09:12:39Z",
+    "ramp_end_time": "2026-07-21T09:14:52Z",
+    "hold_end_time": "2026-07-21T09:17:15Z",
+    "end_time": "2026-07-21T09:20:33Z",
+    "post_incident_window_end": "2026-07-21T09:25:33Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 115,
+        "magnitude": 0.44,
+        "start": "2026-07-21T09:14:34Z",
+        "end": "2026-07-21T09:22:28Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (high)"
+  },
+  {
+    "id": "inc-56a319fc",
+    "component": "message-queue",
+    "fault_type": "queue_backlog",
+    "severity": "critical",
+    "pre_incident_window_start": "2026-07-21T11:48:13Z",
+    "start_time": "2026-07-21T11:53:13Z",
+    "ramp_end_time": "2026-07-21T11:55:13Z",
+    "hold_end_time": "2026-07-21T12:00:01Z",
+    "end_time": "2026-07-21T12:03:49Z",
+    "post_incident_window_end": "2026-07-21T12:08:49Z",
+    "cascade": [
+      {
+        "component": "order-service",
+        "delay_s": 43,
+        "magnitude": 0.3,
+        "start": "2026-07-21T11:53:56Z",
+        "end": "2026-07-21T12:04:32Z"
+      },
+      {
+        "component": "inventory-service",
+        "delay_s": 223,
+        "magnitude": 0.37,
+        "start": "2026-07-21T11:56:56Z",
+        "end": "2026-07-21T12:07:32Z"
+      }
+    ],
+    "description": "queue backlog on message-queue (critical)"
+  },
+  {
+    "id": "inc-ea1f3142",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-21T13:45:22Z",
+    "start_time": "2026-07-21T13:50:22Z",
+    "ramp_end_time": "2026-07-21T13:53:23Z",
+    "hold_end_time": "2026-07-21T13:56:33Z",
+    "end_time": "2026-07-21T13:59:55Z",
+    "post_incident_window_end": "2026-07-21T14:04:55Z",
+    "cascade": [
+      {
+        "component": "auth-service",
+        "delay_s": 103,
+        "magnitude": 0.31,
+        "start": "2026-07-21T13:52:05Z",
+        "end": "2026-07-21T14:01:38Z"
+      },
+      {
+        "component": "user-service",
+        "delay_s": 168,
+        "magnitude": 0.27,
+        "start": "2026-07-21T13:53:10Z",
+        "end": "2026-07-21T14:02:43Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (high)"
+  },
+  {
+    "id": "inc-f1605c22",
+    "component": "data-warehouse",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-21T15:09:00Z",
+    "start_time": "2026-07-21T15:14:00Z",
+    "ramp_end_time": "2026-07-21T15:16:16Z",
+    "hold_end_time": "2026-07-21T15:20:17Z",
+    "end_time": "2026-07-21T15:23:41Z",
+    "post_incident_window_end": "2026-07-21T15:28:41Z",
+    "cascade": [],
+    "description": "disk io saturation on data-warehouse (medium)"
+  },
+  {
+    "id": "inc-b598b551",
+    "component": "primary-db",
+    "fault_type": "disk_io_saturation",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-21T15:58:54Z",
+    "start_time": "2026-07-21T16:03:54Z",
+    "ramp_end_time": "2026-07-21T16:08:15Z",
+    "hold_end_time": "2026-07-21T16:11:31Z",
+    "end_time": "2026-07-21T16:13:27Z",
+    "post_incident_window_end": "2026-07-21T16:18:27Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 59,
+        "magnitude": 0.47,
+        "start": "2026-07-21T16:04:53Z",
+        "end": "2026-07-21T16:14:26Z"
+      }
+    ],
+    "description": "disk io saturation on primary-db (medium)"
+  },
+  {
+    "id": "inc-e2dac31c",
+    "component": "search-service",
+    "fault_type": "memory_leak",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-21T18:45:07Z",
+    "start_time": "2026-07-21T18:50:07Z",
+    "ramp_end_time": "2026-07-21T18:54:58Z",
+    "hold_end_time": "2026-07-21T18:57:48Z",
+    "end_time": "2026-07-21T19:00:51Z",
+    "post_incident_window_end": "2026-07-21T19:05:51Z",
+    "cascade": [
+      {
+        "component": "api-gateway",
+        "delay_s": 200,
+        "magnitude": 0.48,
+        "start": "2026-07-21T18:53:27Z",
+        "end": "2026-07-21T19:04:11Z"
+      }
+    ],
+    "description": "memory leak on search-service (high)"
+  },
+  {
+    "id": "inc-bf878453",
+    "component": "notification-service",
+    "fault_type": "cpu_spike",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-21T21:29:45Z",
+    "start_time": "2026-07-21T21:34:45Z",
+    "ramp_end_time": "2026-07-21T21:37:25Z",
+    "hold_end_time": "2026-07-21T21:42:35Z",
+    "end_time": "2026-07-21T21:46:06Z",
+    "post_incident_window_end": "2026-07-21T21:51:06Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 222,
+        "magnitude": 0.31,
+        "start": "2026-07-21T21:38:27Z",
+        "end": "2026-07-21T21:49:48Z"
+      }
+    ],
+    "description": "cpu spike on notification-service (high)"
+  },
+  {
+    "id": "inc-5373bc52",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-21T23:03:17Z",
+    "start_time": "2026-07-21T23:08:17Z",
+    "ramp_end_time": "2026-07-21T23:11:29Z",
+    "hold_end_time": "2026-07-21T23:16:03Z",
+    "end_time": "2026-07-21T23:18:26Z",
+    "post_incident_window_end": "2026-07-21T23:23:26Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 192,
+        "magnitude": 0.46,
+        "start": "2026-07-21T23:11:29Z",
+        "end": "2026-07-21T23:21:38Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (medium)"
+  },
+  {
+    "id": "inc-8ac68ed6",
+    "component": "inventory-service",
+    "fault_type": "cpu_spike",
+    "severity": "medium",
+    "pre_incident_window_start": "2026-07-21T23:58:17Z",
+    "start_time": "2026-07-22T00:03:17Z",
+    "ramp_end_time": "2026-07-22T00:07:40Z",
+    "hold_end_time": "2026-07-22T00:12:03Z",
+    "end_time": "2026-07-22T00:14:57Z",
+    "post_incident_window_end": "2026-07-22T00:19:57Z",
+    "cascade": [],
+    "description": "cpu spike on inventory-service (medium)"
+  },
+  {
+    "id": "inc-809a5b4e",
+    "component": "redis-cache",
+    "fault_type": "cache_eviction",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-22T02:45:23Z",
+    "start_time": "2026-07-22T02:50:23Z",
+    "ramp_end_time": "2026-07-22T02:53:51Z",
+    "hold_end_time": "2026-07-22T02:58:07Z",
+    "end_time": "2026-07-22T03:01:26Z",
+    "post_incident_window_end": "2026-07-22T03:06:26Z",
+    "cascade": [
+      {
+        "component": "user-service",
+        "delay_s": 195,
+        "magnitude": 0.34,
+        "start": "2026-07-22T02:53:38Z",
+        "end": "2026-07-22T03:04:41Z"
+      }
+    ],
+    "description": "cache eviction on redis-cache (high)"
+  },
+  {
+    "id": "inc-3c68052c",
+    "component": "load-balancer",
+    "fault_type": "network_latency",
+    "severity": "high",
+    "pre_incident_window_start": "2026-07-22T03:32:31Z",
+    "start_time": "2026-07-22T03:37:31Z",
+    "ramp_end_time": "2026-07-22T03:42:07Z",
+    "hold_end_time": "2026-07-22T03:47:16Z",
+    "end_time": "2026-07-22T03:49:11Z",
+    "post_incident_window_end": "2026-07-22T03:54:11Z",
+    "cascade": [],
+    "description": "network latency on load-balancer (high)"
   }
 ]
