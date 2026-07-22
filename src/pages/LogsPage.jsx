@@ -77,7 +77,7 @@ export default function LogsPage() {
           <span className="text-xs font-semibold text-ink-soft">Log Volume</span>
           <span className="text-[11px] text-ink-faint">· stacked by severity</span>
         </div>
-        <LogChart logs={rangeFiltered} rangeMs={rangeMs} />
+        <LogChart logs={tableFiltered} rangeMs={rangeMs} />
       </div>
 
       {/* ── Log table ───────────────────────────────────────────────────────── */}
