@@ -135,6 +135,26 @@ async def forecast_system_analysis(hours: int = 24):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/api/forecast/traffic")
+async def forecast_traffic(component: str, hours: int = 24):
+    from server.services.forecast_service import get_traffic_history
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+        result = get_traffic_history(data_dir, component, hours)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/forecast/bottleneck")
+async def forecast_bottleneck(hours: int = 24):
+    from server.services.forecast_service import get_bottleneck_analysis
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+        result = get_bottleneck_analysis(data_dir, hours)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []

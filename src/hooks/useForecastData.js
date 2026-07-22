@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback } from 'react'
 
 const BASE = '/api'
-const METRICS = ['cpu_pct', 'memory_pct', 'latency_ms', 'error_rate', 'log_error_rate_per_min']
+const METRICS = ['cpu_pct', 'memory_pct', 'latency_ms', 'error_rate']
 
 const METRIC_META = {
-  cpu_pct:                { label: 'CPU', unit: '%',    color: '#6366f1', warnAt: 75, critAt: 90 },
-  memory_pct:             { label: 'Memory', unit: '%', color: '#8b5cf6', warnAt: 80, critAt: 92 },
-  latency_ms:             { label: 'Latency', unit: 'ms', color: '#06b6d4', warnAt: 200, critAt: 500 },
-  error_rate:             { label: 'Error Rate', unit: '%', color: '#f59e0b', warnAt: 1, critAt: 5 },
-  log_error_rate_per_min: { label: 'Log Errors/min', unit: '/min', color: '#ef4444', warnAt: 5, critAt: 15 },
+  cpu_pct:    { label: 'CPU', unit: '%',    color: '#6366f1', warnAt: 75, critAt: 90 },
+  memory_pct: { label: 'Memory', unit: '%', color: '#8b5cf6', warnAt: 80, critAt: 92 },
+  latency_ms: { label: 'Latency', unit: 'ms', color: '#06b6d4', warnAt: 200, critAt: 500 },
+  error_rate: { label: 'Error Rate', unit: '%', color: '#f59e0b', warnAt: 1, critAt: 5 },
 }
 
 export { METRIC_META, METRICS }

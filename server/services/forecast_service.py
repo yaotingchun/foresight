@@ -31,14 +31,18 @@ DISPLAY_METRICS = {
     "latency_ms":            "Latency (ms)",
     "error_rate":            "Error Rate (%)",
     "log_error_rate_per_min":"Log Error Rate (/min)",
+    "throughput_rps":        "Throughput (RPS)",
 }
 
 # Keys that come out of infra_metrics.csv (rename from the raw header)
 _RAW_RENAME = {"error_rate_pct": "error_rate"}
 
+# Network metrics cache
+_network_df: pd.DataFrame | None = None
+
 
 def _load(data_dir: str):
-    global _metrics_df, _detector
+    global _metrics_df, _detector, _network_df
     if _metrics_df is not None:
         return
 
@@ -48,6 +52,11 @@ def _load(data_dir: str):
     if "log_error_rate_per_min" not in df.columns:
         df["log_error_rate_per_min"] = 0.0
     _metrics_df = df
+
+    # Load network metrics
+    net_path = os.path.join(data_dir, "network_metrics.csv")
+    if os.path.exists(net_path):
+        _network_df = pd.read_csv(net_path, parse_dates=["timestamp"])
 
     det = OutageDetector()
     det.fit(df)
@@ -392,3 +401,137 @@ Summary: {len(critical)} critical, {len(warning)} warning, {len(all_components) 
         }
     }
 
+
+def get_traffic_history(data_dir: str, component_id: str, hours: int = 24) -> dict:
+    """
+    Return throughput_rps + bandwidth_util_pct time series for one component.
+    Also returns connection_count from network_metrics if available.
+    """
+    _ensure_loaded(data_dir)
+
+    cutoff = _metrics_df["timestamp"].max() - pd.Timedelta(hours=hours)
+
+    comp_infra = _metrics_df[
+        (_metrics_df["component_id"] == component_id) &
+        (_metrics_df["timestamp"] >= cutoff)
+    ].sort_values("timestamp")
+
+    if "throughput_rps" not in comp_infra.columns:
+        return {"error": "throughput_rps not available in metrics"}
+
+    tps_series  = _downsample(comp_infra.set_index("timestamp")["throughput_rps"].dropna())
+
+    result = {
+        "component_id": component_id,
+        "throughput": {
+            "times":  [t.isoformat() for t in tps_series.index],
+            "values": [round(float(v), 2) for v in tps_series.values],
+            "unit":   "rps",
+            "label":  "Throughput (req/s)",
+        }
+    }
+
+    # Enrich with network metrics if available
+    if _network_df is not None:
+        comp_net = _network_df[
+            (_network_df["component_id"] == component_id) &
+            (_network_df["timestamp"] >= cutoff)
+        ].sort_values("timestamp")
+
+        if not comp_net.empty:
+            bw = _downsample(comp_net.set_index("timestamp")["bandwidth_util_pct"].dropna())
+            cc = _downsample(comp_net.set_index("timestamp")["connection_count"].dropna())
+            result["bandwidth"] = {
+                "times":  [t.isoformat() for t in bw.index],
+                "values": [round(float(v), 2) for v in bw.values],
+                "unit": "%", "label": "Bandwidth Utilisation (%)",
+            }
+            result["connections"] = {
+                "times":  [t.isoformat() for t in cc.index],
+                "values": [int(v) for v in cc.values],
+                "unit": "", "label": "Active Connections",
+            }
+
+    return result
+
+
+def get_bottleneck_analysis(data_dir: str, hours: int = 24) -> dict:
+    """
+    Returns per-component scatter data:
+      x = avg throughput_rps
+      y = avg latency_ms
+      z = avg cpu_pct (bubble size)
+    Also classifies each component as bottleneck / stressed / healthy.
+    Bottleneck = high latency + high throughput.
+    Stressed   = high latency but lower throughput (resource exhaustion).
+    """
+    _ensure_loaded(data_dir)
+
+    cutoff = _metrics_df["timestamp"].max() - pd.Timedelta(hours=hours)
+    recent = _metrics_df[_metrics_df["timestamp"] >= cutoff]
+
+    all_components = sorted(recent["component_id"].unique())
+
+    # System-wide medians for threshold calculation
+    med_tput    = float(recent["throughput_rps"].median()) if "throughput_rps" in recent.columns else 100
+    med_latency = float(recent["latency_ms"].median())
+
+    points = []
+    for comp in all_components:
+        g = recent[recent["component_id"] == comp]
+        if g.empty:
+            continue
+
+        avg_tput    = float(g["throughput_rps"].mean()) if "throughput_rps" in g.columns else 0
+        avg_latency = float(g["latency_ms"].mean())
+        avg_cpu     = float(g["cpu_pct"].mean())
+        avg_err     = float(g["error_rate"].mean()) if "error_rate" in g.columns else 0
+
+        # Bottleneck classification
+        high_latency  = avg_latency > med_latency * 1.3
+        high_tput     = avg_tput    > med_tput    * 0.8
+
+        if high_latency and high_tput:
+            status = "bottleneck"
+        elif high_latency:
+            status = "stressed"
+        else:
+            status = "healthy"
+
+        # Network enrichment
+        net_bandwidth = None
+        net_conns     = None
+        if _network_df is not None:
+            comp_net = _network_df[
+                (_network_df["component_id"] == comp) &
+                (_network_df["timestamp"] >= cutoff)
+            ]
+            if not comp_net.empty:
+                net_bandwidth = round(float(comp_net["bandwidth_util_pct"].mean()), 1)
+                net_conns     = int(comp_net["connection_count"].mean())
+
+        points.append({
+            "component":       comp,
+            "throughput":      round(avg_tput,    1),
+            "latency":         round(avg_latency, 1),
+            "cpu":             round(avg_cpu,     1),
+            "error_rate":      round(avg_err,     2),
+            "bandwidth_pct":   net_bandwidth,
+            "connections":     net_conns,
+            "status":          status,
+        })
+
+    # Sort: bottlenecks first
+    order = {"bottleneck": 0, "stressed": 1, "healthy": 2}
+    points.sort(key=lambda p: order.get(p["status"], 9))
+
+    bottlenecks = [p["component"] for p in points if p["status"] == "bottleneck"]
+    stressed    = [p["component"] for p in points if p["status"] == "stressed"]
+
+    return {
+        "points":      points,
+        "thresholds":  {"latency": round(med_latency, 1), "throughput": round(med_tput, 1)},
+        "bottlenecks": bottlenecks,
+        "stressed":    stressed,
+        "hours":       hours,
+    }

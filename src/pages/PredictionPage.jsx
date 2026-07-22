@@ -13,6 +13,7 @@ import {
 import { METRICS, METRIC_META } from '../hooks/useForecastData'
 import { usePrediction } from '../context/PredictionContext'
 import ForecastChart from '../components/prediction/ForecastChart'
+import TrafficChart from '../components/prediction/TrafficChart'
 import LiveBadge from '../components/servicemap/LiveBadge'
 
 const COMPONENTS = [
@@ -187,7 +188,9 @@ export default function PredictionPage() {
     component, setComponent,
     hours, setHours,
     charts, summary, systemAnalysis,
+    trafficData,
     summaryLoading, chartsLoading, systemLoading,
+    trafficLoading,
     refetch,
   } = usePrediction()
 
@@ -244,45 +247,43 @@ export default function PredictionPage() {
         />
 
         {/* ── Selectors ───────────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-line bg-card shadow-card p-4 flex flex-col gap-3">
-          {/* Component selector */}
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint mb-2">Component</p>
-            <div className="flex flex-wrap gap-1.5">
-              {COMPONENTS.map(c => (
-                <button
-                  key={c}
-                  onClick={() => setComponent(c)}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-all duration-150 ${
-                    c === component
-                      ? 'bg-indigo-500 text-white shadow-sm'
-                      : 'border border-line bg-muted text-ink-soft hover:border-indigo-300 hover:text-indigo-600'
-                  }`}
-                >
-                  {c}
-                </button>
-              ))}
+        <div className="rounded-xl border border-line bg-card shadow-card p-4 flex flex-wrap gap-6 items-center justify-between">
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Drill-Down Telemetry Component</span>
+              <select
+                value={component}
+                onChange={(e) => setComponent(e.target.value)}
+                className="rounded-lg border border-line bg-card px-3 py-1.5 text-xs font-semibold text-ink focus:border-indigo-500 focus:outline-none shadow-sm cursor-pointer"
+              >
+                {COMPONENTS.map(c => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Time Horizon</span>
+              <div className="flex items-center gap-1 rounded-lg border border-line bg-muted p-1">
+                {HOURS_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setHours(opt.value)}
+                    className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
+                      hours === opt.value
+                        ? 'bg-indigo-500 text-white shadow-sm'
+                        : 'text-ink-soft hover:text-ink'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Time window */}
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint mb-2">Time Window</p>
-            <div className="flex items-center gap-1 rounded-lg border border-line bg-muted p-1 w-fit">
-              {HOURS_OPTIONS.map(opt => (
-                <button
-                  key={opt.value}
-                  onClick={() => setHours(opt.value)}
-                  className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
-                    hours === opt.value
-                      ? 'bg-indigo-500 text-white shadow-sm'
-                      : 'text-ink-soft hover:text-ink'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+          <div className="text-[11px] text-ink-faint">
+            Telemetry Target: <strong className="text-indigo-600 font-semibold">{component}</strong>
           </div>
         </div>
 
@@ -352,6 +353,13 @@ export default function PredictionPage() {
             </div>
           )}
         </div>
+
+        {/* ── Traffic Overview ────────────────────────────────────────────── */}
+        <TrafficChart
+          trafficData={trafficData}
+          isLoading={trafficLoading}
+          component={component}
+        />
 
         {/* ── Legend ────────────────────────────────────────────────────────── */}
         <div className="flex flex-wrap items-center gap-5 text-[11px] text-ink-faint">
