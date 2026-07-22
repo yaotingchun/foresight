@@ -95,11 +95,11 @@ async def chat_with_ai(payload: ChatPayload):
 from typing import Optional
 
 @app.get("/api/forecast/metrics")
-async def forecast_metrics(component: str, metric: str = "cpu_pct", hours: int = 24):
+async def forecast_metrics(component: str, metric: str = "cpu_pct", hours: int = 24, forecast_minutes: int = 30):
     from server.services.forecast_service import get_metric_forecast
     try:
         data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
-        result = get_metric_forecast(data_dir, component, metric, hours)
+        result = get_metric_forecast(data_dir, component, metric, hours, forecast_minutes)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

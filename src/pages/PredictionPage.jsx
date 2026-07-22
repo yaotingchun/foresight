@@ -31,6 +31,14 @@ const HOURS_OPTIONS = [
   { value: 48, label: 'Last 48 h' },
 ]
 
+const FORECAST_OPTIONS = [
+  { value: 30, label: '30 min' },
+  { value: 60, label: '1 hour' },
+  { value: 360, label: '6 hours' },
+  { value: 720, label: '12 hours' },
+  { value: 1440, label: '1 day' },
+]
+
 function InlineMarkdown({ text }) {
   if (!text) return null
   const parts = text.split(/(\*\*[^*]+\*\*)/)
@@ -187,6 +195,7 @@ export default function PredictionPage() {
   const {
     component, setComponent,
     hours, setHours,
+    forecastMinutes, setForecastMinutes,
     charts, summary, systemAnalysis,
     trafficData,
     summaryLoading, chartsLoading, systemLoading,
@@ -271,6 +280,25 @@ export default function PredictionPage() {
                     onClick={() => setHours(opt.value)}
                     className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
                       hours === opt.value
+                        ? 'bg-indigo-500 text-white shadow-sm'
+                        : 'text-ink-soft hover:text-ink'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Forecast Horizon</span>
+              <div className="flex items-center gap-1 rounded-lg border border-line bg-muted p-1">
+                {FORECAST_OPTIONS.map(opt => (
+                  <button
+                    key={opt.value}
+                    onClick={() => setForecastMinutes(opt.value)}
+                    className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
+                      forecastMinutes === opt.value
                         ? 'bg-indigo-500 text-white shadow-sm'
                         : 'text-ink-soft hover:text-ink'
                     }`}
@@ -369,7 +397,7 @@ export default function PredictionPage() {
           </span>
           <span className="flex items-center gap-1.5">
             <span className="inline-block w-7 h-0" style={{ borderTop: '2px dashed #8b5cf6' }} />
-            Forecast (next 30 min)
+            Forecast (next {forecastMinutes} min)
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-3 w-7 rounded inline-block border border-red-300 bg-red-50" />

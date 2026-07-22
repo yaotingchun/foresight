@@ -97,25 +97,62 @@ def _anomaly_windows(flagged_df: pd.DataFrame, gap_minutes: int = 5) -> list[dic
 
 def _build_forecast(historical: pd.Series, horizon_minutes: int = 30) -> dict:
     """
-    Rolling-mean extrapolation with a ±1.5-sigma confidence band.
-    Returns {times, values, lower, upper}.
+    Damped linear regression trend projection with widening uncertainty bands.
+    Estimates the velocity of the metric from recent history and projects it.
     """
     window = min(60, len(historical))
-    last_val = float(historical.iloc[-window:].mean())
-    std_val = float(historical.iloc[-window:].std()) if window > 1 else last_val * 0.05
-    if np.isnan(std_val):
-        std_val = abs(last_val) * 0.05 + 0.01
+    if window < 2:
+        # Fallback if too few points
+        val = float(historical.iloc[-1]) if len(historical) else 0.0
+        times = [(pd.to_datetime(historical.index[-1]) + timedelta(minutes=i*2)).isoformat() for i in range(1, 16)]
+        return {"times": times, "values": [val]*15, "lower": [val]*15, "upper": [val]*15}
 
+    y = historical.iloc[-window:].values
+    times_series = pd.to_datetime(historical.index[-window:])
+    
+    # Time delta in seconds from the start of the window
+    ts_seconds = (times_series - times_series[0]).total_seconds().values
+    
+    # Fit linear regression line to find current velocity (slope)
+    try:
+        slope, intercept = np.polyfit(ts_seconds, y, 1)
+    except Exception:
+        slope = 0.0
+
+    std_val = float(historical.iloc[-window:].std()) if window > 1 else y[-1] * 0.05
+    if np.isnan(std_val) or std_val == 0:
+        std_val = abs(y[-1]) * 0.05 + 0.01
+
+    last_val = float(y[-1])
     last_ts = pd.to_datetime(historical.index[-1])
-    step = timedelta(minutes=2)
-    steps = horizon_minutes // 2
 
+    # Dynamic step sizing
+    if horizon_minutes >= 1440:
+        step_mins = 30
+    elif horizon_minutes >= 360:
+        step_mins = 10
+    else:
+        step_mins = 2
+
+    step = timedelta(minutes=step_mins)
+    steps = horizon_minutes // step_mins
+
+    # Dampening factor per step (e.g. 0.95) to prevent extreme forecasts over long ranges
+    phi = 0.95
+    
     times, values, lower, upper = [], [], [], []
+    damped_trend = 0.0
+    slope_per_step = slope * step.total_seconds()
+
     for i in range(1, steps + 1):
         t = last_ts + step * i
-        drift = std_val * 0.03 * i          # slight natural drift
-        mu = last_val + drift
-        band = std_val * 0.5 * (1 + i / steps)  # widening confidence band
+        # Accumulate damped slope projection
+        damped_trend += slope_per_step * (phi ** i)
+        mu = last_val + damped_trend
+        
+        # Uncertainty band expands with time
+        band = std_val * (1.5 + 0.15 * i)
+        
         times.append(t.isoformat())
         values.append(round(mu, 3))
         lower.append(round(max(0, mu - band), 3))
@@ -126,7 +163,7 @@ def _build_forecast(historical: pd.Series, horizon_minutes: int = 30) -> dict:
 
 # ── public API ─────────────────────────────────────────────────────────────
 
-def get_metric_forecast(data_dir: str, component_id: str, metric: str, hours: int = 24) -> dict:
+def get_metric_forecast(data_dir: str, component_id: str, metric: str, hours: int = 24, forecast_minutes: int = 30) -> dict:
     """Return historical + anomaly windows + forecast for one component/metric."""
     _ensure_loaded(data_dir)
 
@@ -179,7 +216,7 @@ def get_metric_forecast(data_dir: str, component_id: str, metric: str, hours: in
         f"({pct_anomalous}% of samples flagged)."
     )
 
-    forecast = _build_forecast(series)
+    forecast = _build_forecast(series, forecast_minutes)
 
     return {
         "component_id":   component_id,

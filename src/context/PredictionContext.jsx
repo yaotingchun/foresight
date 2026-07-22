@@ -16,6 +16,7 @@ export function PredictionProvider({ children }) {
   // ── Selector state (persisted) ──────────────────────────────────────────
   const [component, setComponent] = useState('api-gateway')
   const [hours, setHours]         = useState(24)
+  const [forecastMinutes, setForecastMinutes] = useState(30)
 
   // ── Fetched data (persisted across tab switches) ────────────────────────
   const [charts, setCharts]               = useState({})
@@ -33,14 +34,14 @@ export function PredictionProvider({ children }) {
   const [error, setError]                     = useState(null)
 
   // Track what we've already fetched to avoid duplicate requests
-  const chartsKey     = useRef(null) // `${component}-${hours}`
+  const chartsKey     = useRef(null) // `${component}-${hours}-${forecastMinutes}`
   const summaryKey    = useRef(null) // component
   const systemKey     = useRef(null) // hours
   const trafficKey    = useRef(null) // `${component}-${hours}`
   const bottleneckKey = useRef(null) // hours
 
-  const fetchCharts = useCallback(async (comp, h, force = false) => {
-    const key = `${comp}-${h}`
+  const fetchCharts = useCallback(async (comp, h, fm, force = false) => {
+    const key = `${comp}-${h}-${fm}`
     if (!force && chartsKey.current === key) return
     chartsKey.current = key
     setChartsLoading(true)
@@ -48,7 +49,7 @@ export function PredictionProvider({ children }) {
     try {
       const results = await Promise.all(
         METRICS.map(metric =>
-          fetch(`${BASE}/forecast/metrics?component=${encodeURIComponent(comp)}&metric=${metric}&hours=${h}`)
+          fetch(`${BASE}/forecast/metrics?component=${encodeURIComponent(comp)}&metric=${metric}&hours=${h}&forecast_minutes=${fm}`)
             .then(r => r.json())
         )
       )
@@ -136,10 +137,10 @@ export function PredictionProvider({ children }) {
     chartsKey.current = null
     summaryKey.current = null
     trafficKey.current = null
-    fetchCharts(component, hours)
+    fetchCharts(component, hours, forecastMinutes)
     fetchSummary(component)
     fetchTraffic(component, hours)
-  }, [component, fetchCharts, fetchSummary, fetchTraffic, hours])
+  }, [component, fetchCharts, fetchSummary, fetchTraffic, hours, forecastMinutes])
 
   // When hours changes → refetch everything
   useEffect(() => {
@@ -153,13 +154,20 @@ export function PredictionProvider({ children }) {
     systemKey.current = null
     trafficKey.current = null
     bottleneckKey.current = null
-    fetchCharts(component, hours)
+    fetchCharts(component, hours, forecastMinutes)
     fetchSummary(component)
     fetchSystemAnalysis(hours)
     fetchTraffic(component, hours)
     fetchBottleneck(hours)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hours])
+
+  // When forecastMinutes changes → refetch charts
+  useEffect(() => {
+    setCharts({})
+    chartsKey.current = null
+    fetchCharts(component, hours, forecastMinutes)
+  }, [forecastMinutes, fetchCharts, component, hours])
 
   // Initial load (only once)
   const didInit = useRef(false)
@@ -176,16 +184,17 @@ export function PredictionProvider({ children }) {
     systemKey.current     = null
     trafficKey.current    = null
     bottleneckKey.current = null
-    fetchCharts(component, hours, true)
+    fetchCharts(component, hours, forecastMinutes, true)
     fetchSummary(component, true)
     fetchSystemAnalysis(hours, true)
     fetchTraffic(component, hours, true)
     fetchBottleneck(hours, true)
-  }, [component, hours, fetchCharts, fetchSummary, fetchSystemAnalysis, fetchTraffic, fetchBottleneck])
+  }, [component, hours, forecastMinutes, fetchCharts, fetchSummary, fetchSystemAnalysis, fetchTraffic, fetchBottleneck])
 
   const value = {
     component, setComponent,
     hours, setHours,
+    forecastMinutes, setForecastMinutes,
     charts, summary, systemAnalysis, trafficData, bottleneckData,
     chartsLoading, summaryLoading, systemLoading, trafficLoading, bottleneckLoading,
     error,
