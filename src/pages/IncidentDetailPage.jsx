@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft, Clock, Search, ShieldAlert, GitBranch, Activity, Wrench,
-  CheckCircle2, AlertTriangle, TrendingUp, TrendingDown, ArrowUp, ArrowDown,
+  CheckCircle2, AlertTriangle, TrendingUp, TrendingDown, ArrowUp, ArrowDown, Loader2, Sparkles,
 } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 import { useSimulation } from '../context/SimulationContext'
 import {
   deriveIncidentStatus, chainNodesFor, rootDependencies,
@@ -12,6 +13,14 @@ import {
 import IncidentStatusBadge from '../components/incidents/IncidentStatusBadge'
 import DependencyChain from '../components/incidents/DependencyChain'
 import { NODE_BY_ID } from '../data/serviceMapData'
+import { api } from '../lib/api'
+
+const MarkdownComponents = {
+  p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+  ul: ({node, ...props}) => <ul className="list-disc pl-5 space-y-1.5 mb-2 last:mb-0" {...props} />,
+  li: ({node, ...props}) => <li className="text-ink-soft marker:text-indigo-400" {...props} />,
+  strong: ({node, ...props}) => <strong className="font-semibold text-ink" {...props} />,
+};
 
 function fmtClock(ms) {
   return new Date(ms).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
@@ -169,6 +178,8 @@ export default function IncidentDetailPage() {
 
   const incident = useMemo(() => incidents.find((inc) => inc.id === id), [incidents, id])
   const isLive = incident && !incident.frozenStatus
+  const isAnalyzing = incident?.isAnalyzing
+  const aiAnalysis = incident?.aiAnalysis
 
   useEffect(() => {
     if (!isLive) return undefined
@@ -187,6 +198,18 @@ export default function IncidentDetailPage() {
         >
           Back to Incidents
         </button>
+      </div>
+    )
+  }
+
+  if (isAnalyzing) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-4">
+        <Loader2 size={28} className="animate-spin text-indigo-500" />
+        <div className="flex flex-col items-center gap-1 text-center">
+          <p className="text-[14px] font-bold text-ink">AI Agent is analyzing the incident...</p>
+          <p className="text-[12px] text-ink-soft">Reviewing topology, metrics, and drafting a remediation plan.</p>
+        </div>
       </div>
     )
   }
@@ -235,11 +258,19 @@ export default function IncidentDetailPage() {
           <Timeline incident={incident} status={status} />
         </Section>
 
-        <Section icon={ShieldAlert} title="Root Cause Analysis">
-          <p className="text-[13px] leading-relaxed text-ink-soft">
-            <span className="font-semibold text-ink">{NODE_BY_ID[rootStage.component]?.label ?? rootStage.component}</span>
-            {' — '}{rootStage.faultType.replace(/_/g, ' ')} ({rootStage.severity}). {rootAnalysis?.rootCause}
-          </p>
+        <Section icon={ShieldAlert} title={<span className="flex items-center gap-2">Root Cause Analysis {aiAnalysis && <Sparkles size={14} className="text-indigo-500 animate-pulse" />}</span>}>
+          {isAnalyzing ? (
+             <div className="flex items-center gap-2 text-sm text-ink-soft"><Loader2 size={16} className="animate-spin" /> AI is analyzing root cause...</div>
+          ) : aiAnalysis ? (
+             <div className="text-[13px] leading-relaxed text-ink-soft p-3 rounded-lg bg-indigo-50/50 border border-indigo-100/50 shadow-sm">
+               <ReactMarkdown components={MarkdownComponents}>{aiAnalysis.rootCause}</ReactMarkdown>
+             </div>
+          ) : (
+            <p className="text-[13px] leading-relaxed text-ink-soft">
+              <span className="font-semibold text-ink">{NODE_BY_ID[rootStage.component]?.label ?? rootStage.component}</span>
+              {' — '}{rootStage.faultType.replace(/_/g, ' ')} ({rootStage.severity}). {rootAnalysis?.rootCause}
+            </p>
+          )}
         </Section>
 
         <Section icon={GitBranch} title="Dependency Analysis">
@@ -272,10 +303,17 @@ export default function IncidentDetailPage() {
           </div>
         </Section>
 
-        <Section icon={TrendingUp} title="Impact Analysis">
+        <Section icon={TrendingUp} title={<span className="flex items-center gap-2">Impact Analysis {aiAnalysis && <Sparkles size={14} className="text-indigo-500 animate-pulse" />}</span>}>
+          {isAnalyzing ? (
+             <div className="flex items-center gap-2 text-sm text-ink-soft mb-3"><Loader2 size={16} className="animate-spin" /> AI is calculating impact...</div>
+          ) : aiAnalysis ? (
+             <div className="text-[13px] leading-relaxed text-ink-soft mb-3 p-3 rounded-lg bg-indigo-50/50 border border-indigo-100/50 shadow-sm">
+               <ReactMarkdown components={MarkdownComponents}>{aiAnalysis.impact}</ReactMarkdown>
+             </div>
+          ) : null}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[
-              { label: 'Components affected', value: nodes.length },
+              { label: 'Components affected', value: aiAnalysis ? aiAnalysis.affectedServices.length : nodes.length },
               { label: 'Error logs generated', value: incident.impact.logErrors },
               { label: 'Tx flagged / blocked', value: `${incident.impact.txFlagged} / ${incident.impact.txBlocked}` },
               { label: 'Value at risk', value: fmtMoney(incident.impact.valueAtRisk) },
@@ -292,18 +330,43 @@ export default function IncidentDetailPage() {
           <MetricsTable incident={incident} />
         </Section>
 
-        <Section icon={Wrench} title="Remediation Plan">
-          <div className="flex flex-col gap-2.5">
-            {plan.map((p) => (
-              <div key={p.component} className="flex items-start gap-2.5 rounded-lg bg-muted/60 p-3">
-                <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
-                <div>
-                  <p className="text-[12.5px] font-semibold text-ink">{p.label}</p>
-                  <p className="text-[12px] text-ink-soft">{p.remediation}</p>
+        <Section icon={Wrench} title={<span className="flex items-center gap-2">Remediation Plan {aiAnalysis && <Sparkles size={14} className="text-indigo-500 animate-pulse" />}</span>}>
+          {isAnalyzing ? (
+             <div className="flex items-center gap-2 text-sm text-ink-soft"><Loader2 size={16} className="animate-spin" /> AI is drafting remediation plan...</div>
+          ) : aiAnalysis ? (
+             <div className="flex flex-col gap-2.5">
+              {aiAnalysis.remediationPlan.map((p, idx) => (
+                <div key={idx} className="flex items-start justify-between gap-4 rounded-lg bg-gradient-to-r from-indigo-50/80 to-transparent p-3 border-l-2 border-indigo-500 shadow-sm transition-all hover:translate-x-0.5">
+                  <div className="flex items-start gap-2.5">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-500" />
+                    <div>
+                      <p className="text-[12.5px] font-semibold text-ink mb-0.5">{p.step}</p>
+                      <div className="text-[12px] text-ink-soft">
+                        <ReactMarkdown components={MarkdownComponents}>{p.description}</ReactMarkdown>
+                      </div>
+                    </div>
+                  </div>
+                  {p.type === 'requires_approval' ? (
+                     <button className="rounded bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-md hover:bg-indigo-700 hover:shadow-lg transition-all active:scale-95 shrink-0">Approve</button>
+                  ) : (
+                     <span className="rounded bg-emerald-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-700 shrink-0 border border-emerald-200">Automated</span>
+                  )}
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2.5">
+              {plan.map((p) => (
+                <div key={p.component} className="flex items-start gap-2.5 rounded-lg bg-muted/60 p-3">
+                  <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
+                  <div>
+                    <p className="text-[12.5px] font-semibold text-ink">{p.label}</p>
+                    <p className="text-[12px] text-ink-soft">{p.remediation}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </Section>
 
         <Section icon={CheckCircle2} title="Effect of Remediation">
@@ -322,26 +385,34 @@ export default function IncidentDetailPage() {
           </div>
         </Section>
 
-        <Section icon={AlertTriangle} title="Flaws Detected">
-          <ul className="flex flex-col gap-1.5">
-            {flaws.map((f) => (
-              <li key={f} className="flex items-start gap-2 text-[12.5px] text-ink-soft">
-                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-red-400" />
-                {f}
-              </li>
-            ))}
-          </ul>
+        <Section icon={AlertTriangle} title={<span className="flex items-center gap-2">Flaws Detected {aiAnalysis && <Sparkles size={14} className="text-indigo-500 animate-pulse" />}</span>}>
+          {isAnalyzing ? (
+             <div className="flex items-center gap-2 text-sm text-ink-soft"><Loader2 size={16} className="animate-spin" /> AI is identifying flaws...</div>
+          ) : (
+            <ul className="flex flex-col gap-1.5">
+              {(aiAnalysis ? aiAnalysis.flawsDetected : flaws).map((f) => (
+                <li key={f} className="flex items-start gap-2 text-[12.5px] text-ink-soft">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-red-400" />
+                  <ReactMarkdown components={{ p: 'span' }}>{f}</ReactMarkdown>
+                </li>
+              ))}
+            </ul>
+          )}
         </Section>
 
-        <Section icon={ShieldAlert} title="Preventive Measures">
-          <ul className="flex flex-col gap-1.5">
-            {preventiveMeasures.map((p) => (
-              <li key={p} className="flex items-start gap-2 text-[12.5px] text-ink-soft">
-                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
-                {p}
-              </li>
-            ))}
-          </ul>
+        <Section icon={ShieldAlert} title={<span className="flex items-center gap-2">Preventive Measures {aiAnalysis && <Sparkles size={14} className="text-indigo-500 animate-pulse" />}</span>}>
+          {isAnalyzing ? (
+             <div className="flex items-center gap-2 text-sm text-ink-soft"><Loader2 size={16} className="animate-spin" /> AI is formulating preventive measures...</div>
+          ) : (
+            <ul className="flex flex-col gap-1.5">
+              {(aiAnalysis ? aiAnalysis.preventiveMeasures : preventiveMeasures).map((p) => (
+                <li key={p} className="flex items-start gap-2 text-[12.5px] text-ink-soft">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-emerald-400" />
+                  <ReactMarkdown components={{ p: 'span' }}>{p}</ReactMarkdown>
+                </li>
+              ))}
+            </ul>
+          )}
         </Section>
       </div>
     </div>

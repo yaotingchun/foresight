@@ -53,5 +53,24 @@ export const api = {
       console.error('API Error (predictOutage):', error);
       throw error;
     }
+  },
+
+  /**
+   * Analyze an incident using AI
+   * @param {Object} incident 
+   */
+  async analyzeIncident(incident) {
+    try {
+      const response = await fetch('/api/analyze-incident', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(incident),
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      return await response.json();
+    } catch (error) {
+      console.error('API Error (analyzeIncident):', error);
+      throw error;
+    }
   }
 };

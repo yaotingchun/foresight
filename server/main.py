@@ -69,6 +69,16 @@ async def predict_outage(metrics: MetricsPayload):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/analyze-incident")
+async def analyze_incident(incident: dict):
+    from server.services.remediation_ai import analyze_incident_with_ai
+    try:
+        topology = ml_service.topology or {}
+        result = analyze_incident_with_ai(incident, topology)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
     # Run from root dir: python -m server.main

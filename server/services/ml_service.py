@@ -28,6 +28,15 @@ class MLService:
         transactions_path = os.path.join(data_dir, "transactions.csv")
         if os.path.exists(transactions_path):
             txns = pd.read_csv(transactions_path)
+            # Map schema to match what FraudDetector expects
+            txns = txns.rename(columns={
+                "id": "transaction_id",
+                "src": "account_id",
+                "dst": "dest_account",
+                "is_fraud": "is_fraud_label"
+            })
+            if "source_account" not in txns.columns:
+                txns["source_account"] = txns["account_id"]
             self.fraud_detector.fit(txns)
             print(f"FraudDetector initialized with {len(txns)} transactions.")
         else:
@@ -37,6 +46,12 @@ class MLService:
         metrics_path = os.path.join(data_dir, "infra_metrics.csv")
         if os.path.exists(metrics_path):
             metrics = pd.read_csv(metrics_path, parse_dates=["timestamp"])
+            # Map schema to match what OutageDetector expects
+            metrics = metrics.rename(columns={
+                "error_rate_pct": "error_rate"
+            })
+            if "log_error_rate_per_min" not in metrics.columns:
+                metrics["log_error_rate_per_min"] = 0.0 # Fill missing expected feature
             self.outage_detector.fit(metrics)
             print(f"OutageDetector initialized with {len(metrics)} metric records.")
         else:

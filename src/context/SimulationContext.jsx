@@ -5,6 +5,7 @@ import {
   computeEffectMetrics, randomTxAmount,
 } from '../data/simulationEngine'
 import { NODE_BY_ID } from '../data/serviceMapData'
+import { api } from '../lib/api'
 
 /**
  * Drives the "Simulate Event" drawer AND the Incidents page: turns a
@@ -66,6 +67,9 @@ function buildIncidentRecord(scenario, stages, runStart) {
     beforeMetrics: before,
     peakMetrics: peak,
     impact: { txTotal: 0, txFlagged: 0, txBlocked: 0, valueAtRisk: 0, logTotal: 0, logErrors: 0 },
+    aiAnalysis: null,
+    isAnalyzing: true,
+    analysisError: null,
   }
 }
 
@@ -224,6 +228,13 @@ export function SimulationProvider({ children }) {
     setIncidents((prev) => [record, ...prev].slice(0, MAX_INCIDENTS))
     setTick(0)
     setActiveRun({ scenario, runStart, stages, endAt: record.endAt, status: 'running' })
+
+    // Fire off AI analysis in the background immediately
+    api.analyzeIncident(record).then(data => {
+      setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false } : p))
+    }).catch(err => {
+      setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, analysisError: err.message, isAnalyzing: false } : p))
+    })
   }, [])
 
   const stopScenario = useCallback(() => {
