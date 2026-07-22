@@ -212,6 +212,105 @@ function MetricsTable({ incident }) {
   )
 }
 
+function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
+  const { setExperienceLogs } = useSettings()
+  const [feedbackMode, setFeedbackMode] = useState(false)
+  const [feedbackText, setFeedbackText] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+
+  const mockConfidence = Math.max(0, 95 - (idx * 12))
+  const escalationTarget = resolveEscalationTeam(incident, escalation.routingRules)
+  
+  let liveType = 'requires_approval'
+  if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+  else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+
+  const handleDisapprove = () => setFeedbackMode(true)
+  
+  const handleSubmitFeedback = () => {
+    if (!feedbackText.trim()) return
+    setExperienceLogs(prev => [...prev, {
+      timestamp: new Date().toISOString(),
+      incidentContext: incident.title,
+      rejectedStep: p.step,
+      userFeedback: feedbackText
+    }])
+    setSubmitted(true)
+    setFeedbackMode(false)
+  }
+
+  return (
+    <div className="flex flex-col gap-4 p-5 rounded-xl border border-line bg-card shadow-sm hover:shadow-md hover:border-indigo-100 transition-all">
+      <div className="flex flex-col md:flex-row items-start justify-between gap-6">
+        <div className="flex items-start gap-4">
+          <span className="mt-0.5 h-8 w-8 shrink-0 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[13px] font-bold text-indigo-600 shadow-sm">{idx + 1}</span>
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <p className="text-[15px] font-bold text-ink">{p.step}</p>
+              <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">
+                Confidence: {mockConfidence}%
+              </span>
+            </div>
+            <div className="text-[14px] leading-relaxed text-ink-soft max-w-4xl prose-p:mb-2">
+              <ReactMarkdown components={MarkdownComponents}>{ensureString(p.description)}</ReactMarkdown>
+            </div>
+          </div>
+        </div>
+        
+        {liveType === 'requires_approval' && !submitted && !feedbackMode && (
+          <div className="flex gap-2.5 shrink-0 self-start md:self-center">
+             <button className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95">
+               <CheckCircle2 size={16} /> Approve
+             </button>
+             <button onClick={handleDisapprove} className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-4 py-2 text-[13px] font-bold text-ink-soft shadow-sm hover:bg-muted hover:text-ink transition-all active:scale-95">
+               <X size={16} /> Disapprove
+             </button>
+          </div>
+        )}
+        {liveType === 'automated' && (
+           <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-emerald-600 shrink-0 border border-emerald-200 self-start md:self-center">Automated</span>
+        )}
+        {liveType === 'escalated' && (
+           <span className="rounded-full bg-red-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-red-600 shrink-0 border border-red-200 self-start md:self-center">
+             Escalated to {escalationTarget}
+           </span>
+        )}
+        {submitted && (
+           <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-500 shrink-0 border border-slate-200 self-start md:self-center">Feedback Recorded</span>
+        )}
+      </div>
+
+      {feedbackMode && (
+        <div className="ml-12 mt-2 bg-slate-50 border border-line p-4 rounded-lg animate-slide-fade">
+          <p className="text-xs font-bold text-ink mb-2">Why are you rejecting this step? What should the AI do instead?</p>
+          <div className="flex gap-2">
+            <input 
+              type="text" 
+              value={feedbackText}
+              onChange={e => setFeedbackText(e.target.value)}
+              placeholder="e.g. Never drop tables, flush cache instead." 
+              className="flex-1 rounded border border-line px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
+              autoFocus
+            />
+            <button 
+              onClick={handleSubmitFeedback}
+              className="rounded bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition-colors"
+            >
+              Submit Feedback
+            </button>
+            <button 
+              onClick={() => setFeedbackMode(false)}
+              className="rounded border border-line bg-white px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function IncidentDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -401,51 +500,10 @@ export default function IncidentDetailPage() {
             {isAnalyzing ? (
                <div className="flex items-center gap-2 text-sm text-ink-soft py-2"><Loader2 size={16} className="animate-spin" /> AI is drafting remediation plan...</div>
             ) : aiAnalysis ? (
-               <div className="flex flex-col gap-4 mt-2">
-                {aiAnalysis.remediationPlan.map((p, idx) => {
-                  const mockConfidence = Math.max(0, 95 - (idx * 12))
-                  const escalationTarget = resolveEscalationTeam(incident, escalation.routingRules)
-                  
-                  let liveType = 'requires_approval'
-                  if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
-                  else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
-
-                  return (
-                  <div key={idx} className="flex flex-col md:flex-row items-start justify-between gap-6 p-5 rounded-xl border border-line bg-card shadow-sm hover:shadow-md hover:border-indigo-100 transition-all">
-                    <div className="flex items-start gap-4">
-                      <span className="mt-0.5 h-8 w-8 shrink-0 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[13px] font-bold text-indigo-600 shadow-sm">{idx + 1}</span>
-                      <div>
-                        <div className="flex items-center gap-3 mb-2">
-                          <p className="text-[15px] font-bold text-ink">{p.step}</p>
-                          <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">
-                            Confidence: {mockConfidence}%
-                          </span>
-                        </div>
-                        <div className="text-[14px] leading-relaxed text-ink-soft max-w-4xl prose-p:mb-2">
-                          <ReactMarkdown components={MarkdownComponents}>{ensureString(p.description)}</ReactMarkdown>
-                        </div>
-                      </div>
-                    </div>
-                    {liveType === 'requires_approval' && (
-                      <div className="flex gap-2.5 shrink-0 self-start md:self-center">
-                         <button className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95">
-                           <CheckCircle2 size={16} /> Approve
-                         </button>
-                         <button className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-4 py-2 text-[13px] font-bold text-ink-soft shadow-sm hover:bg-muted hover:text-ink transition-all active:scale-95">
-                           <X size={16} /> Disapprove
-                         </button>
-                      </div>
-                    )}
-                    {liveType === 'automated' && (
-                       <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-emerald-600 shrink-0 border border-emerald-200 self-start md:self-center">Automated</span>
-                    )}
-                    {liveType === 'escalated' && (
-                       <span className="rounded-full bg-red-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-red-600 shrink-0 border border-red-200 self-start md:self-center">
-                         Escalated to {escalationTarget}
-                       </span>
-                    )}
-                  </div>
-                )})}
+             <div className="flex flex-col gap-4 mt-2">
+                {aiAnalysis.remediationPlan.map((p, idx) => (
+                  <RemediationStep key={idx} p={p} idx={idx} riskTiers={riskTiers} escalation={escalation} incident={incident} />
+                ))}
               </div>
             ) : (
               <div className="flex flex-col gap-2.5">

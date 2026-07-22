@@ -61,6 +61,10 @@ def analyze_incident_with_ai(incident: dict, topology: dict):
     
     Business Context & Rules (RAG):
     {json.dumps(incident.get("businessContext", {}), indent=2)}
+    
+    Experience Memory (Human Feedback from past incidents):
+    {json.dumps(incident.get("experienceLogs", []), indent=2)}
+    *CRITICAL INSTRUCTION*: Before formulating your remediation plan, review the Experience Memory above. If a user has explicitly rejected or disapproved of a specific action in the past, you MUST avoid suggesting that same action again, and instead incorporate their provided feedback into your new plan.
 
     Please respond with a JSON object strictly matching this schema:
     {{

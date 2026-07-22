@@ -22,10 +22,10 @@ const defaultAllowedActions = {
 const defaultDataSources = { 
   metrics: true, 
   logs: true, 
-  transactions: true, 
   network: false, 
   security: false 
 }
+const defaultExperienceLogs = []
 
 export function SettingsProvider({ children }) {
   const [thresholds, setThresholds] = useState(defaultThresholds)
@@ -34,6 +34,7 @@ export function SettingsProvider({ children }) {
   const [businessContext, setBusinessContext] = useState(defaultBusinessContext)
   const [allowedActions, setAllowedActions] = useState(defaultAllowedActions)
   const [dataSources, setDataSources] = useState(defaultDataSources)
+  const [experienceLogs, setExperienceLogs] = useState(defaultExperienceLogs)
 
   const value = useMemo(() => ({
     thresholds,
@@ -47,8 +48,10 @@ export function SettingsProvider({ children }) {
     allowedActions,
     setAllowedActions,
     dataSources,
-    setDataSources
-  }), [thresholds, riskTiers, escalation, businessContext, allowedActions, dataSources])
+    setDataSources,
+    experienceLogs,
+    setExperienceLogs
+  }), [thresholds, riskTiers, escalation, businessContext, allowedActions, dataSources, experienceLogs])
 
   return (
     <SettingsContext.Provider value={value}>

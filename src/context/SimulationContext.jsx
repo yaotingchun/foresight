@@ -78,7 +78,7 @@ export function SimulationProvider({ children }) {
   const [logEvents, setLogEvents] = useState([])
   const [txEvents, setTxEvents] = useState([])
   const [incidents, setIncidents] = useState(loadStoredIncidents)
-  const { businessContext } = useSettings()
+  const { businessContext, experienceLogs } = useSettings()
   const rtSeq = useRef(0)
   const activeIncidentIdRef = useRef(null)
 
@@ -229,12 +229,12 @@ export function SimulationProvider({ children }) {
     setActiveRun({ scenario, runStart, stages, endAt: record.endAt, status: 'running' })
 
     // Fire off AI analysis in the background immediately
-    api.analyzeIncident({ ...record, businessContext }).then(data => {
+    api.analyzeIncident({ ...record, businessContext, experienceLogs }).then(data => {
       setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false } : p))
     }).catch(err => {
       setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, analysisError: err.message, isAnalyzing: false } : p))
     })
-  }, [businessContext])
+  }, [businessContext, experienceLogs])
 
   const stopScenario = useCallback(() => {
     const incidentId = activeIncidentIdRef.current

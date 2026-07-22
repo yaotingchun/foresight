@@ -4,7 +4,7 @@ import {
   Settings2, SlidersHorizontal, Share2, 
   BellRing, Activity, Terminal, CreditCard, 
   Network, Shield, Bot, Plus, Trash2,
-  Upload, FileText
+  Upload, FileText, BrainCircuit
 } from 'lucide-react'
 
 function Toggle({ checked, onChange }) {
@@ -283,6 +283,41 @@ function DataSourcesSettings({ dataSources, setDataSources }) {
   )
 }
 
+function AdaptiveLearningSettings({ experienceLogs }) {
+  return (
+    <div className="flex flex-col gap-6 animate-slide-fade">
+      <div>
+        <h3 className="text-sm font-bold text-ink mb-1">Experience Memory</h3>
+        <p className="text-xs text-slate-500 mb-4">Read-only log of AI lessons learned from human feedback.</p>
+        
+        {(!experienceLogs || experienceLogs.length === 0) ? (
+          <div className="text-center py-10 border border-dashed border-slate-300 rounded-lg text-slate-400 text-xs">
+            No feedback recorded yet. Disapprove an AI remediation step to teach it.
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {experienceLogs.map((log, idx) => (
+              <div key={idx} className="flex flex-col gap-2 p-3 rounded-lg border border-line bg-slate-50">
+                <div className="flex items-center gap-2">
+                  <BrainCircuit size={14} className="text-indigo-500" />
+                  <span className="text-xs font-bold text-ink">{log.incidentContext || 'General Context'}</span>
+                  <span className="text-[10px] text-slate-400 ml-auto">{new Date(log.timestamp).toLocaleString()}</span>
+                </div>
+                <div className="text-xs text-slate-600">
+                  <span className="font-semibold text-red-500">Rejected: </span> {log.rejectedStep}
+                </div>
+                <div className="text-xs text-slate-600">
+                  <span className="font-semibold text-emerald-600">Feedback: </span> {log.userFeedback}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('general')
   const {
@@ -291,14 +326,16 @@ export default function SettingsPage() {
     escalation, setEscalation,
     businessContext, setBusinessContext,
     allowedActions, setAllowedActions,
-    dataSources, setDataSources
+    dataSources, setDataSources,
+    experienceLogs
   } = useSettings()
 
   const tabs = [
     { id: 'general', label: 'General', icon: Settings2 },
     { id: 'automation', label: 'AI Automation', icon: Bot },
     { id: 'routing', label: 'Escalation Routing', icon: BellRing },
-    { id: 'datasources', label: 'Data Sources', icon: Share2 }
+    { id: 'datasources', label: 'Data Sources', icon: Share2 },
+    { id: 'learning', label: 'Adaptive Learning', icon: BrainCircuit }
   ]
 
   return (
@@ -343,8 +380,11 @@ export default function SettingsPage() {
             {activeTab === 'routing' && (
               <RoutingSettings escalation={escalation} setEscalation={setEscalation} />
             )}
-            {activeTab === 'datasources' && (
+            { activeTab === 'datasources' && (
               <DataSourcesSettings dataSources={dataSources} setDataSources={setDataSources} />
+            )}
+            { activeTab === 'learning' && (
+              <AdaptiveLearningSettings experienceLogs={experienceLogs} />
             )}
           </div>
         </div>
