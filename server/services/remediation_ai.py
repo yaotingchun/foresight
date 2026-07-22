@@ -58,6 +58,9 @@ def analyze_incident_with_ai(incident: dict, topology: dict):
 
     Monitoring Data (Anomalies & Metrics before/during the incident):
     {json.dumps(sanitized_incident, indent=2)}
+    
+    Business Context & Rules (RAG):
+    {json.dumps(incident.get("businessContext", {}), indent=2)}
 
     Please respond with a JSON object strictly matching this schema:
     {{

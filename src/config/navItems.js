@@ -20,5 +20,5 @@ export const navItems = [
   { path: '/financial-monitor', label: 'Financial Monitor', icon: CircleDollarSign, built: true },
   { path: '/incidents', label: 'Incidents', icon: AlertOctagon, built: true },
   { path: '/reports', label: 'Reports', icon: FileBarChart },
-  { path: '/settings', label: 'Settings', icon: Settings },
+  { path: '/settings', label: 'Settings', icon: Settings, built: true },
 ]

@@ -1,11 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { SCENARIOS, SCENARIOS_BY_ID, FAULT_EFFECTS, SEVERITY_MULT } from '../data/simulationScenarios'
-import {
-  buildStages, stageProgress, healthFromSeverity, peakSeverity,
-  computeEffectMetrics, randomTxAmount,
-} from '../data/simulationEngine'
+import { buildStages, stageProgress, healthFromSeverity, peakSeverity, computeEffectMetrics, randomTxAmount } from '../data/simulationEngine'
 import { NODE_BY_ID } from '../data/serviceMapData'
 import { api } from '../lib/api'
+import { useSettings } from './SettingsContext'
 
 /**
  * Drives the "Simulate Event" drawer AND the Incidents page: turns a
@@ -80,6 +78,7 @@ export function SimulationProvider({ children }) {
   const [logEvents, setLogEvents] = useState([])
   const [txEvents, setTxEvents] = useState([])
   const [incidents, setIncidents] = useState(loadStoredIncidents)
+  const { businessContext } = useSettings()
   const rtSeq = useRef(0)
   const activeIncidentIdRef = useRef(null)
 
@@ -230,12 +229,12 @@ export function SimulationProvider({ children }) {
     setActiveRun({ scenario, runStart, stages, endAt: record.endAt, status: 'running' })
 
     // Fire off AI analysis in the background immediately
-    api.analyzeIncident(record).then(data => {
+    api.analyzeIncident({ ...record, businessContext }).then(data => {
       setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false } : p))
     }).catch(err => {
       setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, analysisError: err.message, isAnalyzing: false } : p))
     })
-  }, [])
+  }, [businessContext])
 
   const stopScenario = useCallback(() => {
     const incidentId = activeIncidentIdRef.current

@@ -9,11 +9,14 @@ import IncidentDetailPage from './pages/IncidentDetailPage'
 import ComingSoon from './pages/ComingSoon'
 import { navItems } from './config/navItems'
 import { SimulationProvider } from './context/SimulationContext'
+import { SettingsProvider } from './context/SettingsContext'
+import SettingsPage from './pages/SettingsPage'
 
 export default function App() {
   return (
-    <SimulationProvider>
-      <BrowserRouter>
+    <SettingsProvider>
+      <SimulationProvider>
+        <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Navigate to="/overview" replace />} />
@@ -23,6 +26,7 @@ export default function App() {
             <Route path="/financial-monitor" element={<FinancialMonitorPage />} />
             <Route path="/incidents" element={<IncidentsPage />} />
             <Route path="/incidents/:id" element={<IncidentDetailPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
 
             {navItems
               .filter((item) => !item.built)
@@ -37,7 +41,8 @@ export default function App() {
             <Route path="*" element={<Navigate to="/overview" replace />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </SimulationProvider>
+        </BrowserRouter>
+      </SimulationProvider>
+    </SettingsProvider>
   )
 }

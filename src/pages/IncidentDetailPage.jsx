@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import { useSimulation } from '../context/SimulationContext'
+import { useSettings } from '../context/SettingsContext'
 import {
   deriveIncidentStatus, chainNodesFor, rootDependencies,
   aggregatedAnalysis, remediationPlan,
@@ -146,6 +147,25 @@ function Timeline({ incident, status }) {
     </div>
   )
 }
+function resolveEscalationTeam(incident, routingRules = []) {
+  if (!incident || !routingRules.length) return 'Default On-Call';
+  
+  const affected = incident.stages.map(s => s.component);
+  
+  for (const rule of routingRules) {
+    if (!rule.serviceMatch) continue;
+    const pattern = rule.serviceMatch.replace(/\*/g, '.*');
+    try {
+      const regex = new RegExp(`^${pattern}$`);
+      if (affected.some(c => regex.test(c))) {
+        return `${rule.team} (${rule.emails})`;
+      }
+    } catch {
+      continue;
+    }
+  }
+  return 'Default On-Call';
+}
 
 function MetricsTable({ incident }) {
   const components = [...new Set(incident.stages.map((s) => s.component))]
@@ -196,6 +216,7 @@ export default function IncidentDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { incidents } = useSimulation()
+  const { riskTiers, escalation } = useSettings()
   const [, setTock] = useState(0)
 
   const incident = useMemo(() => incidents.find((inc) => inc.id === id), [incidents, id])
@@ -381,18 +402,31 @@ export default function IncidentDetailPage() {
                <div className="flex items-center gap-2 text-sm text-ink-soft py-2"><Loader2 size={16} className="animate-spin" /> AI is drafting remediation plan...</div>
             ) : aiAnalysis ? (
                <div className="flex flex-col gap-4 mt-2">
-                {aiAnalysis.remediationPlan.map((p, idx) => (
+                {aiAnalysis.remediationPlan.map((p, idx) => {
+                  const mockConfidence = Math.max(0, 95 - (idx * 12))
+                  const escalationTarget = resolveEscalationTeam(incident, escalation.routingRules)
+                  
+                  let liveType = 'requires_approval'
+                  if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+                  else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+
+                  return (
                   <div key={idx} className="flex flex-col md:flex-row items-start justify-between gap-6 p-5 rounded-xl border border-line bg-card shadow-sm hover:shadow-md hover:border-indigo-100 transition-all">
                     <div className="flex items-start gap-4">
                       <span className="mt-0.5 h-8 w-8 shrink-0 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center text-[13px] font-bold text-indigo-600 shadow-sm">{idx + 1}</span>
                       <div>
-                        <p className="text-[15px] font-bold text-ink mb-2">{p.step}</p>
+                        <div className="flex items-center gap-3 mb-2">
+                          <p className="text-[15px] font-bold text-ink">{p.step}</p>
+                          <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full border border-slate-200">
+                            Confidence: {mockConfidence}%
+                          </span>
+                        </div>
                         <div className="text-[14px] leading-relaxed text-ink-soft max-w-4xl prose-p:mb-2">
                           <ReactMarkdown components={MarkdownComponents}>{ensureString(p.description)}</ReactMarkdown>
                         </div>
                       </div>
                     </div>
-                    {p.type === 'requires_approval' ? (
+                    {liveType === 'requires_approval' && (
                       <div className="flex gap-2.5 shrink-0 self-start md:self-center">
                          <button className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95">
                            <CheckCircle2 size={16} /> Approve
@@ -401,11 +435,17 @@ export default function IncidentDetailPage() {
                            <X size={16} /> Disapprove
                          </button>
                       </div>
-                    ) : (
+                    )}
+                    {liveType === 'automated' && (
                        <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-emerald-600 shrink-0 border border-emerald-200 self-start md:self-center">Automated</span>
                     )}
+                    {liveType === 'escalated' && (
+                       <span className="rounded-full bg-red-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-red-600 shrink-0 border border-red-200 self-start md:self-center">
+                         Escalated to {escalationTarget}
+                       </span>
+                    )}
                   </div>
-                ))}
+                )})}
               </div>
             ) : (
               <div className="flex flex-col gap-2.5">
