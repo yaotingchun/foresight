@@ -104,9 +104,8 @@ Unlike traditional Application Performance Monitoring (APM) tools (like Datadog 
 ## 🏗️ System Architecture
 
 <p align="center">
-  <img src="public/Foresight_Architecture_Diagram.png" alt="System Architecture Diagram" width="800" />
+  <img src="public/Foresight_Architecture Diagram.png" alt="System Architecture Diagram" width="800" />
   <br/>
-  <em>(Replace `public/Architecture_Diagram.png` with your actual architecture diagram file)</em>
 </p>
 
 ---
