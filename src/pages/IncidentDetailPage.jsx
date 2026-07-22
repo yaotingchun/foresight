@@ -214,9 +214,11 @@ function MetricsTable({ incident }) {
 
 function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
   const { setExperienceLogs } = useSettings()
+  const { stopScenario, activeRun } = useSimulation()
   const [feedbackMode, setFeedbackMode] = useState(false)
   const [feedbackText, setFeedbackText] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [approved, setApproved] = useState(false)
 
   const mockConfidence = Math.max(0, 95 - (idx * 12))
   const escalationTarget = resolveEscalationTeam(incident, escalation.routingRules)
@@ -224,6 +226,15 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
   let liveType = 'requires_approval'
   if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
   else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+
+  const handleApprove = () => {
+    setApproved(true)
+    // If this is the currently active live simulation run, mitigate/resolve it immediately
+    const isActiveRun = activeRun && incident.id === `${activeRun.scenario.id}-${activeRun.runStart}`
+    if (isActiveRun) {
+      stopScenario()
+    }
+  }
 
   const handleDisapprove = () => setFeedbackMode(true)
   
@@ -257,9 +268,9 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
           </div>
         </div>
         
-        {liveType === 'requires_approval' && !submitted && !feedbackMode && (
+        {liveType === 'requires_approval' && !submitted && !approved && !feedbackMode && (
           <div className="flex gap-2.5 shrink-0 self-start md:self-center">
-             <button className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95">
+             <button onClick={handleApprove} className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95">
                <CheckCircle2 size={16} /> Approve
              </button>
              <button onClick={handleDisapprove} className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-4 py-2 text-[13px] font-bold text-ink-soft shadow-sm hover:bg-muted hover:text-ink transition-all active:scale-95">
@@ -277,6 +288,11 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
         )}
         {submitted && (
            <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-500 shrink-0 border border-slate-200 self-start md:self-center">Feedback Recorded</span>
+        )}
+        {approved && (
+           <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-emerald-600 shrink-0 border border-emerald-200 self-start md:self-center flex items-center gap-1">
+             <CheckCircle2 size={12} className="text-emerald-500" /> Approved & Executed
+           </span>
         )}
       </div>
 
