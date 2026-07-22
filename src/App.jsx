@@ -9,10 +9,12 @@ import IncidentDetailPage from './pages/IncidentDetailPage'
 import SettingsPage from './pages/SettingsPage'
 import ComingSoon from './pages/ComingSoon'
 import LandingPage from './pages/LandingPage'
+import PredictionPage from './pages/PredictionPage'
 import { navItems } from './config/navItems'
 import { SimulationProvider } from './context/SimulationContext'
 import { SettingsProvider } from './context/SettingsContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { PredictionProvider } from './context/PredictionContext'
 
 function AppRouter() {
   const { isAuthenticated } = useAuth()
@@ -38,6 +40,7 @@ function AppRouter() {
           <Route path="/financial-monitor" element={<FinancialMonitorPage />} />
           <Route path="/incidents" element={<IncidentsPage />} />
           <Route path="/incidents/:id" element={<IncidentDetailPage />} />
+          <Route path="/prediction" element={<PredictionPage />} />
           <Route path="/settings" element={<SettingsPage />} />
 
           {navItems
@@ -62,7 +65,9 @@ export default function App() {
     <AuthProvider>
       <SettingsProvider>
         <SimulationProvider>
-          <AppRouter />
+          <PredictionProvider>
+            <AppRouter />
+          </PredictionProvider>
         </SimulationProvider>
       </SettingsProvider>
     </AuthProvider>

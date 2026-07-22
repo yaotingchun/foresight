@@ -92,6 +92,49 @@ async def chat_with_ai(payload: ChatPayload):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+from typing import Optional
+
+@app.get("/api/forecast/metrics")
+async def forecast_metrics(component: str, metric: str = "cpu_pct", hours: int = 24):
+    from server.services.forecast_service import get_metric_forecast
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+        result = get_metric_forecast(data_dir, component, metric, hours)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/forecast/summary")
+async def forecast_summary(component: str):
+    from server.services.forecast_service import get_forecast_summary
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+        text = get_forecast_summary(data_dir, component)
+        return {"summary": text}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/forecast/components")
+async def forecast_components():
+    """Return the list of known component IDs."""
+    return {"components": [
+        "api-gateway", "auth-service", "data-warehouse", "email-provider",
+        "inventory-service", "load-balancer", "message-queue",
+        "notification-service", "order-service", "payment-gateway",
+        "payment-service", "primary-db", "redis-cache",
+        "search-service", "user-service", "web-portal"
+    ]}
+
+@app.get("/api/forecast/system-analysis")
+async def forecast_system_analysis(hours: int = 24):
+    from server.services.forecast_service import get_system_analysis
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+        result = get_system_analysis(data_dir, hours)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
