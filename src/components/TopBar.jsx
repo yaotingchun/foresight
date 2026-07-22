@@ -1,8 +1,9 @@
-import { Bell, MessageSquare, HelpCircle, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 import SearchInput from './SearchInput'
 import IconButton from './IconButton'
 import ProfileBlock from './ProfileBlock'
 import { useSimulation } from '../context/SimulationContext'
+import NotificationDropdown from './NotificationDropdown'
 
 export default function TopBar() {
   const { openDrawer, activeRun } = useSimulation()
@@ -21,9 +22,7 @@ export default function TopBar() {
           <Zap size={13} className={activeRun ? 'animate-pulse' : ''} />
           Simulate Event
         </button>
-        <IconButton icon={Bell} badge={12} label="Notifications" />
-        <IconButton icon={MessageSquare} label="Messages" />
-        <IconButton icon={HelpCircle} label="Help" />
+        <NotificationDropdown />
         <ProfileBlock />
       </div>
     </header>

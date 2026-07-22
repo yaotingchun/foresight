@@ -22,6 +22,26 @@ const MarkdownComponents = {
   strong: ({node, ...props}) => <strong className="font-semibold text-ink" {...props} />,
 };
 
+const ensureString = (val) => {
+  if (typeof val === 'string') return val;
+  if (val == null) return '';
+  if (Array.isArray(val)) {
+    return val.map(v => `- ${ensureString(v)}`).join('\n');
+  }
+  if (typeof val === 'object') {
+    return Object.entries(val)
+      .map(([k, v]) => {
+        const valStr = ensureString(v);
+        if (Array.isArray(v)) {
+          return `**${k}**:\n${valStr}`;
+        }
+        return `**${k}**: ${valStr}`;
+      })
+      .join('\n\n');
+  }
+  try { return JSON.stringify(val); } catch { return String(val); }
+};
+
 function fmtClock(ms) {
   return new Date(ms).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
 }
@@ -273,13 +293,13 @@ export default function IncidentDetailPage() {
                   <div className="md:pr-8">
                     <h3 className="text-[12px] font-bold uppercase tracking-widest text-indigo-800/80 mb-3 flex items-center gap-1.5"><Sparkles size={14} className="text-indigo-500"/> Root Cause Analysis</h3>
                     <div className="text-[14px] leading-relaxed text-indigo-950/90 prose-p:mb-3">
-                      <ReactMarkdown components={MarkdownComponents}>{aiAnalysis.rootCause}</ReactMarkdown>
+                      <ReactMarkdown components={MarkdownComponents}>{ensureString(aiAnalysis.rootCause)}</ReactMarkdown>
                     </div>
                   </div>
                   <div className="pt-6 md:pt-0 md:pl-8">
                     <h3 className="text-[12px] font-bold uppercase tracking-widest text-indigo-800/80 mb-3 flex items-center gap-1.5"><Sparkles size={14} className="text-indigo-500"/> Impact Analysis</h3>
                     <div className="text-[14px] leading-relaxed text-indigo-950/90 prose-p:mb-3">
-                      <ReactMarkdown components={MarkdownComponents}>{aiAnalysis.impact}</ReactMarkdown>
+                      <ReactMarkdown components={MarkdownComponents}>{ensureString(aiAnalysis.impact)}</ReactMarkdown>
                     </div>
                   </div>
                 </div>
@@ -368,7 +388,7 @@ export default function IncidentDetailPage() {
                       <div>
                         <p className="text-[15px] font-bold text-ink mb-2">{p.step}</p>
                         <div className="text-[14px] leading-relaxed text-ink-soft max-w-4xl prose-p:mb-2">
-                          <ReactMarkdown components={MarkdownComponents}>{p.description}</ReactMarkdown>
+                          <ReactMarkdown components={MarkdownComponents}>{ensureString(p.description)}</ReactMarkdown>
                         </div>
                       </div>
                     </div>
@@ -412,7 +432,7 @@ export default function IncidentDetailPage() {
                   {(aiAnalysis ? aiAnalysis.flawsDetected : flaws).map((f) => (
                     <li key={f} className="flex items-start gap-3.5 text-[14px] leading-relaxed text-indigo-950/80 bg-red-50/50 p-4 rounded-xl border border-red-100/50">
                       <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
-                      <ReactMarkdown components={{ p: 'span' }}>{f}</ReactMarkdown>
+                      <ReactMarkdown components={{ p: 'span' }}>{ensureString(f)}</ReactMarkdown>
                     </li>
                   ))}
                 </ul>
@@ -427,7 +447,7 @@ export default function IncidentDetailPage() {
                   {(aiAnalysis ? aiAnalysis.preventiveMeasures : preventiveMeasures).map((p) => (
                     <li key={p} className="flex items-start gap-3.5 text-[14px] leading-relaxed text-indigo-950/80 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100/50">
                       <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
-                      <ReactMarkdown components={{ p: 'span' }}>{p}</ReactMarkdown>
+                      <ReactMarkdown components={{ p: 'span' }}>{ensureString(p)}</ReactMarkdown>
                     </li>
                   ))}
                 </ul>
