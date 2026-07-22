@@ -23,26 +23,51 @@ def get_gemini_client():
 def analyze_incident_with_ai(incident: dict, topology: dict):
     client = get_gemini_client()
     
-    prompt = f"""
-    You are an expert AI DevOps and SRE (Site Reliability Engineer) Remediation Agent.
-    An incident has occurred in the system. Analyze the following data and provide a concise root cause, impact, and remediation plan.
-    Keep your explanations extremely brief, punchy, and easy to visualize. Use markdown formatting (like **bolding** and `-` lists) inside the text fields.
+    # Prevent data leakage: only give the AI the raw metrics and anomaly alerts, NOT the simulation's title or summary.
+    sanitized_incident = {
+        "anomalous_components": [
+            {
+                "component": s.get("component"),
+                "detected_fault": s.get("faultType"),
+                "severity": s.get("severity")
+            }
+            for s in incident.get("stages", [])
+        ],
+        "metrics_before": incident.get("beforeMetrics", {}),
+        "metrics_peak": incident.get("peakMetrics", {})
+    }
 
-    Topology Data:
+    prompt = f"""
+    You are an expert AI DevOps and Site Reliability Engineer (SRE).
+    A severe incident has occurred in the system. Analyze the provided topology map, incident anomalies, and metrics, and produce a structured, hierarchical Root Cause Analysis and Impact Report.
+    
+    Guidelines:
+    1. **Root Cause Analysis**: Use a clear bulleted hierarchy.
+       - **Primary Failure**: 1-2 sentences on what broke first.
+       - **Cascade Effect**: Bullet points on how it affected dependencies.
+       - **Key Metrics**: 1 concise point on the most critical metric shift.
+       Keep it concise and highly scannable. Do NOT write walls of text.
+    2. **Impact Analysis**: Use a clear bulleted hierarchy.
+       - **Business Impact**: 1 sentence summary.
+       - **System Impact**: Concise bullet points for each affected service and its degradation.
+    3. **Formatting**: Use markdown bolding for emphasis on service names and metrics.
+       - IMPORTANT: Do NOT include top-level headings like "# Root Cause Analysis" or "# Impact Analysis" in your output text. We already have titles for these sections in the UI. Just provide the bullet points directly.
+
+    Topology Data (Service Map):
     {json.dumps(topology, indent=2)}
 
-    Incident Data (including timeline stages, and metrics before/after):
-    {json.dumps(incident, indent=2)}
+    Monitoring Data (Anomalies & Metrics before/during the incident):
+    {json.dumps(sanitized_incident, indent=2)}
 
     Please respond with a JSON object strictly matching this schema:
     {{
-      "rootCause": "A concise, bulleted markdown summary of the root cause.",
+      "rootCause": "A concise, hierarchically structured markdown summary using bullet points (Primary Failure, Cascade Effect).",
       "affectedServices": ["list", "of", "service", "names", "based", "on", "topology"],
-      "impact": "A concise, bulleted markdown summary of business and system impact.",
+      "impact": "A concise, hierarchically structured markdown breakdown (Business Impact, System Impact).",
       "remediationPlan": [
         {{
           "step": "Short Step Name",
-          "description": "Very brief markdown description (1 sentence).",
+          "description": "A clear, actionable markdown description of how to execute this step.",
           "type": "automated" // or "requires_approval" for actions that critically affect the system
         }}
       ],

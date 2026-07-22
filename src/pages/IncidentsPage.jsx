@@ -30,7 +30,7 @@ export default function IncidentsPage() {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="mx-auto flex max-w-[900px] flex-col gap-4 pb-6">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 pb-6 px-4 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2.5">
