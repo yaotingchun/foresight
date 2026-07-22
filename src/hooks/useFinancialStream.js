@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { ALL_TRANSACTIONS, generateRealtimeTx, ANOMALY_FEATURES } from '../data/financialData'
 import { useSimulation } from '../context/SimulationContext'
+import { useDataPipeline } from './useDataPipeline'
 
 const MAX_TXS     = 600
 const INTERVAL_MS = 2200  // slightly slower than logs — finance is calmer
@@ -49,21 +50,76 @@ export function useFinancialStream() {
 
   const { txEvents } = useSimulation()
   const lastTxEventsRef = useRef(null)
+  
+  const { pushTransaction, onTxProcessed, isConnected } = useDataPipeline()
+
+  // Listen for ML-processed transactions from the backend WebSocket
+  useEffect(() => {
+    const unsubscribe = onTxProcessed((mlData, originalTx) => {
+      if (pausedRef.current) return
+      
+      const proba = mlData.fraud_probability || 0
+      let status = 'normal'
+      if (proba >= 0.75) status = 'blocked'
+      else if (proba >= 0.45) status = 'flagged'
+
+      // Use the ML explanation if available, otherwise fallback
+      let mlExplanation = null
+      let dominantFeature = null
+      
+      if (mlData.top_contributing_features && mlData.top_contributing_features.length > 0) {
+        const topFeat = mlData.top_contributing_features[0]
+        const featMap = {
+          'amount': 'unusual_amount',
+          'amount_z': 'unusual_amount',
+          'seconds_since_last': 'velocity_spike',
+          'dest_is_new': 'unusual_destination'
+        }
+        const key = featMap[topFeat.feature] || 'unusual_frequency'
+        dominantFeature = ANOMALY_FEATURES.find(f => f.key === key) || ANOMALY_FEATURES[1]
+        
+        mlExplanation = `Model flagged based on ${topFeat.feature} (importance: ${Math.round(topFeat.importance*100)}%). Value was ${topFeat.value}.`
+      }
+
+      const finalTx = {
+        ...originalTx,
+        status: originalTx.simulated ? originalTx.status : status, // Preserve incident forced status if simulated
+        anomalyScore: proba,
+        dominantFeature: dominantFeature || originalTx.dominantFeature,
+        mlExplanation: mlExplanation || originalTx.mlExplanation
+      }
+
+      setTxs(prev => {
+        // Prevent duplicates
+        if (prev.some(t => t.id === finalTx.id)) return prev
+        return [finalTx, ...prev].slice(0, MAX_TXS)
+      })
+      setNewIds(new Set([finalTx.id]))
+      setTimeout(() => setNewIds(new Set()), 2400)
+    })
+    return unsubscribe
+  }, [onTxProcessed])
 
   // Simulated-scenario transactions feed into the same live stream.
-  // (Guarded against React StrictMode's double-invoke, which would otherwise
-  // reprocess the same tick's events twice and insert duplicate rows.)
   useEffect(() => {
     if (txEvents.length === 0 || pausedRef.current) return
     if (lastTxEventsRef.current === txEvents) return
     lastTxEventsRef.current = txEvents
     const batch = txEvents.map(buildSimulatedTx)
-    const ids = new Set(batch.map((t) => t.id))
-    setNewIds(ids)
-    setTxs((prev) => [...batch, ...prev].slice(0, MAX_TXS))
-    setTimeout(() => setNewIds(new Set()), 2400)
-  }, [txEvents])
+    
+    // Route simulated incident transactions through ML pipeline
+    batch.forEach(tx => {
+      if (isConnected) {
+        pushTransaction(tx)
+      } else {
+        // Fallback if WS not connected
+        setTxs(prev => [tx, ...prev].slice(0, MAX_TXS))
+        setNewIds(new Set([tx.id]))
+      }
+    })
+  }, [txEvents, isConnected, pushTransaction])
 
+  // Ambient traffic tick
   useEffect(() => {
     const tick = () => {
       if (pausedRef.current) return
@@ -75,17 +131,21 @@ export function useFinancialStream() {
         : Math.floor(Math.random() * 3) + 1  // 1-3
 
       const batch = Array.from({ length: count }, () => generateRealtimeTx())
-      const ids   = new Set(batch.map((t) => t.id))
-
-      setNewIds(ids)
-      setTxs((prev) => [...batch, ...prev].slice(0, MAX_TXS))
-
-      setTimeout(() => setNewIds(new Set()), 2400)
+      
+      batch.forEach(tx => {
+        if (isConnected) {
+          pushTransaction(tx)
+        } else {
+          // Fallback if WS not connected
+          setTxs(prev => [tx, ...prev].slice(0, MAX_TXS))
+          setNewIds(new Set([tx.id]))
+        }
+      })
     }
 
     const id = setInterval(tick, INTERVAL_MS)
     return () => clearInterval(id)
-  }, [])
+  }, [isConnected, pushTransaction])
 
   const togglePause = useCallback(() => setIsPaused((v) => !v), [])
 

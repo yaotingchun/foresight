@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
@@ -92,6 +92,55 @@ async def chat_with_ai(payload: ChatPayload):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class ConnectionManager:
+    def __init__(self):
+        self.active_connections: list[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        if websocket in self.active_connections:
+            self.active_connections.remove(websocket)
+
+    async def broadcast(self, message: dict):
+        for connection in self.active_connections:
+            try:
+                await connection.send_json(message)
+            except Exception:
+                pass
+
+manager = ConnectionManager()
+
+@app.websocket("/api/stream")
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
+    try:
+        while True:
+            data = await websocket.receive_json()
+            if data.get("type") == "TX_INGEST":
+                try:
+                    tx_data = data.get("data")
+                    result = ml_service.predict_fraud(tx_data)
+                    # Broadcast the processed result
+                    await manager.broadcast({"type": "TX_PROCESSED", "data": result, "original": tx_data})
+                except Exception as e:
+                    print(f"Error processing transaction: {e}")
+            elif data.get("type") == "METRICS_INGEST":
+                try:
+                    metrics_data = data.get("data")
+                    result = ml_service.predict_outage(metrics_data)
+                    if result is not None:
+                        result["anomalous"] = True
+                    else:
+                        result = {"anomalous": False, "component_id": metrics_data.get("component_id")}
+                    await manager.broadcast({"type": "METRICS_PROCESSED", "data": result, "original": metrics_data})
+                except Exception as e:
+                    print(f"Error processing metrics: {e}")
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
+        
 if __name__ == "__main__":
     import uvicorn
     # Run from root dir: python -m server.main

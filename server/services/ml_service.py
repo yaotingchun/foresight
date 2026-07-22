@@ -72,7 +72,9 @@ class MLService:
         if os.path.exists(incidents_path):
             with open(incidents_path) as f:
                 inc_data = json.load(f)
-            self.incidents_df = pd.DataFrame(inc_data)
+            df = pd.DataFrame(inc_data)
+            df = df.rename(columns={"id": "incident_id", "component": "component_id"})
+            self.incidents_df = df
             print(f"Loaded {len(self.incidents_df)} incidents.")
         else:
             print("Warning: incidents.json not found.")

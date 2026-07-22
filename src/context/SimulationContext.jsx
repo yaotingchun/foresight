@@ -4,6 +4,7 @@ import { buildStages, stageProgress, healthFromSeverity, peakSeverity, computeEf
 import { NODE_BY_ID } from '../data/serviceMapData'
 import { api } from '../lib/api'
 import { useSettings } from './SettingsContext'
+import { useDataPipeline } from '../hooks/useDataPipeline'
 
 /**
  * Drives the "Simulate Event" drawer AND the Incidents page: turns a
@@ -79,6 +80,7 @@ export function SimulationProvider({ children }) {
   const [txEvents, setTxEvents] = useState([])
   const [incidents, setIncidents] = useState(loadStoredIncidents)
   const { businessContext, experienceLogs } = useSettings()
+  const { pushMetrics, isConnected } = useDataPipeline()
   const rtSeq = useRef(0)
   const activeIncidentIdRef = useRef(null)
 
@@ -154,6 +156,25 @@ export function SimulationProvider({ children }) {
       )))
     }
   }, [componentEffects, activeRun])
+
+  // Push metrics to backend ML pipeline
+  useEffect(() => {
+    if (!isConnected) return
+    const now = new Date().toISOString()
+    
+    // For each component that has an effect, push its metrics
+    Object.entries(componentEffects).forEach(([componentId, eff]) => {
+      pushMetrics({
+        component_id: componentId,
+        timestamp: now,
+        cpu_pct: eff.metrics.cpu || 0,
+        memory_pct: eff.metrics.memory || 0,
+        latency_ms: eff.metrics.latency || 0,
+        error_rate: eff.metrics.errorRate || 0,
+        log_error_rate_per_min: (eff.metrics.errorRate || 0) * 60 
+      })
+    })
+  }, [componentEffects, isConnected, pushMetrics])
 
   // Emit synthetic flagged/blocked transactions for payment-path components.
   useEffect(() => {

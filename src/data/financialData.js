@@ -139,30 +139,23 @@ export function generateRealtimeTx() {
   const timestamp = Date.now()
 
   let score = 0
-  let explanations = []
 
   if (amount > 50000) {
     score += 0.30
-    explanations.push(`Transaction amount is >$50,000, which is >3 standard deviations above the historical average for ${src}.`)
   } else if (amount > 10000) {
     score += 0.15
-    explanations.push(`Transaction amount is >$10,000, significantly higher than the normal variance for ${src}.`)
   } else if (amount > 5000) {
     score += 0.08
-    explanations.push(`Transaction amount deviates slightly from the typical behavior for ${src}.`)
   }
 
   if (EXTERNAL.includes(dst)) {
     score += 0.20
-    explanations.push(`Funds are being routed to a never-before-seen external destination (${dst}).`)
   }
   if (txType === 'crypto_withdrawal') {
     score += 0.25
-    explanations.push(`The use of a high-risk crypto withdrawal gateway significantly increases the risk profile.`)
   }
   if (txType === 'wire_transfer' && amount > 10000) {
     score += 0.15
-    explanations.push(`Large wire transfers are anomalous for this account.`)
   }
   
   score += (Math.random() - 0.5) * 0.15
@@ -187,7 +180,6 @@ export function generateRealtimeTx() {
     dominantFeature:  score >= 0.45 
       ? ANOMALY_FEATURES[Math.floor(Math.random() * ANOMALY_FEATURES.length)]
       : null,
-    mlExplanation:    score >= 0.45 ? explanations.join(' ') : null,
     infraCorrelation: infraCorr,
     actionHistory:    [],
   }
