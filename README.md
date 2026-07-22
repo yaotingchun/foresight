@@ -47,12 +47,10 @@
 
 | Member | Role | Responsibility |
 | :--- | :--- | :--- |
-| **[Name 1]** | Leader | **Backend & ML Architecture**: Developing the FastAPI service, training Scikit-Learn models, and managing data pipelines. |
-| **[Name 2]** | Member | **Frontend & Data Visualization**: Developing the React UI, interactive dashboard widgets, live telemetry charts, and financial monitor. |
-| **[Name 3]** | Member | **AI Models & Intelligence**: Developing Gemini-powered incident analysis, remediation planning, and RAG-based context integration. |
-| **[Name 4]** | Member | **Core Logic & Integration**: Implementing topology-aware correlation, real-time WebSocket ingestion, and SRE feedback loops. |
-
-*(Note: Replace with your actual team details)*
+| **[Chun Yao Ting]** | Leader | **Backend & ML Architecture**: Developing the FastAPI service, training Scikit-Learn models, and managing data pipelines. |
+| **[Angela Ngu Xin Yi]** | Member | **Frontend & Data Visualization**: Developing the React UI, interactive dashboard widgets, live telemetry charts, and financial monitor. |
+| **[Evelyn Ang]** | Member | **AI Models & Intelligence**: Developing Gemini-powered incident analysis, remediation planning, and RAG-based context integration. |
+| **[Teoh Xin Yee]** | Member | **Core Logic & Integration**: Implementing topology-aware correlation, real-time WebSocket ingestion, and SRE feedback loops. |
 
 ---
 
@@ -106,7 +104,7 @@ Unlike traditional Application Performance Monitoring (APM) tools (like Datadog 
 ## 🏗️ System Architecture
 
 <p align="center">
-  <img src="public/Architecture_Diagram.png" alt="System Architecture Diagram" width="800" />
+  <img src="public/Foresight_Architecture_Diagram.png" alt="System Architecture Diagram" width="800" />
   <br/>
   <em>(Replace `public/Architecture_Diagram.png` with your actual architecture diagram file)</em>
 </p>
