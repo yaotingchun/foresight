@@ -130,14 +130,31 @@ export default function TxAnomalyDetail({ tx, onAction }) {
 
       {/* Dominant feature */}
       {feature && (
-        <div className="flex items-center gap-2">
-          <span className="text-base">{feature.icon}</span>
-          <div>
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-faint mr-2">
-              Dominant trigger:
-            </span>
-            <span className="text-[12px] font-semibold text-ink">{feature.label}</span>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-base">{feature.icon}</span>
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-faint mr-2">
+                Dominant trigger:
+              </span>
+              <span className="text-[12px] font-semibold text-ink">{feature.label}</span>
+            </div>
           </div>
+          
+          {/* AI Explanation block */}
+          {tx.mlExplanation && (
+            <div className="mt-1 ml-7 flex items-start gap-2.5 rounded-xl border border-indigo-100 bg-indigo-50/50 p-3">
+              <Zap size={14} className="text-indigo-500 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-indigo-800 mb-0.5">
+                  AI Explanation
+                </p>
+                <p className="text-[12.5px] leading-relaxed text-indigo-950">
+                  {tx.mlExplanation}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

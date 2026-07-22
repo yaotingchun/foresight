@@ -79,6 +79,19 @@ async def analyze_incident(incident: dict):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class ChatPayload(BaseModel):
+    messages: list
+    system_context: dict
+
+@app.post("/api/chat")
+async def chat_with_ai(payload: ChatPayload):
+    from server.services.chat_ai import chat_with_system_context
+    try:
+        reply = chat_with_system_context(payload.messages, payload.system_context)
+        return {"reply": reply}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
     # Run from root dir: python -m server.main

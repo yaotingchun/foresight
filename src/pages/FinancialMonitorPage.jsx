@@ -26,7 +26,7 @@ export default function FinancialMonitorPage() {
   const [statusFilter,   setStatusFilter]   = useState('all')
   const [minAmount,      setMinAmount]      = useState('')
   const [maxAmount,      setMaxAmount]      = useState('')
-  const [timeMs,         setTimeMs]         = useState(900_000) // 15 min
+  const [timeMs,         setTimeMs]         = useState(900000) // 15 min
   const [categoryFilter, setCategoryFilter] = useState('all')
 
   // ── Time-range filter ───────────────────────────────────────────────────────
