@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <b>🚀 <a href="#">Live Demo (Coming Soon)</a></b> •
-  <b>🎥 <a href="#">Watch our Pitching Video</a></b>
+  <b>🚀 <a href="https://youtu.be/AyJzMufqzEE">Live Demo</a></b> •
+  <b>🎥 <a href="https://youtu.be/exQmN5-FIZA">Watch our Pitching Video</a></b>
 </p>
 
 <div align="center">
