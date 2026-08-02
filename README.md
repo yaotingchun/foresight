@@ -43,7 +43,7 @@
 
 ## 👥 Team Details & Responsibilities
 
-* **Team Name**: [Your Team Name]
+* **Team Name**: Trail Never Ends
 
 | Member | Role | Responsibility |
 | :--- | :--- | :--- |
