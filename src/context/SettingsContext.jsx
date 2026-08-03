@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo } from 'react'
+import { createContext, useContext, useState, useEffect, useMemo } from 'react'
 
 const SettingsContext = createContext(null)
 
@@ -25,7 +25,17 @@ const defaultDataSources = {
     network: false,
     security: false
 }
-const defaultExperienceLogs = []
+
+const STORAGE_KEY = 'foresight.experienceLogs'
+
+function loadStoredExperienceLogs() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY)
+        return raw ? JSON.parse(raw) : []
+    } catch {
+        return []
+    }
+}
 
 export function SettingsProvider({ children }) {
     const [thresholds, setThresholds] = useState(defaultThresholds)
@@ -34,7 +44,15 @@ export function SettingsProvider({ children }) {
     const [businessContext, setBusinessContext] = useState(defaultBusinessContext)
     const [allowedActions, setAllowedActions] = useState(defaultAllowedActions)
     const [dataSources, setDataSources] = useState(defaultDataSources)
-    const [experienceLogs, setExperienceLogs] = useState(defaultExperienceLogs)
+    const [experienceLogs, setExperienceLogs] = useState(loadStoredExperienceLogs)
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(experienceLogs))
+        } catch (err) {
+            console.error('Failed to save experience logs to localStorage', err)
+        }
+    }, [experienceLogs])
 
     const value = useMemo(() => ({
         thresholds,

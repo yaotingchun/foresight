@@ -145,6 +145,14 @@ export default function TxAnomalyDetail({ tx, onAction }) {
     recAction = 'escalate'
   }
 
+  const lastAction = tx.actionHistory && tx.actionHistory.length > 0
+    ? tx.actionHistory[tx.actionHistory.length - 1].action
+    : null
+
+  const isApproved = lastAction ? (lastAction === 'approve') : (tx.status === 'normal')
+  const isEscalated = lastAction === 'escalate'
+  const isBlocked = lastAction ? (lastAction === 'block') : (tx.status === 'blocked')
+
   return (
     <div className="flex flex-col gap-3 px-4 pb-4 pt-1 ml-9">
       {/* Score bar */}
@@ -191,51 +199,57 @@ export default function TxAnomalyDetail({ tx, onAction }) {
         <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-faint mr-1">
           Actions:
         </span>
-        <button
-          onClick={() => onAction(tx.id, 'approve')}
-          style={{
-            backgroundColor: recAction === 'approve' ? '#D1FAE5' : '#ECFDF5',
-            color: '#047857',
-            borderColor: recAction === 'approve' ? '#059669' : '#A7F3D0',
-            borderWidth: recAction === 'approve' ? '2px' : '1px',
-          }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-            recAction === 'approve' ? 'font-bold shadow-sm hover:bg-emerald-200/60' : 'font-semibold hover:bg-emerald-100 opacity-75'
-          }`}
-        >
-          <CheckCircle size={12} />
-          Approve
-        </button>
-        <button
-          onClick={() => onAction(tx.id, 'block')}
-          style={{
-            backgroundColor: recAction === 'block' ? '#FEE2E2' : '#FEF2F2',
-            color: '#B91C1C',
-            borderColor: recAction === 'block' ? '#DC2626' : '#FECACA',
-            borderWidth: recAction === 'block' ? '2px' : '1px',
-          }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-            recAction === 'block' ? 'font-bold shadow-sm hover:bg-red-200/60' : 'font-semibold hover:bg-red-100 opacity-75'
-          }`}
-        >
-          <XCircle size={12} />
-          Block
-        </button>
-        <button
-          onClick={() => onAction(tx.id, 'escalate')}
-          style={{
-            backgroundColor: recAction === 'escalate' ? '#FEF3C7' : '#FFFBEB',
-            color: '#B45309',
-            borderColor: recAction === 'escalate' ? '#D97706' : '#FDE68A',
-            borderWidth: recAction === 'escalate' ? '2px' : '1px',
-          }}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
-            recAction === 'escalate' ? 'font-bold shadow-sm hover:bg-amber-200/60' : 'font-semibold hover:bg-amber-100 opacity-75'
-          }`}
-        >
-          <ArrowUpRight size={12} />
-          Escalate
-        </button>
+        {!isApproved && (
+          <button
+            onClick={() => onAction(tx.id, 'approve')}
+            style={{
+              backgroundColor: recAction === 'approve' ? '#D1FAE5' : '#ECFDF5',
+              color: '#047857',
+              borderColor: recAction === 'approve' ? '#059669' : '#A7F3D0',
+              borderWidth: recAction === 'approve' ? '2px' : '1px',
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+              recAction === 'approve' ? 'font-bold shadow-sm hover:bg-emerald-200/60' : 'font-semibold hover:bg-emerald-100 opacity-75'
+            }`}
+          >
+            <CheckCircle size={12} />
+            Approve
+          </button>
+        )}
+        {!isBlocked && (
+          <button
+            onClick={() => onAction(tx.id, 'block')}
+            style={{
+              backgroundColor: recAction === 'block' ? '#FEE2E2' : '#FEF2F2',
+              color: '#B91C1C',
+              borderColor: recAction === 'block' ? '#DC2626' : '#FECACA',
+              borderWidth: recAction === 'block' ? '2px' : '1px',
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+              recAction === 'block' ? 'font-bold shadow-sm hover:bg-red-200/60' : 'font-semibold hover:bg-red-100 opacity-75'
+            }`}
+          >
+            <XCircle size={12} />
+            Block
+          </button>
+        )}
+        {!isEscalated && (
+          <button
+            onClick={() => onAction(tx.id, 'escalate')}
+            style={{
+              backgroundColor: recAction === 'escalate' ? '#FEF3C7' : '#FFFBEB',
+              color: '#B45309',
+              borderColor: recAction === 'escalate' ? '#D97706' : '#FDE68A',
+              borderWidth: recAction === 'escalate' ? '2px' : '1px',
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+              recAction === 'escalate' ? 'font-bold shadow-sm hover:bg-amber-200/60' : 'font-semibold hover:bg-amber-100 opacity-75'
+            }`}
+          >
+            <ArrowUpRight size={12} />
+            Escalate
+          </button>
+        )}
       </div>
 
       {/* Action history */}

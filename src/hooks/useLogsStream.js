@@ -18,28 +18,35 @@ const MAX_LOGS = 800   // cap total in-memory entries
  * }}
  */
 export function useLogsStream() {
-  const [logs,     setLogs]     = useState(() => [...ALL_LOGS])
+  const { accumulatedLogs } = useSimulation()
+  const [logs,     setLogs]     = useState(() => [...accumulatedLogs, ...ALL_LOGS])
   const [newIds,   setNewIds]   = useState(() => new Set())
   const [isPaused, setIsPaused] = useState(false)
 
   const pausedRef = useRef(false)
   pausedRef.current = isPaused
 
-  const { logEvents } = useSimulation()
-  const lastLogEventsRef = useRef(null)
-
-  // Simulated-scenario log lines feed into the same live stream.
-  // (Guarded against React StrictMode's double-invoke, which would otherwise
-  // reprocess the same tick's events twice and insert duplicate rows.)
+  // Sync state when accumulatedLogs changes
   useEffect(() => {
-    if (logEvents.length === 0 || pausedRef.current) return
-    if (lastLogEventsRef.current === logEvents) return
-    lastLogEventsRef.current = logEvents
-    const ids = new Set(logEvents.map((e) => e.id))
-    setNewIds(ids)
-    setLogs((prev) => [...logEvents, ...prev].slice(0, MAX_LOGS))
-    setTimeout(() => setNewIds(new Set()), 2200)
-  }, [logEvents])
+    if (accumulatedLogs.length === 0) {
+      setLogs([...ALL_LOGS])
+      return
+    }
+
+    if (pausedRef.current) return
+
+    setLogs((prev) => {
+      const existingIds = new Set(prev.map((l) => l.id))
+      const newLogs = accumulatedLogs.filter((l) => !existingIds.has(l.id))
+      if (newLogs.length === 0) return prev
+
+      const ids = new Set(newLogs.map((l) => l.id))
+      setNewIds(ids)
+      setTimeout(() => setNewIds(new Set()), 2200)
+
+      return [...newLogs, ...prev].slice(0, MAX_LOGS)
+    })
+  }, [accumulatedLogs])
 
   const togglePause = useCallback(() => setIsPaused((v) => !v), [])
 
