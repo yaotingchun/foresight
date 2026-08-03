@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Activity, X } from 'lucide-react'
-import { SERVICES, bucketLogs, LOG_BUCKET_COUNT } from '../data/logsData'
+import { SERVICES } from '../data/logsData'
 import { useLogsStream }  from '../hooks/useLogsStream'
 import LogChart   from '../components/logs/LogChart'
 import LogFilters from '../components/logs/LogFilters'
@@ -18,6 +18,7 @@ export default function LogsPage() {
   const [selectedStatuses,    setSelectedStatuses]    = useState([...STATUS_OPTIONS])
   const [search,              setSearch]              = useState('')
   const [selectedBucketIndex, setSelectedBucketIndex] = useState(null)
+  const [selectedBucketData, setSelectedBucketData]   = useState(null)
 
   function toggleService(svc) {
     setSelectedServices((prev) =>
@@ -31,14 +32,30 @@ export default function LogsPage() {
     )
   }
 
+  function handleSelectBucket(idx, bucketData) {
+    if (idx === null || idx === selectedBucketIndex) {
+      setSelectedBucketIndex(null)
+      setSelectedBucketData(null)
+    } else {
+      setSelectedBucketIndex(idx)
+      setSelectedBucketData(bucketData)
+    }
+  }
+
   // Reset bucket selection when time range filter changes
   function handleRangeChange(newRange) {
     setRangeMs(newRange)
     setSelectedBucketIndex(null)
+    setSelectedBucketData(null)
   }
 
-  // ── Fixed reference time to anchor bucket boundaries stably ───────────────
-  const referenceTime = useMemo(() => Math.floor(Date.now() / 1000) * 1000, [rangeMs]) // eslint-disable-line react-hooks/exhaustive-deps
+  // ── Reference time quantized to 10-second steps for calm, steady updates ──────
+  const referenceTime = useMemo(() => {
+    if (streamLogs && streamLogs.length > 0) {
+      return Math.floor(streamLogs[0].timestamp / 10000) * 10000
+    }
+    return Math.floor(Date.now() / 10000) * 10000
+  }, [streamLogs])
 
   // ── Filtered logs (matching search, service, status within time range) ────
   const chartLogs = useMemo(() => {
@@ -55,24 +72,17 @@ export default function LogsPage() {
     })
   }, [streamLogs, rangeMs, selectedServices, selectedStatuses, search, referenceTime])
 
-  // ── Stable Chart Buckets ──────────────────────────────────────────────────
-  const chartBuckets = useMemo(() => {
-    return bucketLogs(chartLogs, rangeMs, LOG_BUCKET_COUNT, referenceTime)
-  }, [chartLogs, rangeMs, referenceTime])
-
   // ── Selected bucket time window ───────────────────────────────────────────
   const bucketWindow = useMemo(() => {
-    if (selectedBucketIndex === null) return null
-    const b = chartBuckets[selectedBucketIndex]
-    if (!b) return null
-    const startDate = new Date(b.t)
+    if (selectedBucketIndex === null || !selectedBucketData) return null
+    const startDate = new Date(selectedBucketData.t)
     const timeStr = startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
     return {
-      start: b.t,
-      end: b.tEnd,
+      start: selectedBucketData.t,
+      end: selectedBucketData.tEnd,
       label: timeStr
     }
-  }, [selectedBucketIndex, chartBuckets])
+  }, [selectedBucketIndex, selectedBucketData])
 
   // ── Table filtered logs ───────────────────────────────────────────────────
   const tableFiltered = useMemo(() => {
@@ -114,7 +124,10 @@ export default function LogsPage() {
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200 text-[11px] font-mono text-indigo-700">
                 <span>Time bucket: {bucketWindow.label}</span>
                 <button
-                  onClick={() => setSelectedBucketIndex(null)}
+                  onClick={() => {
+                    setSelectedBucketIndex(null)
+                    setSelectedBucketData(null)
+                  }}
                   className="p-0.5 hover:bg-indigo-100 rounded text-indigo-700 transition-colors ml-0.5"
                   title="Clear time bucket filter"
                 >
@@ -128,7 +141,7 @@ export default function LogsPage() {
           logs={chartLogs}
           rangeMs={rangeMs}
           selectedBucketIndex={selectedBucketIndex}
-          onSelectBucket={setSelectedBucketIndex}
+          onSelectBucket={handleSelectBucket}
           referenceTime={referenceTime}
         />
       </div>

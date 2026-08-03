@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { Bell, CheckCircle2, ShieldAlert } from 'lucide-react'
+import { Bell, CheckCircle2, ShieldAlert, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useSimulation } from '../context/SimulationContext'
 
@@ -44,6 +44,11 @@ export default function NotificationDropdown() {
   const [readIds, setReadIds] = useState(getReadIds)
   const dropdownRef = useRef(null)
 
+  // Auto-appearing popup state & queue
+  const [popupQueue, setPopupQueue] = useState([])
+  const [currentPopup, setCurrentPopup] = useState(null)
+  const seenNotifIdsRef = useRef(null)
+
   useClickOutside(dropdownRef, () => setIsOpen(false))
 
   const notifications = useMemo(() => {
@@ -74,6 +79,45 @@ export default function NotificationDropdown() {
     return notifs.sort((a, b) => b.timestamp - a.timestamp)
   }, [incidents])
 
+  // Track initial notifications so pre-existing ones don't trigger popups on load,
+  // but any NEW notifications added dynamically during session are enqueued for auto-popup.
+  useEffect(() => {
+    if (!seenNotifIdsRef.current) {
+      seenNotifIdsRef.current = new Set(notifications.map((n) => n.id))
+      return
+    }
+
+    const newNotifs = []
+    notifications.forEach((n) => {
+      if (!seenNotifIdsRef.current.has(n.id)) {
+        seenNotifIdsRef.current.add(n.id)
+        newNotifs.push(n)
+      }
+    })
+
+    if (newNotifs.length > 0) {
+      setPopupQueue((prev) => [...prev, ...newNotifs])
+    }
+  }, [notifications])
+
+  // Process popup queue sequentially (one item at a time)
+  useEffect(() => {
+    if (currentPopup || popupQueue.length === 0) return
+
+    const next = popupQueue[0]
+    setCurrentPopup(next)
+    setPopupQueue((prev) => prev.slice(1))
+  }, [popupQueue, currentPopup])
+
+  // Auto-dismiss current popup after 5.5 seconds
+  useEffect(() => {
+    if (!currentPopup) return
+    const timer = setTimeout(() => {
+      setCurrentPopup(null)
+    }, 5500)
+    return () => clearTimeout(timer)
+  }, [currentPopup])
+
   const unreadCount = notifications.filter((n) => !readIds.includes(n.id)).length
 
   const markAllRead = () => {
@@ -89,7 +133,19 @@ export default function NotificationDropdown() {
       saveReadIds(newReadIds)
     }
     setIsOpen(false)
+    setCurrentPopup(null)
     navigate(`/incidents/${n.incidentId}`)
+  }
+
+  const handleToggleOpen = () => {
+    setIsOpen((v) => {
+      const nextOpen = !v
+      if (nextOpen) {
+        // Full panel takes over the spot when opened
+        setCurrentPopup(null)
+      }
+      return nextOpen
+    })
   }
 
   const fmtTime = (ts) => {
@@ -103,7 +159,7 @@ export default function NotificationDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         type="button"
-        onClick={() => setIsOpen((v) => !v)}
+        onClick={handleToggleOpen}
         className={`relative flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${
           isOpen ? 'bg-indigo-50 text-indigo-700' : 'text-ink-soft hover:bg-muted'
         }`}
@@ -116,6 +172,49 @@ export default function NotificationDropdown() {
         )}
       </button>
 
+      {/* Auto-Appearing Single-Item Popup (shown at same location when full dropdown is closed) */}
+      {!isOpen && currentPopup && (
+        <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-xl border border-line bg-white shadow-xl z-50 overflow-hidden flex flex-col animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="flex items-center justify-between border-b border-line bg-slate-50/50 px-4 py-3 shrink-0">
+            <h3 className="text-[13px] font-bold text-ink uppercase tracking-widest">NOTIFICATIONS</h3>
+            <button
+              type="button"
+              onClick={() => setCurrentPopup(null)}
+              className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+              title="Close notification"
+            >
+              <X size={14} />
+            </button>
+          </div>
+
+          <div className="p-2">
+            <button
+              type="button"
+              onClick={() => handleNotifClick(currentPopup)}
+              className="flex items-start gap-3 w-full text-left p-3 rounded-lg bg-indigo-50/30 hover:bg-indigo-50 border border-indigo-100/50 transition-colors group"
+            >
+              <div className={`mt-0.5 shrink-0 h-8 w-8 rounded-full flex items-center justify-center ${
+                currentPopup.type === 'remediation' ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'
+              }`}>
+                {currentPopup.type === 'remediation' ? <CheckCircle2 size={16} /> : <ShieldAlert size={16} />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-0.5">
+                  <p className="text-[13px] font-bold text-indigo-950 truncate group-hover:text-indigo-600 transition-colors">
+                    {currentPopup.title}
+                  </p>
+                  <span className="text-[10px] text-slate-400 shrink-0 whitespace-nowrap">{fmtTime(currentPopup.timestamp)}</span>
+                </div>
+                <p className="text-[12px] text-slate-700 line-clamp-2">
+                  {currentPopup.message}
+                </p>
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Full Notification Panel (opened when user clicks bell icon) */}
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 rounded-xl border border-line bg-white shadow-xl z-50 overflow-hidden flex flex-col max-h-[85vh]">
           <div className="flex items-center justify-between border-b border-line bg-slate-50/50 px-4 py-3 shrink-0">

@@ -1,5 +1,5 @@
 import { useMemo, useRef, useEffect, useState } from 'react'
-import { bucketLogs, LOG_BUCKET_COUNT } from '../../data/logsData'
+import { bucketLogs } from '../../data/logsData'
 
 function formatBucketTime(ts, rangeMs) {
   const d = new Date(ts)
@@ -11,12 +11,14 @@ function formatBucketTime(ts, rangeMs) {
 }
 
 export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, onSelectBucket, referenceTime = null }) {
-  const BUCKETS = LOG_BUCKET_COUNT
-  const BAR_H = 75    // px — modest height increase for clear vertical range
+  const TARGET_BAR_W = 18 // Fixed consistent bar width in px
+  const BAR_GAP = 1      // 1px hairline separator
+  const SLOT_PX = TARGET_BAR_W + BAR_GAP // 19px per bucket slot
+
+  const BAR_H = 75    // px — height for clear vertical range
   const LABEL_H = 18   // px — x-axis label row
   const Y_AXIS_W = 28  // px — space for y-axis count labels
   const TOTAL_H = BAR_H + LABEL_H
-  const BAR_W_FRAC = 0.56 // Balanced bar width with clean gaps
 
   const containerRef = useRef(null)
   const [width, setWidth] = useState(800)
@@ -32,6 +34,11 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
     return () => ro.disconnect()
   }, [])
 
+  const chartW = Math.max(100, width - Y_AXIS_W)
+  const BUCKETS = Math.max(10, Math.floor(chartW / SLOT_PX))
+  const bucketPx = chartW / BUCKETS
+  const barW = Math.max(1, bucketPx - BAR_GAP)
+
   const data = useMemo(() => bucketLogs(logs, rangeMs, BUCKETS, referenceTime), [logs, rangeMs, BUCKETS, referenceTime])
 
   const maxVal = useMemo(
@@ -39,15 +46,29 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
     [data]
   )
 
-  const chartW = Math.max(100, width - Y_AXIS_W)
-  const bucketPx = chartW / BUCKETS
-  const barPx = Math.max(16, Math.min(24, bucketPx * BAR_W_FRAC))
-
-  // Show ~5 evenly spaced tick labels
-  const tickEvery = Math.max(1, Math.floor(BUCKETS / 5))
-  const tickIndices = Array.from({ length: BUCKETS }, (_, i) => i).filter(
-    (i) => i % tickEvery === 0 || i === BUCKETS - 1
-  )
+  // Show evenly spaced tick labels with minimum pixel gap to prevent overlaps
+  const tickIndices = useMemo(() => {
+    const MIN_GAP_PX = 85
+    const indices = []
+    let lastX = -999
+    for (let i = 0; i < BUCKETS; i++) {
+      const cx = Y_AXIS_W + i * bucketPx + bucketPx / 2
+      if (cx - lastX >= MIN_GAP_PX) {
+        indices.push(i)
+        lastX = cx
+      }
+    }
+    if (indices.length > 0) {
+      const lastIdx = BUCKETS - 1
+      const lastCX = Y_AXIS_W + lastIdx * bucketPx + bucketPx / 2
+      if (lastCX - lastX < MIN_GAP_PX && indices.length > 1) {
+        indices[indices.length - 1] = lastIdx
+      } else if (lastCX - lastX >= MIN_GAP_PX && indices[indices.length - 1] !== lastIdx) {
+        indices.push(lastIdx)
+      }
+    }
+    return indices
+  }, [BUCKETS, bucketPx])
 
   const handleMouseMove = (e) => {
     if (!containerRef.current) return
@@ -67,7 +88,9 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
     const x = e.clientX - rect.left - Y_AXIS_W
     if (x < 0) return
     const idx = Math.max(0, Math.min(BUCKETS - 1, Math.floor((x / chartW) * BUCKETS)))
-    onSelectBucket(idx === selectedBucketIndex ? null : idx)
+    const targetBucket = data[idx]
+    if (!targetBucket || (targetBucket.error + targetBucket.warn + targetBucket.info) === 0) return
+    onSelectBucket(idx === selectedBucketIndex ? null : idx, targetBucket)
   }
 
   const hoverBucket = hoverIndex !== null ? data[hoverIndex] : null
@@ -189,15 +212,25 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
           />
         )}
 
-        {/* Stacked Histogram Bars */}
+        {/* Stacked Histogram Bars — Continuous Strip with 1px separator */}
         {data.map((bucket, i) => {
-          const x = Y_AXIS_W + i * bucketPx + (bucketPx - barPx) / 2
-          const scale = BAR_H / maxVal
+          const x = Y_AXIS_W + i * bucketPx
 
-          const infoH = bucket.info * scale
-          const warnH = bucket.warn * scale
-          const errorH = bucket.error * scale
-          const totalH = infoH + warnH + errorH
+          // Power scaling (exponent 0.6) ensures 1-2 event baseline bars stay clearly visible (~12-20px)
+          // even when a massive incident error spike (e.g. 19 events) dominates the maxVal.
+          const getSegH = (count) => {
+            if (!count || count === 0) return 0
+            const ratio = Math.pow(count / maxVal, 0.58)
+            return Math.max(7, Math.round(ratio * BAR_H))
+          }
+
+          const totalCount = bucket.info + bucket.warn + bucket.error
+          const totalH = getSegH(totalCount)
+
+          // Distribute total scaled height proportionally among severity layers
+          const infoH  = totalCount > 0 ? Math.round(totalH * (bucket.info / totalCount)) : 0
+          const warnH  = totalCount > 0 ? Math.round(totalH * (bucket.warn / totalCount)) : 0
+          const errorH = totalCount > 0 ? Math.max(0, totalH - infoH - warnH) : 0
 
           let y = BAR_H
           const segs = []
@@ -205,24 +238,19 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
           const isSelected = i === selectedBucketIndex
 
           const opacity =
-            (hoverIndex === null && selectedBucketIndex === null) || isHovered || isSelected ? 1 : 0.6
-
-          const hasError = errorH > 0
-          const hasWarn = warnH > 0
+            (hoverIndex === null && selectedBucketIndex === null) || isHovered || isSelected ? 1 : 0.65
 
           // Bottom: Info (Blue)
           if (infoH > 0) {
             y -= infoH
-            const isTop = !hasWarn && !hasError
             segs.push(
               <rect
                 key="info"
                 x={x}
                 y={y}
-                width={barPx}
+                width={barW}
                 height={infoH}
                 fill="#60A5FA"
-                rx={isTop ? 1.5 : 0}
                 opacity={opacity}
               />
             )
@@ -231,16 +259,14 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
           // Middle: Warning (Yellow)
           if (warnH > 0) {
             y -= warnH
-            const isTop = !hasError
             segs.push(
               <rect
                 key="warn"
                 x={x}
                 y={y}
-                width={barPx}
+                width={barW}
                 height={warnH}
                 fill="#FBBF24"
-                rx={isTop ? 1.5 : 0}
                 opacity={opacity}
               />
             )
@@ -254,10 +280,9 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
                 key="err"
                 x={x}
                 y={y}
-                width={barPx}
+                width={barW}
                 height={errorH}
                 fill="#F87171"
-                rx={1.5}
                 opacity={opacity}
               />
             )
