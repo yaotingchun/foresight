@@ -26,7 +26,7 @@ export default function IncidentCard({ incident, onClick }) {
     return () => clearInterval(id)
   }, [isLive])
 
-  const status = deriveIncidentStatus(incident.stages, Date.now(), incident.frozenStatus)
+  const status = deriveIncidentStatus(incident.stages, Date.now(), incident.frozenStatus, incident.hasApprovalSteps || incident.isAnalyzing)
   const nodes = chainNodesFor(incident)
   const { impact } = incident
 

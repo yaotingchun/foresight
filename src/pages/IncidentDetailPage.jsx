@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 import {
   ArrowLeft, Clock, Search, ShieldAlert, GitBranch, Activity, Wrench,
   CheckCircle2, AlertTriangle, TrendingUp, TrendingDown, ArrowUp, ArrowDown, Loader2, Sparkles, X,
@@ -211,14 +213,8 @@ function MetricsTable({ incident }) {
     </div>
   )
 }
-
 function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
-  const { setExperienceLogs } = useSettings()
-  const { stopScenario, activeRun } = useSimulation()
-  const [feedbackMode, setFeedbackMode] = useState(false)
-  const [feedbackText, setFeedbackText] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [approved, setApproved] = useState(false)
+  const { approveRemediationStep, rejectRemediationStep } = useSimulation()
 
   const mockConfidence = Math.max(0, 95 - (idx * 12))
   const escalationTarget = resolveEscalationTeam(incident, escalation.routingRules)
@@ -227,27 +223,68 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
   if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
   else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
 
+  const approved = p.approved || false
+  const submitted = p.rejected || false
+
   const handleApprove = () => {
-    setApproved(true)
-    // If this is the currently active live simulation run, mitigate/resolve it immediately
-    const isActiveRun = activeRun && incident.id === `${activeRun.scenario.id}-${activeRun.runStart}`
-    if (isActiveRun) {
-      stopScenario()
-    }
+    Swal.fire({
+      title: 'Execute Remediation?',
+      html: `
+        <div style="text-align: left; font-size: 14.5px; line-height: 1.5; color: #1e293b;">
+          <p style="font-weight: 700; margin-bottom: 8px;">Step ${idx + 1}: ${p.step}</p>
+          <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-weight: 500; color: #475569;">
+            ${p.description.replace(/\n/g, '<br/>')}
+          </div>
+        </div>
+      `,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#059669', // emerald-600
+      cancelButtonColor: '#6b7280', // slate-500
+      confirmButtonText: 'Yes, Confirm & Execute',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        popup: 'rounded-2xl shadow-xl border border-slate-100 font-sans',
+        title: 'text-[18px] font-bold text-slate-800',
+        confirmButton: 'rounded-lg px-4 py-2 font-bold text-[13px] text-white',
+        cancelButton: 'rounded-lg px-4 py-2 font-bold text-[13px] text-white',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        approveRemediationStep(incident.id, idx)
+      }
+    })
   }
 
-  const handleDisapprove = () => setFeedbackMode(true)
-  
-  const handleSubmitFeedback = () => {
-    if (!feedbackText.trim()) return
-    setExperienceLogs(prev => [...prev, {
-      timestamp: new Date().toISOString(),
-      incidentContext: incident.title,
-      rejectedStep: p.step,
-      userFeedback: feedbackText
-    }])
-    setSubmitted(true)
-    setFeedbackMode(false)
+  const handleDisapprove = () => {
+    Swal.fire({
+      title: 'Reject Remediation Step',
+      text: 'Why are you rejecting this step? What should the AI do instead?',
+      input: 'text',
+      inputPlaceholder: 'e.g. Never drop tables, flush cache instead.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4f46e5', // indigo-600
+      cancelButtonColor: '#6b7280', // slate-500
+      confirmButtonText: 'Submit Feedback',
+      cancelButtonText: 'Cancel',
+      inputValidator: (value) => {
+        if (!value || !value.trim()) {
+          return 'You must enter feedback to reject the step!'
+        }
+      },
+      customClass: {
+        popup: 'rounded-2xl shadow-xl border border-slate-100 font-sans',
+        title: 'text-[18px] font-bold text-slate-800',
+        input: 'rounded-xl border border-slate-200 text-[13.5px]',
+        confirmButton: 'rounded-lg px-4 py-2 font-bold text-[13px] text-white',
+        cancelButton: 'rounded-lg px-4 py-2 font-bold text-[13px] text-white',
+      }
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        rejectRemediationStep(incident.id, idx, result.value)
+      }
+    })
   }
 
   return (
@@ -268,13 +305,13 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
           </div>
         </div>
         
-        {liveType === 'requires_approval' && !submitted && !approved && !feedbackMode && (
+        {liveType === 'requires_approval' && !submitted && !approved && (
           <div className="flex gap-2.5 shrink-0 self-start md:self-center">
-             <button onClick={handleApprove} className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95">
-               <CheckCircle2 size={16} /> Approve
+             <button onClick={handleApprove} className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-[13px] font-bold text-white shadow-sm hover:bg-emerald-700 hover:shadow-md transition-all active:scale-95 cursor-pointer">
+                <CheckCircle2 size={16} /> Approve
              </button>
-             <button onClick={handleDisapprove} className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-4 py-2 text-[13px] font-bold text-ink-soft shadow-sm hover:bg-muted hover:text-ink transition-all active:scale-95">
-               <X size={16} /> Disapprove
+             <button onClick={handleDisapprove} className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-4 py-2 text-[13px] font-bold text-ink-soft shadow-sm hover:bg-muted hover:text-ink transition-all active:scale-95 cursor-pointer">
+                <X size={16} /> Disapprove
              </button>
           </div>
         )}
@@ -287,7 +324,10 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
            </span>
         )}
         {submitted && (
-           <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-500 shrink-0 border border-slate-200 self-start md:self-center">Feedback Recorded</span>
+           <div className="flex flex-col items-end gap-1.5 shrink-0 self-start md:self-center">
+             <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-slate-500 border border-slate-200">Disapproved</span>
+             {p.feedback && <span className="text-[11px] text-red-600 bg-red-50/50 px-2.5 py-1 rounded-md border border-red-100 max-w-xs truncate" title={p.feedback}>"{p.feedback}"</span>}
+           </div>
         )}
         {approved && (
            <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-emerald-600 shrink-0 border border-emerald-200 self-start md:self-center flex items-center gap-1">
@@ -295,34 +335,6 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
            </span>
         )}
       </div>
-
-      {feedbackMode && (
-        <div className="ml-12 mt-2 bg-slate-50 border border-line p-4 rounded-lg animate-slide-fade">
-          <p className="text-xs font-bold text-ink mb-2">Why are you rejecting this step? What should the AI do instead?</p>
-          <div className="flex gap-2">
-            <input 
-              type="text" 
-              value={feedbackText}
-              onChange={e => setFeedbackText(e.target.value)}
-              placeholder="e.g. Never drop tables, flush cache instead." 
-              className="flex-1 rounded border border-line px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none"
-              autoFocus
-            />
-            <button 
-              onClick={handleSubmitFeedback}
-              className="rounded bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition-colors"
-            >
-              Submit Feedback
-            </button>
-            <button 
-              onClick={() => setFeedbackMode(false)}
-              className="rounded border border-line bg-white px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -330,14 +342,37 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
 export default function IncidentDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { incidents } = useSimulation()
+  const { incidents, approveRemediationStep, rejectRemediationStep } = useSimulation()
   const { riskTiers, escalation } = useSettings()
   const [, setTock] = useState(0)
+
+
 
   const incident = useMemo(() => incidents.find((inc) => inc.id === id), [incidents, id])
   const isLive = incident && !incident.frozenStatus
   const isAnalyzing = incident?.isAnalyzing
   const aiAnalysis = incident?.aiAnalysis
+
+  const visiblePlan = useMemo(() => {
+    if (!aiAnalysis?.remediationPlan) return []
+    
+    const visible = []
+    for (let i = 0; i < aiAnalysis.remediationPlan.length; i++) {
+      const step = aiAnalysis.remediationPlan[i]
+      visible.push(step)
+      
+      const mockConfidence = Math.max(0, 95 - (i * 12))
+      let liveType = 'requires_approval'
+      if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+      else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+      
+      const isDisapproved = liveType === 'requires_approval' && step.rejected
+      if (!isDisapproved) {
+        break
+      }
+    }
+    return visible
+  }, [aiAnalysis, riskTiers])
 
   useEffect(() => {
     if (!isLive) return undefined
@@ -372,7 +407,7 @@ export default function IncidentDetailPage() {
     )
   }
 
-  const status = deriveIncidentStatus(incident.stages, Date.now(), incident.frozenStatus)
+  const status = deriveIncidentStatus(incident.stages, Date.now(), incident.frozenStatus, incident.hasApprovalSteps || incident.isAnalyzing)
   const nodes = chainNodesFor(incident)
   const deps = rootDependencies(incident)
   const { flaws, preventiveMeasures } = aggregatedAnalysis(incident)
@@ -516,10 +551,20 @@ export default function IncidentDetailPage() {
             {isAnalyzing ? (
                <div className="flex items-center gap-2 text-sm text-ink-soft py-2"><Loader2 size={16} className="animate-spin" /> AI is drafting remediation plan...</div>
             ) : aiAnalysis ? (
-             <div className="flex flex-col gap-4 mt-2">
-                {aiAnalysis.remediationPlan.map((p, idx) => (
-                  <RemediationStep key={idx} p={p} idx={idx} riskTiers={riskTiers} escalation={escalation} incident={incident} />
-                ))}
+              <div className="flex flex-col gap-4 mt-2">
+                {visiblePlan.map((p) => {
+                  const originalIdx = aiAnalysis.remediationPlan.indexOf(p)
+                  return (
+                    <RemediationStep
+                      key={originalIdx}
+                      p={p}
+                      idx={originalIdx}
+                      riskTiers={riskTiers}
+                      escalation={escalation}
+                      incident={incident}
+                    />
+                  )
+                })}
               </div>
             ) : (
               <div className="flex flex-col gap-2.5">

@@ -4,7 +4,6 @@ import {
   Logs,
   CircleDollarSign,
   AlertOctagon,
-  FileBarChart,
   TrendingUp,
   Settings,
 } from 'lucide-react'
@@ -21,6 +20,5 @@ export const navItems = [
   { path: '/financial-monitor', label: 'Financial Monitor', icon: CircleDollarSign, built: true },
   { path: '/incidents', label: 'Incidents', icon: AlertOctagon, built: true },
   { path: '/prediction', label: 'Prediction', icon: TrendingUp, built: true },
-  { path: '/reports', label: 'Reports', icon: FileBarChart },
   { path: '/settings', label: 'Settings', icon: Settings, built: true },
 ]

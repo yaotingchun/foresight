@@ -20,11 +20,11 @@ export default function IncidentsPage() {
 
   const filtered = useMemo(() => {
     if (filter === 'all') return incidents
-    return incidents.filter((inc) => deriveIncidentStatus(inc.stages, Date.now(), inc.frozenStatus) === filter)
+    return incidents.filter((inc) => deriveIncidentStatus(inc.stages, Date.now(), inc.frozenStatus, inc.hasApprovalSteps || inc.isAnalyzing) === filter)
   }, [incidents, filter])
 
   const activeCount = useMemo(
-    () => incidents.filter((inc) => deriveIncidentStatus(inc.stages, Date.now(), inc.frozenStatus) !== 'resolved').length,
+    () => incidents.filter((inc) => deriveIncidentStatus(inc.stages, Date.now(), inc.frozenStatus, inc.hasApprovalSteps || inc.isAnalyzing) !== 'resolved').length,
     [incidents]
   )
 
