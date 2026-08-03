@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { Activity, Shield, Zap, Lock, Mail, ChevronRight, X } from 'lucide-react'
-import foresightLogo from '../assets/logo_foresight.png'
+import foresightLogo from '../assets/foresight_logo.png'
 
 function LoginModal({ isOpen, onClose }) {
   const { login } = useAuth()

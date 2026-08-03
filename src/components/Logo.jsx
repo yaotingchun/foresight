@@ -1,4 +1,4 @@
-import foresightLogo from '../assets/logo_foresight.png'
+import foresightLogo from '../assets/foresight_logo.png'
 
 export default function Logo() {
   return (

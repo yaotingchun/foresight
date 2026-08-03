@@ -137,7 +137,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                             <span className="text-xs font-bold text-amber-600">{riskTiers.tier2}%</span>
                         </div>
                         <input
-                            type="range" min="1" max={riskTiers.tier1}
+                            type="range" min="1" max="100"
                             value={riskTiers.tier2}
                             onChange={(e) => setRiskTiers(prev => ({ ...prev, tier2: Number(e.target.value) }))}
                             className="w-full h-1 bg-slate-200 rounded appearance-none cursor-pointer accent-amber-500"

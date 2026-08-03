@@ -22,12 +22,18 @@ const defaultAllowedActions = {
 const defaultDataSources = {
     metrics: true,
     logs: true,
+    transactions: true,
     network: false,
     security: false
 }
 
 const STORAGE_KEY = 'foresight.experienceLogs'
 const BUSINESS_CONTEXT_KEY = 'foresight.businessContext'
+const THRESHOLDS_KEY = 'foresight.thresholds'
+const RISK_TIERS_KEY = 'foresight.riskTiers'
+const ESCALATION_KEY = 'foresight.escalation'
+const ALLOWED_ACTIONS_KEY = 'foresight.allowedActions'
+const DATA_SOURCES_KEY = 'foresight.dataSources'
 
 function loadStoredExperienceLogs() {
     try {
@@ -47,13 +53,58 @@ function loadStoredBusinessContext() {
     }
 }
 
+function loadStoredThresholds() {
+    try {
+        const raw = localStorage.getItem(THRESHOLDS_KEY)
+        return raw ? JSON.parse(raw) : defaultThresholds
+    } catch {
+        return defaultThresholds
+    }
+}
+
+function loadStoredRiskTiers() {
+    try {
+        const raw = localStorage.getItem(RISK_TIERS_KEY)
+        return raw ? JSON.parse(raw) : defaultRiskTiers
+    } catch {
+        return defaultRiskTiers
+    }
+}
+
+function loadStoredEscalation() {
+    try {
+        const raw = localStorage.getItem(ESCALATION_KEY)
+        return raw ? JSON.parse(raw) : defaultEscalation
+    } catch {
+        return defaultEscalation
+    }
+}
+
+function loadStoredAllowedActions() {
+    try {
+        const raw = localStorage.getItem(ALLOWED_ACTIONS_KEY)
+        return raw ? JSON.parse(raw) : defaultAllowedActions
+    } catch {
+        return defaultAllowedActions
+    }
+}
+
+function loadStoredDataSources() {
+    try {
+        const raw = localStorage.getItem(DATA_SOURCES_KEY)
+        return raw ? JSON.parse(raw) : defaultDataSources
+    } catch {
+        return defaultDataSources
+    }
+}
+
 export function SettingsProvider({ children }) {
-    const [thresholds, setThresholds] = useState(defaultThresholds)
-    const [riskTiers, setRiskTiers] = useState(defaultRiskTiers)
-    const [escalation, setEscalation] = useState(defaultEscalation)
+    const [thresholds, setThresholds] = useState(loadStoredThresholds)
+    const [riskTiers, setRiskTiers] = useState(loadStoredRiskTiers)
+    const [escalation, setEscalation] = useState(loadStoredEscalation)
     const [businessContext, setBusinessContext] = useState(loadStoredBusinessContext)
-    const [allowedActions, setAllowedActions] = useState(defaultAllowedActions)
-    const [dataSources, setDataSources] = useState(defaultDataSources)
+    const [allowedActions, setAllowedActions] = useState(loadStoredAllowedActions)
+    const [dataSources, setDataSources] = useState(loadStoredDataSources)
     const [experienceLogs, setExperienceLogs] = useState(loadStoredExperienceLogs)
 
     useEffect(() => {
@@ -71,6 +122,46 @@ export function SettingsProvider({ children }) {
             console.error('Failed to save business context to localStorage', err)
         }
     }, [businessContext])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(THRESHOLDS_KEY, JSON.stringify(thresholds))
+        } catch (err) {
+            console.error('Failed to save thresholds to localStorage', err)
+        }
+    }, [thresholds])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(RISK_TIERS_KEY, JSON.stringify(riskTiers))
+        } catch (err) {
+            console.error('Failed to save risk tiers to localStorage', err)
+        }
+    }, [riskTiers])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(ESCALATION_KEY, JSON.stringify(escalation))
+        } catch (err) {
+            console.error('Failed to save escalation to localStorage', err)
+        }
+    }, [escalation])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(ALLOWED_ACTIONS_KEY, JSON.stringify(allowedActions))
+        } catch (err) {
+            console.error('Failed to save allowed actions to localStorage', err)
+        }
+    }, [allowedActions])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(DATA_SOURCES_KEY, JSON.stringify(dataSources))
+        } catch (err) {
+            console.error('Failed to save data sources to localStorage', err)
+        }
+    }, [dataSources])
 
     const value = useMemo(() => ({
         thresholds,
