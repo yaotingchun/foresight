@@ -57,14 +57,14 @@ export function computeEffectMetrics(baseMetrics, faultType, s) {
  * downstream cascaded stages (which can start and run long after the root)
  * are still actively degraded.
  */
-export function deriveIncidentStatus(stages, now, frozenStatus) {
+export function deriveIncidentStatus(stages, now, frozenStatus, hasApprovalSteps = false) {
   if (frozenStatus) return frozenStatus
   const root = stages[0]
   const overallEnd = Math.max(...stages.map((s) => s.endAt))
   if (now < root.rampEnd) return 'detected'
   const holdMid = root.rampEnd + (root.holdEnd - root.rampEnd) / 2
   if (now < holdMid) return 'investigating'
-  if (now < overallEnd) return 'mitigating'
+  if (now < overallEnd || hasApprovalSteps) return 'mitigating'
   return 'resolved'
 }
 

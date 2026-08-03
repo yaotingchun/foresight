@@ -80,10 +80,28 @@ export function SimulationProvider({ children }) {
   const [accumulatedLogs, setAccumulatedLogs] = useState([])
   const [txEvents, setTxEvents] = useState([])
   const [incidents, setIncidents] = useState(loadStoredIncidents)
-  const { businessContext, experienceLogs } = useSettings()
+  const { businessContext, experienceLogs, riskTiers, setExperienceLogs } = useSettings()
   const { pushMetrics, isConnected } = useDataPipeline()
   const rtSeq = useRef(0)
   const activeIncidentIdRef = useRef(null)
+
+  const activeIncident = useMemo(() => {
+    return incidents.find((inc) => inc.id === activeIncidentIdRef.current)
+  }, [incidents])
+
+  const hasApprovalSteps = useMemo(() => {
+    if (!activeIncident) return false
+    if (activeIncident.isAnalyzing) return true
+    if (activeIncident.hasApprovalSteps !== undefined) return activeIncident.hasApprovalSteps
+    if (!activeIncident.aiAnalysis?.remediationPlan) return false
+    return activeIncident.aiAnalysis.remediationPlan.some((p, idx) => {
+      const mockConfidence = Math.max(0, 95 - (idx * 12))
+      let liveType = 'requires_approval'
+      if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+      else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+      return liveType === 'requires_approval'
+    })
+  }, [activeIncident, riskTiers])
 
   useEffect(() => {
     try {
@@ -101,9 +119,10 @@ export function SimulationProvider({ children }) {
 
   const componentEffects = useMemo(() => {
     if (!activeRun) return {}
-    const now = Date.now()
+    const realNow = Date.now()
     const effects = {}
     activeRun.stages.forEach((stage) => {
+      const now = hasApprovalSteps ? Math.min(realNow, stage.holdEnd) : realNow
       const p = stageProgress(stage, now)
       if (p <= 0) return
       const s = p * (SEVERITY_MULT[stage.severity] ?? 1)
@@ -120,7 +139,7 @@ export function SimulationProvider({ children }) {
     return effects
     // `tick` isn't read directly but forces this to recompute every TICK_MS.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeRun, tick])
+  }, [activeRun, tick, hasApprovalSteps])
 
   // Emit synthetic log lines proportional to how severe each active stage currently is.
   useEffect(() => {
@@ -229,6 +248,7 @@ export function SimulationProvider({ children }) {
   useEffect(() => {
     if (!activeRun) return
     const now = Date.now()
+    if (hasApprovalSteps) return
     if (now > activeRun.endAt && activeRun.status !== 'resolved') {
       const incidentId = activeIncidentIdRef.current
       if (incidentId) {
@@ -240,7 +260,7 @@ export function SimulationProvider({ children }) {
       setActiveRun(null)
       activeIncidentIdRef.current = null
     }
-  }, [tick, activeRun])
+  }, [tick, activeRun, hasApprovalSteps])
 
   const startScenario = useCallback((scenarioId) => {
     const scenario = SCENARIOS_BY_ID[scenarioId]
@@ -248,6 +268,7 @@ export function SimulationProvider({ children }) {
     const runStart = Date.now()
     const stages = buildStages(scenario, runStart)
     const record = buildIncidentRecord(scenario, stages, runStart)
+    record.hasApprovalSteps = true // Default to true while analyzing
     activeIncidentIdRef.current = record.id
     setIncidents((prev) => [record, ...prev].slice(0, MAX_INCIDENTS))
     setTick(0)
@@ -256,11 +277,79 @@ export function SimulationProvider({ children }) {
 
     // Fire off AI analysis in the background immediately
     api.analyzeIncident({ ...record, businessContext, experienceLogs }).then(data => {
-      setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false } : p))
+      const hasApproval = data.remediationPlan?.some((p, idx) => {
+        const mockConfidence = Math.max(0, 95 - (idx * 12))
+        let liveType = 'requires_approval'
+        if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+        else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+        return liveType === 'requires_approval'
+      })
+
+      // Check if the first step is automated
+      const firstStep = data.remediationPlan?.[0]
+      let isFirstAutomated = false
+      if (firstStep) {
+        const mockConfidence = 95
+        let liveType = 'requires_approval'
+        if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+        else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+        
+        if (liveType === 'automated') {
+          isFirstAutomated = true
+        }
+      }
+
+      if (isFirstAutomated) {
+        const now = Date.now()
+        const RESOLVE_MS = 8000
+        
+        const updatedPlan = data.remediationPlan.map((step, idx) => {
+          if (idx === 0) return { ...step, approved: true }
+          return step
+        })
+
+        // 1. Update incidents list with approved first step and shifted resolution stages
+        setIncidents((prev) =>
+          prev.map((inc) => {
+            if (inc.id !== record.id) return inc
+            const updatedStages = inc.stages.map((stage) => ({
+              ...stage,
+              holdEnd: now,
+              endAt: now + RESOLVE_MS,
+            }))
+            return {
+              ...inc,
+              aiAnalysis: { ...data, remediationPlan: updatedPlan },
+              isAnalyzing: false,
+              hasApprovalSteps: false,
+              stages: updatedStages,
+              endAt: now + RESOLVE_MS,
+            }
+          })
+        )
+
+        // 2. Update activeRun stages and endAt
+        setActiveRun((r) => {
+          if (!r || `${r.scenario.id}-${r.runStart}` !== record.id) return r
+          const updatedStages = r.stages.map((stage) => ({
+            ...stage,
+            holdEnd: now,
+            endAt: now + RESOLVE_MS,
+          }))
+          return {
+            ...r,
+            stages: updatedStages,
+            endAt: now + RESOLVE_MS,
+          }
+        })
+
+      } else {
+        setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false, hasApprovalSteps: hasApproval } : p))
+      }
     }).catch(err => {
-      setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, analysisError: err.message, isAnalyzing: false } : p))
+      setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, analysisError: err.message, isAnalyzing: false, hasApprovalSteps: false } : p))
     })
-  }, [businessContext, experienceLogs])
+  }, [businessContext, experienceLogs, riskTiers])
 
   const stopScenario = useCallback(() => {
     const incidentId = activeIncidentIdRef.current
@@ -272,6 +361,107 @@ export function SimulationProvider({ children }) {
     activeIncidentIdRef.current = null
     setActiveRun(null)
   }, [])
+
+  const approveRemediationStep = useCallback((incidentId, stepIndex) => {
+    // 1. Mark this step as approved
+    setIncidents((prev) =>
+      prev.map((inc) => {
+        if (inc.id !== incidentId) return inc
+        if (!inc.aiAnalysis?.remediationPlan) return inc
+
+        const plan = inc.aiAnalysis.remediationPlan.map((step, idx) => {
+          if (idx !== stepIndex) return step
+          return { ...step, approved: true }
+        })
+
+        return {
+          ...inc,
+          aiAnalysis: { ...inc.aiAnalysis, remediationPlan: plan },
+          hasApprovalSteps: false,
+        }
+      })
+    )
+
+    // 2. Trigger the 8-second mitigation buffer
+    const isActiveRun = activeRun && incidentId === `${activeRun.scenario.id}-${activeRun.runStart}`
+    if (isActiveRun) {
+      const now = Date.now()
+      const RESOLVE_MS = 8000
+      const updatedStages = activeRun.stages.map((stage) => ({
+        ...stage,
+        holdEnd: now,
+        endAt: now + RESOLVE_MS,
+      }))
+
+      setActiveRun((r) => {
+        if (!r) return null
+        return {
+          ...r,
+          stages: updatedStages,
+          endAt: now + RESOLVE_MS,
+        }
+      })
+
+      setIncidents((prev) =>
+        prev.map((inc) =>
+          inc.id === incidentId
+            ? {
+                ...inc,
+                stages: updatedStages,
+                endAt: now + RESOLVE_MS,
+                hasApprovalSteps: false,
+              }
+            : inc
+        )
+      )
+    }
+  }, [activeRun])
+
+  const rejectRemediationStep = useCallback((incidentId, stepIndex, feedbackText) => {
+    setIncidents((prev) =>
+      prev.map((inc) => {
+        if (inc.id !== incidentId) return inc
+        if (!inc.aiAnalysis?.remediationPlan) return inc
+
+        const plan = inc.aiAnalysis.remediationPlan.map((step, idx) => {
+          if (idx !== stepIndex) return step
+          return { ...step, rejected: true, feedback: feedbackText }
+        })
+
+        // Check if there are still any pending approval steps in the remaining steps
+        const remainingPlan = plan.slice(stepIndex + 1)
+        const hasApproval = remainingPlan.some((p, idx) => {
+          const actualIdx = stepIndex + 1 + idx
+          const mockConfidence = Math.max(0, 95 - (actualIdx * 12))
+          let liveType = 'requires_approval'
+          if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
+          else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
+          return liveType === 'requires_approval' && !p.approved && !p.rejected
+        })
+
+        return {
+          ...inc,
+          aiAnalysis: { ...inc.aiAnalysis, remediationPlan: plan },
+          hasApprovalSteps: hasApproval,
+        }
+      })
+    )
+
+    // Add to experience logs
+    const activeIncident = incidents.find((inc) => inc.id === incidentId)
+    if (activeIncident) {
+      const stepTitle = activeIncident.aiAnalysis?.remediationPlan?.[stepIndex]?.step || 'Step'
+      setExperienceLogs((prev) => [
+        ...prev,
+        {
+          timestamp: new Date().toISOString(),
+          incidentContext: activeIncident.title,
+          rejectedStep: stepTitle,
+          userFeedback: feedbackText,
+        },
+      ])
+    }
+  }, [incidents, riskTiers, setExperienceLogs])
 
   const openDrawer = useCallback(() => setDrawerOpen(true), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
@@ -291,7 +481,9 @@ export function SimulationProvider({ children }) {
     openDrawer,
     closeDrawer,
     toggleDrawer,
-  }), [activeRun, componentEffects, logEvents, accumulatedLogs, txEvents, incidents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer])
+    approveRemediationStep,
+    rejectRemediationStep,
+  }), [activeRun, componentEffects, logEvents, accumulatedLogs, txEvents, incidents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer, approveRemediationStep, rejectRemediationStep])
 
   return <SimulationContext.Provider value={value}>{children}</SimulationContext.Provider>
 }
