@@ -77,6 +77,7 @@ export function SimulationProvider({ children }) {
   const [isDrawerOpen, setDrawerOpen] = useState(false)
   const [tick, setTick] = useState(0)
   const [logEvents, setLogEvents] = useState([])
+  const [accumulatedLogs, setAccumulatedLogs] = useState([])
   const [txEvents, setTxEvents] = useState([])
   const [incidents, setIncidents] = useState(loadStoredIncidents)
   const { businessContext, experienceLogs } = useSettings()
@@ -147,6 +148,9 @@ export function SimulationProvider({ children }) {
       }
     })
     setLogEvents(emitted)
+    if (emitted.length > 0) {
+      setAccumulatedLogs((prev) => [...emitted, ...prev].slice(0, 800))
+    }
     if (emitted.length > 0 && activeIncidentIdRef.current) {
       const errCount = emitted.filter((e) => e.status === 'error').length
       setIncidents((prev) => prev.map((inc) => (
@@ -247,6 +251,7 @@ export function SimulationProvider({ children }) {
     activeIncidentIdRef.current = record.id
     setIncidents((prev) => [record, ...prev].slice(0, MAX_INCIDENTS))
     setTick(0)
+    setAccumulatedLogs([])
     setActiveRun({ scenario, runStart, stages, endAt: record.endAt, status: 'running' })
 
     // Fire off AI analysis in the background immediately
@@ -277,6 +282,7 @@ export function SimulationProvider({ children }) {
     activeRun,
     componentEffects,
     logEvents,
+    accumulatedLogs,
     txEvents,
     incidents,
     isDrawerOpen,
@@ -285,7 +291,7 @@ export function SimulationProvider({ children }) {
     openDrawer,
     closeDrawer,
     toggleDrawer,
-  }), [activeRun, componentEffects, logEvents, txEvents, incidents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer])
+  }), [activeRun, componentEffects, logEvents, accumulatedLogs, txEvents, incidents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer])
 
   return <SimulationContext.Provider value={value}>{children}</SimulationContext.Provider>
 }
