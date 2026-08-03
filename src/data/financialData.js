@@ -25,7 +25,8 @@ export const INFRA_INCIDENTS = incidents.map((inc) => {
 const INCIDENTS_BY_ID = Object.fromEntries(INFRA_INCIDENTS.map((inc) => [inc.id, inc]))
 
 export function getInfraCorrelation(timestampMs) {
-  return INFRA_INCIDENTS.find((inc) => timestampMs >= inc.startMs && timestampMs <= inc.endMs) ?? null
+  // Allow a 10-minute buffer around incident start/end for system retry propagation
+  return INFRA_INCIDENTS.find((inc) => timestampMs >= (inc.startMs - 5 * 60 * 1000) && timestampMs <= (inc.endMs + 10 * 60 * 1000)) ?? null
 }
 
 // ─── Account pools ────────────────────────────────────────────────────────────
@@ -76,11 +77,11 @@ export const ALL_TRANSACTIONS = transactions
     let { status, anomalyScore, feature } = classify(t)
 
     if (infraCorr) {
-      if (status === 'normal' && (t.id.slice(-1).charCodeAt(0) % 4 === 0)) {
+      if (status === 'normal') {
         status = 'flagged'
         anomalyScore = Math.round((0.48 + (t.amount % 20) / 100) * 100) / 100
         feature = FEATURE_BY_KEY.unusual_frequency
-      } else if (status !== 'normal' && !feature) {
+      } else if (!feature) {
         feature = FEATURE_BY_KEY.unusual_frequency
       }
     }

@@ -26,14 +26,15 @@ export default function FinancialMonitorPage() {
   const [statusFilter,   setStatusFilter]   = useState('all')
   const [minAmount,      setMinAmount]      = useState('')
   const [maxAmount,      setMaxAmount]      = useState('')
-  const [timeMs,         setTimeMs]         = useState(900000) // 15 min
+  const [timeMs,         setTimeMs]         = useState(86400000) // 1d default (24h)
   const [categoryFilter, setCategoryFilter] = useState('all')
 
   // ── Time-range filter ───────────────────────────────────────────────────────
   const timeFiltered = useMemo(() => {
-    const cutoff = Date.now() - timeMs
+    const effectiveTimeMs = categoryFilter === 'infra' ? Math.max(timeMs, 86400000) : timeMs
+    const cutoff = Date.now() - effectiveTimeMs
     return txs.filter((t) => t.timestamp >= cutoff)
-  }, [txs, timeMs])
+  }, [txs, timeMs, categoryFilter])
 
   // ── Full filter for table ───────────────────────────────────────────────────
   const tableFiltered = useMemo(() => {
