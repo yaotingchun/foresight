@@ -1,7 +1,5 @@
 import { useMemo, useRef, useEffect, useState } from 'react'
-import { bucketLogs } from '../../data/logsData'
-
-const BAR_W_FRAC = 0.68
+import { bucketLogs, LOG_BUCKET_COUNT } from '../../data/logsData'
 
 function formatBucketTime(ts, rangeMs) {
   const d = new Date(ts)
@@ -9,21 +7,22 @@ function formatBucketTime(ts, rangeMs) {
     return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
   if (rangeMs <= 60 * 60 * 1000)
     return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
-  // 1 day: show HH:MM
   return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
 }
 
-export default function LogChart({ logs, rangeMs }) {
-  const BUCKETS = 32
-  const BAR_H = 80   // px — chart bars area
-  const LABEL_H = 20   // px — x-axis label row
+export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, onSelectBucket, referenceTime = null }) {
+  const BUCKETS = LOG_BUCKET_COUNT
+  const BAR_H = 48    // px — slim chart height
+  const LABEL_H = 18   // px — x-axis label row
+  const Y_AXIS_W = 28  // px — space for y-axis count labels
   const TOTAL_H = BAR_H + LABEL_H
+  const BAR_W_FRAC = 0.60 // Balanced bar width ratio
 
   const containerRef = useRef(null)
   const [width, setWidth] = useState(800)
   const [hoverIndex, setHoverIndex] = useState(null)
 
-  // Measure container width for accurate label rendering
+  // Measure container width
   useEffect(() => {
     if (!containerRef.current) return
     const ro = new ResizeObserver(([entry]) => {
@@ -33,18 +32,19 @@ export default function LogChart({ logs, rangeMs }) {
     return () => ro.disconnect()
   }, [])
 
-  const data = useMemo(() => bucketLogs(logs, rangeMs, BUCKETS), [logs, rangeMs])
+  const data = useMemo(() => bucketLogs(logs, rangeMs, BUCKETS, referenceTime), [logs, rangeMs, BUCKETS, referenceTime])
 
   const maxVal = useMemo(
     () => Math.max(1, ...data.map((d) => d.error + d.warn + d.info)),
     [data]
   )
 
-  const bucketPx = width / BUCKETS
-  const barPx = bucketPx * BAR_W_FRAC
+  const chartW = Math.max(100, width - Y_AXIS_W)
+  const bucketPx = chartW / BUCKETS
+  const barPx = Math.max(16, Math.min(22, bucketPx * BAR_W_FRAC))
 
-  // Show ~7 evenly spaced tick labels
-  const tickEvery = Math.max(1, Math.floor(BUCKETS / 7))
+  // Show ~6 evenly spaced tick labels
+  const tickEvery = Math.max(1, Math.floor(BUCKETS / 6))
   const tickIndices = Array.from({ length: BUCKETS }, (_, i) => i).filter(
     (i) => i % tickEvery === 0 || i === BUCKETS - 1
   )
@@ -52,83 +52,221 @@ export default function LogChart({ logs, rangeMs }) {
   const handleMouseMove = (e) => {
     if (!containerRef.current) return
     const rect = containerRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const idx = Math.max(0, Math.min(BUCKETS - 1, Math.floor((x / width) * BUCKETS)))
+    const x = e.clientX - rect.left - Y_AXIS_W
+    if (x < 0) {
+      setHoverIndex(null)
+      return
+    }
+    const idx = Math.max(0, Math.min(BUCKETS - 1, Math.floor((x / chartW) * BUCKETS)))
     setHoverIndex(idx)
   }
 
+  const handleClick = (e) => {
+    if (!containerRef.current || !onSelectBucket) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left - Y_AXIS_W
+    if (x < 0) return
+    const idx = Math.max(0, Math.min(BUCKETS - 1, Math.floor((x / chartW) * BUCKETS)))
+    onSelectBucket(idx === selectedBucketIndex ? null : idx)
+  }
+
   const hoverBucket = hoverIndex !== null ? data[hoverIndex] : null
-  const hoverX = hoverIndex !== null ? (hoverIndex + 0.5) * bucketPx : 0
+  const hoverX = hoverIndex !== null ? Y_AXIS_W + (hoverIndex + 0.5) * bucketPx : 0
   const tipLeftPct = width > 0 ? (hoverX / width) * 100 : 0
+
+  const midCount = Math.round(maxVal / 2)
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full select-none"
+      className="relative w-full select-none cursor-pointer"
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setHoverIndex(null)}
+      onClick={handleClick}
     >
       <svg
         width={width}
         height={TOTAL_H}
         style={{ display: 'block', overflow: 'visible' }}
       >
-        {/* Grid lines */}
-        {[0.25, 0.5, 0.75, 1].map((f) => (
-          <line
-            key={f}
-            x1={0}
-            y1={BAR_H * (1 - f)}
-            x2={width}
-            y2={BAR_H * (1 - f)}
-            stroke="#E5E7EB"
-            strokeWidth={1}
-          />
-        ))}
+        {/* Y-axis Gridlines & Count Labels */}
+        <line
+          x1={Y_AXIS_W}
+          y1={0}
+          x2={width}
+          y2={0}
+          stroke="#E5E7EB"
+          strokeWidth={1}
+          strokeDasharray="2 2"
+        />
+        <text
+          x={Y_AXIS_W - 4}
+          y={8}
+          textAnchor="end"
+          fontSize={9}
+          fill="#94A3B8"
+          fontFamily="Inter, system-ui, sans-serif"
+        >
+          {maxVal}
+        </text>
 
-        {/* Hover highlight column */}
-        {hoverIndex !== null && (
+        {maxVal > 1 && (
+          <>
+            <line
+              x1={Y_AXIS_W}
+              y1={BAR_H * 0.5}
+              x2={width}
+              y2={BAR_H * 0.5}
+              stroke="#E5E7EB"
+              strokeWidth={1}
+              strokeDasharray="2 2"
+            />
+            <text
+              x={Y_AXIS_W - 4}
+              y={BAR_H * 0.5 + 3}
+              textAnchor="end"
+              fontSize={9}
+              fill="#94A3B8"
+              fontFamily="Inter, system-ui, sans-serif"
+            >
+              {midCount}
+            </text>
+          </>
+        )}
+
+        <line
+          x1={Y_AXIS_W}
+          y1={BAR_H}
+          x2={width}
+          y2={BAR_H}
+          stroke="#CBD5E1"
+          strokeWidth={1}
+        />
+        <text
+          x={Y_AXIS_W - 4}
+          y={BAR_H}
+          textAnchor="end"
+          fontSize={9}
+          fill="#94A3B8"
+          fontFamily="Inter, system-ui, sans-serif"
+        >
+          0
+        </text>
+
+        {/* Selected Bucket Highlight */}
+        {selectedBucketIndex !== null && (
+          <g>
+            <rect
+              x={Y_AXIS_W + selectedBucketIndex * bucketPx}
+              y={0}
+              width={bucketPx}
+              height={BAR_H}
+              fill="#6366F1"
+              fillOpacity={0.15}
+              rx={2}
+            />
+            <rect
+              x={Y_AXIS_W + selectedBucketIndex * bucketPx}
+              y={0}
+              width={bucketPx}
+              height={2}
+              fill="#6366F1"
+              rx={1}
+            />
+          </g>
+        )}
+
+        {/* Hover Highlight Column */}
+        {hoverIndex !== null && hoverIndex !== selectedBucketIndex && (
           <rect
-            x={hoverIndex * bucketPx}
+            x={Y_AXIS_W + hoverIndex * bucketPx}
             y={0}
             width={bucketPx}
             height={BAR_H}
             fill="#3B82F6"
-            fillOpacity={0.06}
-            rx={3}
+            fillOpacity={0.08}
+            rx={2}
           />
         )}
 
-        {/* Bars */}
+        {/* Stacked Histogram Bars */}
         {data.map((bucket, i) => {
-          const x = i * bucketPx + (bucketPx - barPx) / 2
+          const x = Y_AXIS_W + i * bucketPx + (bucketPx - barPx) / 2
           const scale = BAR_H / maxVal
 
-          const errorH = bucket.error * scale
-          const warnH = bucket.warn * scale
           const infoH = bucket.info * scale
+          const warnH = bucket.warn * scale
+          const errorH = bucket.error * scale
+          const totalH = infoH + warnH + errorH
 
           let y = BAR_H
           const segs = []
           const isHovered = i === hoverIndex
+          const isSelected = i === selectedBucketIndex
 
+          const opacity =
+            (hoverIndex === null && selectedBucketIndex === null) || isHovered || isSelected ? 1 : 0.6
+
+          const hasError = errorH > 0
+          const hasWarn = warnH > 0
+
+          // Bottom: Info (Blue)
           if (infoH > 0) {
             y -= infoH
-            segs.push(<rect key="info" x={x} y={y} width={barPx} height={infoH} fill="#60A5FA" rx={1.5} opacity={hoverIndex === null || isHovered ? 1 : 0.65} />)
+            const isTop = !hasWarn && !hasError
+            segs.push(
+              <rect
+                key="info"
+                x={x}
+                y={y}
+                width={barPx}
+                height={infoH}
+                fill="#60A5FA"
+                rx={isTop ? 1.5 : 0}
+                opacity={opacity}
+              />
+            )
           }
+
+          // Middle: Warning (Yellow)
           if (warnH > 0) {
             y -= warnH
-            segs.push(<rect key="warn" x={x} y={y} width={barPx} height={warnH} fill="#FBBF24" rx={1.5} opacity={hoverIndex === null || isHovered ? 1 : 0.65} />)
+            const isTop = !hasError
+            segs.push(
+              <rect
+                key="warn"
+                x={x}
+                y={y}
+                width={barPx}
+                height={warnH}
+                fill="#FBBF24"
+                rx={isTop ? 1.5 : 0}
+                opacity={opacity}
+              />
+            )
           }
+
+          // Top: Error (Red)
           if (errorH > 0) {
             y -= errorH
-            segs.push(<rect key="err" x={x} y={y} width={barPx} height={errorH} fill="#F87171" rx={1.5} opacity={hoverIndex === null || isHovered ? 1 : 0.65} />)
+            segs.push(
+              <rect
+                key="err"
+                x={x}
+                y={y}
+                width={barPx}
+                height={errorH}
+                fill="#F87171"
+                rx={1.5}
+                opacity={opacity}
+              />
+            )
           }
 
           return <g key={i}>{segs}</g>
         })}
 
-        {/* Hover guideline */}
+        {/* Hover Guideline */}
         {hoverIndex !== null && (
           <line
             x1={hoverX}
@@ -138,15 +276,14 @@ export default function LogChart({ logs, rangeMs }) {
             stroke="#94A3B8"
             strokeWidth={1}
             strokeDasharray="2 2"
-            opacity={0.6}
+            opacity={0.7}
           />
         )}
 
-        {/* X-axis tick labels — rendered in pixel space, no clipping */}
+        {/* X-Axis Tick Labels */}
         {tickIndices.map((i) => {
-          const cx = i * bucketPx + bucketPx / 2
-          // clamp so first/last labels don't get cut
-          const x = Math.max(24, Math.min(width - 24, cx))
+          const cx = Y_AXIS_W + i * bucketPx + bucketPx / 2
+          const x = Math.max(Y_AXIS_W + 20, Math.min(width - 20, cx))
           return (
             <text
               key={i}
@@ -154,7 +291,8 @@ export default function LogChart({ logs, rangeMs }) {
               y={BAR_H + LABEL_H - 3}
               textAnchor="middle"
               fontSize={10}
-              fill="#94A3B8"
+              fill={i === selectedBucketIndex ? '#4F46E5' : '#94A3B8'}
+              fontWeight={i === selectedBucketIndex ? 600 : 400}
               fontFamily="Inter, system-ui, sans-serif"
             >
               {formatBucketTime(data[i]?.t ?? 0, rangeMs)}
@@ -166,16 +304,16 @@ export default function LogChart({ logs, rangeMs }) {
       {/* Info Card Tooltip */}
       {hoverBucket && (
         <div
-          className="pointer-events-none absolute -top-1.5 z-20 -translate-x-1/2 -translate-y-full rounded-lg border border-line bg-card p-2.5 shadow-lg min-w-[140px] text-xs backdrop-blur-sm"
-          style={{ left: `clamp(75px, ${tipLeftPct}%, calc(100% - 75px))` }}
+          className="pointer-events-none absolute -top-1.5 z-20 -translate-x-1/2 -translate-y-full rounded-lg border border-line bg-card p-2 shadow-lg min-w-[140px] text-xs backdrop-blur-sm"
+          style={{ left: `clamp(85px, ${tipLeftPct}%, calc(100% - 85px))` }}
         >
-          <div className="font-semibold text-ink border-b border-line pb-1 mb-1.5 flex items-center justify-between gap-3">
+          <div className="font-semibold text-ink border-b border-line pb-1 mb-1 flex items-center justify-between gap-3">
             <span>{formatBucketTime(hoverBucket.t, rangeMs)}</span>
             <span className="text-[10px] font-normal text-ink-faint">
               {(hoverBucket.error + hoverBucket.warn + hoverBucket.info).toLocaleString()} events
             </span>
           </div>
-          <div className="space-y-1 text-[11px]">
+          <div className="space-y-0.5 text-[11px]">
             <div className="flex items-center justify-between gap-3">
               <span className="flex items-center gap-1.5 text-red-500 font-medium">
                 <span className="w-2 h-2 rounded-sm bg-red-400 shrink-0" />
@@ -201,15 +339,15 @@ export default function LogChart({ logs, rangeMs }) {
         </div>
       )}
 
-      {/* Legend row */}
-      <div className="flex items-center gap-4 mt-1 px-0.5">
+      {/* Legend Row */}
+      <div className="flex items-center gap-4 mt-0.5 px-0.5">
         {[
           { color: 'bg-red-400', label: 'Error' },
           { color: 'bg-amber-400', label: 'Warning' },
           { color: 'bg-blue-400', label: 'Info' },
         ].map(({ color, label }) => (
           <span key={label} className="flex items-center gap-1.5 text-[11px] text-ink-faint">
-            <span className={`w-2.5 h-2.5 rounded-sm shrink-0 ${color}`} />
+            <span className={`w-2 h-2 rounded-sm shrink-0 ${color}`} />
             {label}
           </span>
         ))}

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
-import { Activity, Pause, Play } from 'lucide-react'
-import { SERVICES } from '../data/logsData'
+import { Activity, X } from 'lucide-react'
+import { SERVICES, bucketLogs, LOG_BUCKET_COUNT } from '../data/logsData'
 import { useLogsStream }  from '../hooks/useLogsStream'
 import LogChart   from '../components/logs/LogChart'
 import LogFilters from '../components/logs/LogFilters'
@@ -13,10 +13,11 @@ export default function LogsPage() {
   const { logs: streamLogs, newIds, isPaused, togglePause } = useLogsStream()
 
   // ── Filter state ──────────────────────────────────────────────────────────
-  const [rangeMs,          setRangeMs]          = useState(60 * 60 * 1000)
-  const [selectedServices, setSelectedServices] = useState([...SERVICES])
-  const [selectedStatuses, setSelectedStatuses] = useState([...STATUS_OPTIONS])
-  const [search,           setSearch]           = useState('')
+  const [rangeMs,             setRangeMs]             = useState(60 * 60 * 1000)
+  const [selectedServices,    setSelectedServices]    = useState([...SERVICES])
+  const [selectedStatuses,    setSelectedStatuses]    = useState([...STATUS_OPTIONS])
+  const [search,              setSearch]              = useState('')
+  const [selectedBucketIndex, setSelectedBucketIndex] = useState(null)
 
   function toggleService(svc) {
     setSelectedServices((prev) =>
@@ -30,16 +31,21 @@ export default function LogsPage() {
     )
   }
 
-  // ── Time-range filter (used by chart) ─────────────────────────────────────
-  const rangeFiltered = useMemo(() => {
-    const cutoff = Date.now() - rangeMs
-    return streamLogs.filter((l) => l.timestamp >= cutoff)
-  }, [streamLogs, rangeMs])
+  // Reset bucket selection when time range filter changes
+  function handleRangeChange(newRange) {
+    setRangeMs(newRange)
+    setSelectedBucketIndex(null)
+  }
 
-  // ── Full filter for table ─────────────────────────────────────────────────
-  const tableFiltered = useMemo(() => {
+  // ── Fixed reference time to anchor bucket boundaries stably ───────────────
+  const referenceTime = useMemo(() => Math.floor(Date.now() / 1000) * 1000, [rangeMs]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Filtered logs (matching search, service, status within time range) ────
+  const chartLogs = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return rangeFiltered.filter((l) => {
+    const cutoff = referenceTime - rangeMs
+    return streamLogs.filter((l) => {
+      if (l.timestamp < cutoff) return false
       if (!selectedServices.includes(l.service)) return false
       if (!selectedStatuses.includes(l.status))  return false
       if (q && !l.message.toLowerCase().includes(q) &&
@@ -47,7 +53,32 @@ export default function LogsPage() {
                !l.traceId.includes(q))            return false
       return true
     })
-  }, [rangeFiltered, selectedServices, selectedStatuses, search])
+  }, [streamLogs, rangeMs, selectedServices, selectedStatuses, search, referenceTime])
+
+  // ── Stable Chart Buckets ──────────────────────────────────────────────────
+  const chartBuckets = useMemo(() => {
+    return bucketLogs(chartLogs, rangeMs, LOG_BUCKET_COUNT, referenceTime)
+  }, [chartLogs, rangeMs, referenceTime])
+
+  // ── Selected bucket time window ───────────────────────────────────────────
+  const bucketWindow = useMemo(() => {
+    if (selectedBucketIndex === null) return null
+    const b = chartBuckets[selectedBucketIndex]
+    if (!b) return null
+    const startDate = new Date(b.t)
+    const timeStr = startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+    return {
+      start: b.t,
+      end: b.tEnd,
+      label: timeStr
+    }
+  }, [selectedBucketIndex, chartBuckets])
+
+  // ── Table filtered logs ───────────────────────────────────────────────────
+  const tableFiltered = useMemo(() => {
+    if (!bucketWindow) return chartLogs
+    return chartLogs.filter((l) => l.timestamp >= bucketWindow.start && l.timestamp < bucketWindow.end)
+  }, [chartLogs, bucketWindow])
 
   return (
     <div className="flex flex-col gap-3 pb-6">
@@ -56,7 +87,7 @@ export default function LogsPage() {
       <div className="bg-card border border-line rounded-xl px-3 py-2 shadow-card">
         <LogFilters
           rangeMs={rangeMs}
-          onRangeChange={setRangeMs}
+          onRangeChange={handleRangeChange}
           selectedServices={selectedServices}
           onToggleService={toggleService}
           selectedStatuses={selectedStatuses}
@@ -64,20 +95,42 @@ export default function LogsPage() {
           search={search}
           onSearchChange={setSearch}
           totalVisible={tableFiltered.length}
-          totalCount={rangeFiltered.length}
+          totalCount={chartLogs.length}
           isPaused={isPaused}
           onTogglePause={togglePause}
         />
       </div>
 
       {/* ── Log volume chart ─────────────────────────────────────────────────── */}
-      <div className="bg-card border border-line rounded-xl px-4 pt-3 pb-2 shadow-card">
-        <div className="flex items-center gap-1.5 mb-2">
-          <Activity size={13} className="text-ink-faint" />
-          <span className="text-xs font-semibold text-ink-soft">Log Volume</span>
-          <span className="text-[11px] text-ink-faint">· stacked by severity</span>
+      <div className="bg-card border border-line rounded-xl px-4 pt-2.5 pb-2 shadow-card">
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center gap-1.5">
+            <Activity size={13} className="text-ink-faint" />
+            <span className="text-xs font-semibold text-ink-soft">Log Volume</span>
+            <span className="text-[11px] text-ink-faint">· stacked by severity</span>
+          </div>
+          {bucketWindow && (
+            <div className="flex items-center gap-1.5">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200 text-[11px] font-mono text-indigo-700">
+                <span>Time bucket: {bucketWindow.label}</span>
+                <button
+                  onClick={() => setSelectedBucketIndex(null)}
+                  className="p-0.5 hover:bg-indigo-100 rounded text-indigo-700 transition-colors ml-0.5"
+                  title="Clear time bucket filter"
+                >
+                  <X size={12} />
+                </button>
+              </span>
+            </div>
+          )}
         </div>
-        <LogChart logs={tableFiltered} rangeMs={rangeMs} />
+        <LogChart
+          logs={chartLogs}
+          rangeMs={rangeMs}
+          selectedBucketIndex={selectedBucketIndex}
+          onSelectBucket={setSelectedBucketIndex}
+          referenceTime={referenceTime}
+        />
       </div>
 
       {/* ── Log table ───────────────────────────────────────────────────────── */}

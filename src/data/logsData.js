@@ -69,18 +69,21 @@ export const ALL_LOGS = appLogs
   .sort((a, b) => b.timestamp - a.timestamp)
 
 // ─── Chart bucket helpers ─────────────────────────────────────────────────────
-export function bucketLogs(logs, rangeMs, buckets = 30) {
-  const now   = Date.now()
+export const LOG_BUCKET_COUNT = 24
+
+export function bucketLogs(logs, rangeMs, buckets = LOG_BUCKET_COUNT, referenceTime = null) {
+  const now   = referenceTime || Math.floor(Date.now() / 1000) * 1000
   const start = now - rangeMs
   const step  = rangeMs / buckets
   const result = []
 
   for (let i = 0; i < buckets; i += 1) {
-    const bStart = start + i * step
-    const bEnd   = bStart + step
+    const bStart = Math.round(start + i * step)
+    const bEnd   = Math.round(bStart + step)
     const slice  = logs.filter((l) => l.timestamp >= bStart && l.timestamp < bEnd)
     result.push({
       t:     bStart,
+      tEnd:  bEnd,
       error: slice.filter((l) => l.status === 'error').length,
       warn:  slice.filter((l) => l.status === 'warn').length,
       info:  slice.filter((l) => l.status === 'info').length,
