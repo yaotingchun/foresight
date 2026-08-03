@@ -12,11 +12,11 @@ function formatBucketTime(ts, rangeMs) {
 
 export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, onSelectBucket, referenceTime = null }) {
   const BUCKETS = LOG_BUCKET_COUNT
-  const BAR_H = 48    // px — slim chart height
+  const BAR_H = 75    // px — modest height increase for clear vertical range
   const LABEL_H = 18   // px — x-axis label row
   const Y_AXIS_W = 28  // px — space for y-axis count labels
   const TOTAL_H = BAR_H + LABEL_H
-  const BAR_W_FRAC = 0.60 // Balanced bar width ratio
+  const BAR_W_FRAC = 0.56 // Balanced bar width with clean gaps
 
   const containerRef = useRef(null)
   const [width, setWidth] = useState(800)
@@ -41,10 +41,10 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
 
   const chartW = Math.max(100, width - Y_AXIS_W)
   const bucketPx = chartW / BUCKETS
-  const barPx = Math.max(16, Math.min(22, bucketPx * BAR_W_FRAC))
+  const barPx = Math.max(16, Math.min(24, bucketPx * BAR_W_FRAC))
 
-  // Show ~6 evenly spaced tick labels
-  const tickEvery = Math.max(1, Math.floor(BUCKETS / 6))
+  // Show ~5 evenly spaced tick labels
+  const tickEvery = Math.max(1, Math.floor(BUCKETS / 5))
   const tickIndices = Array.from({ length: BUCKETS }, (_, i) => i).filter(
     (i) => i % tickEvery === 0 || i === BUCKETS - 1
   )

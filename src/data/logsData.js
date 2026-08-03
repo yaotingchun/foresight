@@ -69,7 +69,7 @@ export const ALL_LOGS = appLogs
   .sort((a, b) => b.timestamp - a.timestamp)
 
 // ─── Chart bucket helpers ─────────────────────────────────────────────────────
-export const LOG_BUCKET_COUNT = 24
+export const LOG_BUCKET_COUNT = 14
 
 export function bucketLogs(logs, rangeMs, buckets = LOG_BUCKET_COUNT, referenceTime = null) {
   const now   = referenceTime || Math.floor(Date.now() / 1000) * 1000

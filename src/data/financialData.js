@@ -71,10 +71,23 @@ function classify(t) {
 
 export const ALL_TRANSACTIONS = transactions
   .map((t) => {
-    const { status, anomalyScore, feature } = classify(t)
+    const timestamp = Date.parse(t.timestamp)
+    const infraCorr = (t.incident_id ? INCIDENTS_BY_ID[t.incident_id] : null) ?? getInfraCorrelation(timestamp)
+    let { status, anomalyScore, feature } = classify(t)
+
+    if (infraCorr) {
+      if (status === 'normal' && (t.id.slice(-1).charCodeAt(0) % 4 === 0)) {
+        status = 'flagged'
+        anomalyScore = Math.round((0.48 + (t.amount % 20) / 100) * 100) / 100
+        feature = FEATURE_BY_KEY.unusual_frequency
+      } else if (status !== 'normal' && !feature) {
+        feature = FEATURE_BY_KEY.unusual_frequency
+      }
+    }
+
     return {
       id: t.id,
-      timestamp: Date.parse(t.timestamp),
+      timestamp,
       amount: t.amount,
       currency: t.currency,
       type: t.type,
@@ -83,7 +96,7 @@ export const ALL_TRANSACTIONS = transactions
       status,
       anomalyScore,
       dominantFeature: feature,
-      infraCorrelation: t.incident_id ? INCIDENTS_BY_ID[t.incident_id] ?? null : null,
+      infraCorrelation: infraCorr,
       actionHistory: [],
     }
   })
@@ -164,8 +177,16 @@ export function generateRealtimeTx() {
   const infraCorr = getInfraCorrelation(timestamp)
   let status
   if      (score >= 0.75) status = 'blocked'
-  else if (score >= 0.45) status = 'flagged'
+  else if (score >= 0.45 || (infraCorr && Math.random() < 0.35)) status = 'flagged'
   else                    status = 'normal'
+
+  let feature = status !== 'normal'
+    ? ANOMALY_FEATURES[Math.floor(Math.random() * ANOMALY_FEATURES.length)]
+    : null
+
+  if (infraCorr && status === 'flagged' && score < 0.45) {
+    feature = FEATURE_BY_KEY.unusual_frequency
+  }
 
   return {
     id:               `rt-tx-${Date.now()}-${_rtSeq}`,
@@ -177,9 +198,7 @@ export function generateRealtimeTx() {
     dst,
     status,
     anomalyScore:     Math.round(score * 100) / 100,
-    dominantFeature:  score >= 0.45 
-      ? ANOMALY_FEATURES[Math.floor(Math.random() * ANOMALY_FEATURES.length)]
-      : null,
+    dominantFeature:  feature,
     infraCorrelation: infraCorr,
     actionHistory:    [],
   }
