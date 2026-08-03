@@ -45,6 +45,22 @@ const ensureString = (val) => {
   try { return JSON.stringify(val); } catch { return String(val); }
 };
 
+const parseMarkdownToHtml = (markdown) => {
+  if (!markdown) return '';
+  return markdown
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.*?)__/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/_(.*?)_/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code style="background-color: #f1f5f9; padding: 2px 4px; border-radius: 4px; font-family: monospace; font-size: 0.9em; border: 1px solid #e2e8f0; color: #0f172a;">$1</code>')
+    .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" style="color: #4f46e5; text-decoration: underline;">$1</a>')
+    .replace(/\n/g, '<br/>');
+};
+
+
 function fmtClock(ms) {
   return new Date(ms).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
 }
@@ -233,7 +249,7 @@ function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
         <div style="text-align: left; font-size: 14.5px; line-height: 1.5; color: #1e293b;">
           <p style="font-weight: 700; margin-bottom: 8px;">Step ${idx + 1}: ${p.step}</p>
           <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-weight: 500; color: #475569;">
-            ${p.description.replace(/\n/g, '<br/>')}
+            ${parseMarkdownToHtml(ensureString(p.description))}
           </div>
         </div>
       `,
