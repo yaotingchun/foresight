@@ -27,6 +27,7 @@ const defaultDataSources = {
 }
 
 const STORAGE_KEY = 'foresight.experienceLogs'
+const BUSINESS_CONTEXT_KEY = 'foresight.businessContext'
 
 function loadStoredExperienceLogs() {
     try {
@@ -37,11 +38,20 @@ function loadStoredExperienceLogs() {
     }
 }
 
+function loadStoredBusinessContext() {
+    try {
+        const raw = localStorage.getItem(BUSINESS_CONTEXT_KEY)
+        return raw ? JSON.parse(raw) : defaultBusinessContext
+    } catch {
+        return defaultBusinessContext
+    }
+}
+
 export function SettingsProvider({ children }) {
     const [thresholds, setThresholds] = useState(defaultThresholds)
     const [riskTiers, setRiskTiers] = useState(defaultRiskTiers)
     const [escalation, setEscalation] = useState(defaultEscalation)
-    const [businessContext, setBusinessContext] = useState(defaultBusinessContext)
+    const [businessContext, setBusinessContext] = useState(loadStoredBusinessContext)
     const [allowedActions, setAllowedActions] = useState(defaultAllowedActions)
     const [dataSources, setDataSources] = useState(defaultDataSources)
     const [experienceLogs, setExperienceLogs] = useState(loadStoredExperienceLogs)
@@ -53,6 +63,14 @@ export function SettingsProvider({ children }) {
             console.error('Failed to save experience logs to localStorage', err)
         }
     }, [experienceLogs])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem(BUSINESS_CONTEXT_KEY, JSON.stringify(businessContext))
+        } catch (err) {
+            console.error('Failed to save business context to localStorage', err)
+        }
+    }, [businessContext])
 
     const value = useMemo(() => ({
         thresholds,

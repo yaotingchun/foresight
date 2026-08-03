@@ -181,11 +181,30 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                             multiple
                             onChange={(e) => {
                                 if (e.target.files?.length) {
-                                    const newFiles = Array.from(e.target.files).map(f => f.name)
-                                    setBusinessContext(p => ({
-                                        ...p,
-                                        uploadedFiles: [...(p.uploadedFiles || []), ...newFiles]
-                                    }))
+                                    const files = Array.from(e.target.files)
+                                    Promise.all(files.map(file => {
+                                        return new Promise((resolve) => {
+                                            const reader = new FileReader()
+                                            reader.onload = (ev) => {
+                                                resolve({
+                                                    name: file.name,
+                                                    content: ev.target.result || ''
+                                                })
+                                            }
+                                            reader.onerror = () => {
+                                                resolve({
+                                                    name: file.name,
+                                                    content: ''
+                                                })
+                                            }
+                                            reader.readAsText(file)
+                                        })
+                                    })).then(newFiles => {
+                                        setBusinessContext(p => ({
+                                            ...p,
+                                            uploadedFiles: [...(p.uploadedFiles || []), ...newFiles]
+                                        }))
+                                    })
                                 }
                             }}
                         />
@@ -201,7 +220,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                             {businessContext.uploadedFiles.map((file, idx) => (
                                 <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded border border-line">
                                     <FileText size={12} className="text-indigo-500" />
-                                    <span className="text-xs text-ink">{file}</span>
+                                    <span className="text-xs text-ink">{file.name || file}</span>
                                 </div>
                             ))}
                         </div>
