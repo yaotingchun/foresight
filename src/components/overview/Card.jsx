@@ -2,7 +2,7 @@
 export default function Card({ title, subtitle, right, children, className = '', bodyClassName = 'px-5 pb-5' }) {
   return (
     <section
-      className={`flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] ${className}`}
+      className={`flex min-w-0 flex-col rounded-2xl border border-slate-200 bg-card shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] ${className}`}
     >
       {(title || right) && (
         <header className="flex items-center gap-3 px-5 pt-5 pb-3">

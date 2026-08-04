@@ -22,7 +22,7 @@ function pct(a, b) {
 
 function Tile({ icon: Icon, iconBg, iconColor, label, value, sub, badge, badgeColor }) {
   return (
-    <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+    <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-card p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
       <div className="flex items-start gap-3">
         <span
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"

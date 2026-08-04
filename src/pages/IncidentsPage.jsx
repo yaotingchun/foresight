@@ -73,7 +73,7 @@ export default function IncidentsPage() {
         </div>
 
         {filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-slate-200 bg-card py-16 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <AlertOctagon size={32} className="text-ink-faint opacity-40" />
             <p className="text-sm font-medium text-ink-soft">
               {incidents.length === 0 ? 'No incidents yet' : 'No incidents match this filter'}

@@ -110,7 +110,7 @@ export default function ForecastChart({ metric, chartData, isLoading }) {
   const lastActual      = chartData.historical.values.at(-1)
 
   return (
-    <div className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-shadow hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
+    <div className="flex flex-col rounded-2xl border border-slate-200 bg-card shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-shadow hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
       {/* ── header ── */}
       <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-line">
         <div className="flex items-center gap-2.5">

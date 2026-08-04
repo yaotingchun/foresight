@@ -403,7 +403,7 @@ export default function SettingsPage() {
     ]
 
     return (
-        <div className="h-full bg-white flex flex-col">
+        <div className="h-full bg-card flex flex-col">
             <div className="border-b border-line px-6 py-4 flex items-center gap-2">
                 <Settings2 size={18} className="text-brand" />
                 <h1 className="text-base font-bold text-ink">Settings</h1>
@@ -428,7 +428,7 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Content Area */}
-                <div className="flex-1 overflow-y-auto p-8 bg-white">
+                <div className="flex-1 overflow-y-auto p-8 bg-card">
                     <div className="max-w-4xl">
                         {activeTab === 'general' && (
                             <GeneralSettings thresholds={thresholds} setThresholds={setThresholds} />

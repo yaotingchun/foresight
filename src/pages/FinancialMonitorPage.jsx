@@ -143,7 +143,7 @@ export default function FinancialMonitorPage() {
 
 
         {/* ── Filter bar ──────────────────────────────────────────────────────── */}
-        <div className="bg-white border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <div className="bg-card border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <FinFilters
             statusFilter={statusFilter}
             onStatusFilter={setStatusFilter}
@@ -163,7 +163,7 @@ export default function FinancialMonitorPage() {
         </div>
 
         {/* ── Transaction feed ────────────────────────────────────────────────── */}
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <div className="bg-card border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
           <TxFeed
             txs={tableFiltered}
             newIds={newIds}

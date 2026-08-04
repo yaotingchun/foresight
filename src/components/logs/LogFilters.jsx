@@ -39,7 +39,7 @@ function MultiSelectDropdown({ label, options, selected, onToggle, colorDot }) {
         className={`flex items-center gap-1.5 h-8 px-2.5 rounded-lg border text-xs font-medium transition-all
           ${open
             ? 'border-brand bg-brand-tint/30 text-brand'
-            : 'border-slate-200 bg-white text-ink-soft hover:border-ink-faint hover:text-ink'
+            : 'border-slate-200 bg-card text-ink-soft hover:border-ink-faint hover:text-ink'
           }`}
       >
         <span>{label}</span>
@@ -52,7 +52,7 @@ function MultiSelectDropdown({ label, options, selected, onToggle, colorDot }) {
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-1 z-50 w-52 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden">
+        <div className="absolute top-full left-0 mt-1 z-50 w-52 bg-card border border-slate-200 rounded-xl shadow-lg overflow-hidden">
           <div className="p-1.5 border-b border-line">
             <div className="flex items-center gap-1.5 px-2 py-1 bg-muted rounded-lg">
               <Search size={11} className="text-ink-faint shrink-0" />
@@ -155,7 +155,7 @@ export default function LogFilters({
         className={`flex items-center gap-1.5 px-2 h-8 rounded-lg border shrink-0 text-xs font-medium transition-all
           ${isPaused
             ? 'border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100'
-            : 'border-slate-200 bg-white text-ink-soft hover:border-ink-faint hover:text-ink'
+            : 'border-slate-200 bg-card text-ink-soft hover:border-ink-faint hover:text-ink'
           }`}
       >
         {isPaused ? (
@@ -211,7 +211,7 @@ export default function LogFilters({
       <div className="w-px h-5 bg-line shrink-0" />
 
       {/* Search — fills remaining space */}
-      <div className="flex items-center gap-1.5 flex-1 min-w-0 h-8 px-2.5 bg-white border border-slate-200 rounded-lg hover:border-ink-faint focus-within:border-brand focus-within:ring-1 focus-within:ring-brand/20 transition-all">
+      <div className="flex items-center gap-1.5 flex-1 min-w-0 h-8 px-2.5 bg-card border border-slate-200 rounded-lg hover:border-ink-faint focus-within:border-brand focus-within:ring-1 focus-within:ring-brand/20 transition-all">
         <Search size={13} className="text-ink-faint shrink-0" />
         <input
           className="flex-1 bg-transparent text-xs text-ink outline-none placeholder-ink-faint min-w-0"

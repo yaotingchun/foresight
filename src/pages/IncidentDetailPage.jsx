@@ -77,7 +77,7 @@ function fmtMoney(n) {
 
 function Section({ icon: Icon, title, children }) {
   return (
-    <section className="rounded-2xl border border-indigo-100/60 bg-white p-6 shadow-sm">
+    <section className="rounded-2xl border border-indigo-100/60 bg-card p-6 shadow-sm">
       <div className="mb-5 flex items-center gap-2.5">
         <Icon size={16} className="text-indigo-500" />
         <h2 className="text-[12px] font-bold uppercase tracking-widest text-indigo-900/80">{title}</h2>
@@ -143,7 +143,7 @@ function Timeline({ incident, status }) {
                 <span className="w-16 shrink-0 font-mono text-slate-400 text-[12px]">
                   +{Math.round((stage.stageStart - incident.runStart) / 1000)}s
                 </span>
-                <div className="flex flex-1 items-center gap-2 bg-white px-3 py-2 rounded-lg border border-slate-100 shadow-sm">
+                <div className="flex flex-1 items-center gap-2 bg-card px-3 py-2 rounded-lg border border-slate-100 shadow-sm">
                   <span className="font-bold text-indigo-950">{NODE_BY_ID[stage.component]?.label ?? stage.component}</span>
                   <span className="text-slate-300">→</span>
                   <span className="text-slate-600">{stage.faultType.replace(/_/g, ' ')}</span>
@@ -198,7 +198,7 @@ function MetricsTable({ incident }) {
             <th className="py-3 px-4 font-bold">Throughput</th>
           </tr>
         </thead>
-        <tbody className="bg-white">
+        <tbody className="bg-card">
           {components.map((id) => {
             const before = incident.beforeMetrics[id]
             const peak = incident.peakMetrics[id]

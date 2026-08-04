@@ -94,7 +94,7 @@ export default function LogsPage() {
     <div className="flex flex-col gap-3 pb-6">
 
       {/* ── Filter bar ──────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="bg-card border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <LogFilters
           rangeMs={rangeMs}
           onRangeChange={handleRangeChange}
@@ -112,7 +112,7 @@ export default function LogsPage() {
       </div>
 
       {/* ── Log volume chart ─────────────────────────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-2xl px-4 pt-2.5 pb-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="bg-card border border-slate-200 rounded-2xl px-4 pt-2.5 pb-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <div className="flex items-center justify-between mb-1.5">
           <div className="flex items-center gap-1.5">
             <Activity size={13} className="text-ink-faint" />
@@ -147,7 +147,7 @@ export default function LogsPage() {
       </div>
 
       {/* ── Log table ───────────────────────────────────────────────────────── */}
-      <div className="bg-white border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+      <div className="bg-card border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
         <LogTable logs={tableFiltered} newIds={newIds} />
       </div>
     </div>

@@ -161,7 +161,7 @@ function SystemAnalysisBanner({ systemAnalysis, systemLoading, onSelectComponent
                   <button
                     key={row.component}
                     onClick={() => onSelectComponent(row.component)}
-                    className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2.5 hover:border-brand/30 hover:bg-brand-tint/20 transition-all group text-left"
+                    className="flex items-center justify-between rounded-lg border border-slate-200 bg-card px-3 py-2.5 hover:border-brand/30 hover:bg-brand-tint/20 transition-all group text-left"
                   >
                     <div className="flex items-center gap-2">
                       <span className={`h-2 w-2 rounded-full shrink-0 ${s.dot}`} />
@@ -256,14 +256,14 @@ export default function PredictionPage() {
         />
 
         {/* ── Selectors ───────────────────────────────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-4 flex flex-wrap gap-6 items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-card shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-4 flex flex-wrap gap-6 items-center justify-between">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Drill-Down Telemetry Component</span>
               <select
                 value={component}
                 onChange={(e) => setComponent(e.target.value)}
-                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink focus:border-brand focus:outline-none shadow-sm cursor-pointer"
+                className="rounded-lg border border-slate-200 bg-card px-3 py-1.5 text-xs font-semibold text-ink focus:border-brand focus:outline-none shadow-sm cursor-pointer"
               >
                 {COMPONENTS.map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -316,7 +316,7 @@ export default function PredictionPage() {
         </div>
 
         {/* ── AI Summary (collapsable) ─────────────────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <div className="rounded-2xl border border-slate-200 bg-card shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
           <button
             onClick={() => setSummaryOpen(v => !v)}
             className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-muted transition-colors"
@@ -368,7 +368,7 @@ export default function PredictionPage() {
                     { icon: Clock,         label: 'Forecast horizon',  value: '30 min' },
                     { icon: Radio,          label: 'Detector',         value: 'IsoForest + z-score' },
                   ].map(({ icon: Icon, label, value, alert }) => (
-                    <div key={label} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
+                    <div key={label} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-card px-3 py-2">
                       <Icon size={13} className={alert ? 'text-amber-500' : 'text-ink-faint'} />
                       <div>
                         <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">{label}</p>

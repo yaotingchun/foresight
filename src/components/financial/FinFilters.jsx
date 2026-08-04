@@ -125,7 +125,7 @@ export default function FinFilters({
           placeholder="Min $"
           value={minAmount}
           onChange={(e) => onMinAmount(e.target.value)}
-          className="w-20 px-2 py-1 rounded-lg border border-slate-200 bg-white text-xs text-ink-soft focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
+          className="w-20 px-2 py-1 rounded-lg border border-slate-200 bg-card text-xs text-ink-soft focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
         />
         <span className="text-xs text-ink-faint">–</span>
         <input
@@ -133,7 +133,7 @@ export default function FinFilters({
           placeholder="Max $"
           value={maxAmount}
           onChange={(e) => onMaxAmount(e.target.value)}
-          className="w-24 px-2 py-1 rounded-lg border border-slate-200 bg-white text-xs text-ink-soft focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
+          className="w-24 px-2 py-1 rounded-lg border border-slate-200 bg-card text-xs text-ink-soft focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
         />
       </div>
 
