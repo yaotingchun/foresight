@@ -273,7 +273,7 @@ export default function PredictionPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Time Horizon</span>
-              <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
+              <div className="inline-flex items-center gap-1 rounded-xl bg-[#e6f4ea] border border-brand-tint p-1">
                 {HOURS_OPTIONS.map(opt => (
                   <button
                     key={opt.value}
@@ -292,7 +292,7 @@ export default function PredictionPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Forecast Horizon</span>
-              <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
+              <div className="inline-flex items-center gap-1 rounded-xl bg-[#e6f4ea] border border-brand-tint p-1">
                 {FORECAST_OPTIONS.map(opt => (
                   <button
                     key={opt.value}

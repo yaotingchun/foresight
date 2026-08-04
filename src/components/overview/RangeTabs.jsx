@@ -3,7 +3,7 @@ import { TIME_RANGES } from '../../hooks/useLiveDashboard'
 /** Segmented time-range control that sits above the traffic chart. */
 export default function RangeTabs({ value, onChange }) {
   return (
-    <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
+    <div className="inline-flex items-center gap-1 rounded-xl bg-[#e6f4ea] border border-brand-tint p-1">
       {TIME_RANGES.map((r) => {
         const active = r.id === value
         return (

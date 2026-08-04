@@ -58,7 +58,7 @@ export default function IncidentsPage() {
           </button>
         </div>
 
-        <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1 w-fit">
+        <div className="inline-flex items-center gap-1 rounded-xl bg-[#e6f4ea] border border-brand-tint p-1 w-fit">
           {FILTERS.map((f) => (
             <button
               key={f.value}

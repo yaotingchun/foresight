@@ -77,7 +77,7 @@ export default function FinFilters({
       <div className="h-5 w-px bg-line" />
 
       {/* Time window */}
-      <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
+      <div className="inline-flex items-center gap-1 rounded-xl bg-[#e6f4ea] border border-brand-tint p-1">
         {TIME_OPTS.map(({ label, ms }) => (
           <button
             key={ms}

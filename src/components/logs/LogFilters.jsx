@@ -133,7 +133,7 @@ export default function LogFilters({
     <div className="flex items-center gap-2">
 
       {/* Time range pill tabs */}
-      <div className="inline-flex items-center gap-1 bg-[#e8f3eb] rounded-xl p-0.5 border border-brand-tint shrink-0">
+      <div className="inline-flex items-center gap-1 bg-[#e6f4ea] rounded-xl p-0.5 border border-brand-tint shrink-0">
         {TIME_RANGES.map((r) => (
           <button
             key={r.ms}
