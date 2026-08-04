@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from './components/AppLayout'
+import SplashScreen from './components/SplashScreen'
 import OverviewPage from './pages/OverviewPage'
 import TopologyPage from './pages/TopologyPage'
 import LogsPage from './pages/LogsPage'
@@ -18,10 +20,47 @@ import { PredictionProvider } from './context/PredictionContext'
 
 function AppRouter() {
   const { isAuthenticated } = useAuth()
+  const [showSplash, setShowSplash] = useState(true)
+  const timerRef = useRef(null)
+  const isInitialAuthCheck = useRef(true)
+  const prevAuthenticated = useRef(isAuthenticated)
+
+  const triggerSplash = (duration) => {
+    clearTimeout(timerRef.current)
+    setShowSplash(true)
+    timerRef.current = setTimeout(() => setShowSplash(false), duration)
+  }
+
+  // Cover the initial page load / refresh
+  useEffect(() => {
+    triggerSplash(1400)
+    return () => clearTimeout(timerRef.current)
+  }, [])
+
+  // Cover the transition right after a successful login
+  useEffect(() => {
+    if (isInitialAuthCheck.current) {
+      isInitialAuthCheck.current = false
+      prevAuthenticated.current = isAuthenticated
+      return
+    }
+    if (!prevAuthenticated.current && isAuthenticated) {
+      triggerSplash(1200)
+    }
+    prevAuthenticated.current = isAuthenticated
+  }, [isAuthenticated])
+
+  const splash = (
+    <SplashScreen
+      visible={showSplash}
+      label={isAuthenticated ? 'Preparing your dashboard' : 'Loading Foresight.ai'}
+    />
+  )
 
   if (!isAuthenticated) {
     return (
       <BrowserRouter>
+        {splash}
         <Routes>
           <Route path="*" element={<LandingPage />} />
         </Routes>
@@ -31,6 +70,7 @@ function AppRouter() {
 
   return (
     <BrowserRouter>
+      {splash}
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<Navigate to="/overview" replace />} />
