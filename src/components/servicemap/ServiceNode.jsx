@@ -9,21 +9,15 @@ import { AlertTriangle, ShieldAlert } from 'lucide-react'
 export default function ServiceNode({ node, state, primary, selected, onHover, onSelect, sidebarOpen, appliedUpgrades, isSimulating }) {
   const { icon: Icon, r, x, y, health, label, kind } = node
   
-  // If no simulation is active and sidebar is open, inject payment warning health
-  let nodeHealth = health
-  if (!isSimulating && sidebarOpen) {
-    if (node.id === 'payment-service') {
-      nodeHealth = 'warning'
-    }
-  }
-
-  const status = statusOf(nodeHealth)
+  const status = statusOf(health)
   const size = r * 2
 
   const dim = state === 'dim'
   const emphasized = primary || selected
 
-  const isPerformanceBottleneck = sidebarOpen && nodeHealth !== 'healthy'
+  const isPerformanceBottleneck = sidebarOpen && (
+    health !== 'healthy' || (!isSimulating && node.id === 'payment-service')
+  )
   const isBottleneck = isPerformanceBottleneck
 
   const isSPOF = sidebarOpen && !isBottleneck && (
@@ -67,7 +61,7 @@ export default function ServiceNode({ node, state, primary, selected, onHover, o
         <Icon size={r * 0.82} strokeWidth={1.75} style={{ color: status.color }} />
         {isBottleneck ? (
           <div
-            className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-orange-500 text-white shadow-md ring-2 ring-white animate-pulse"
+            className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-orange-500 text-white shadow-md ring-2 ring-white"
             title="Active Bottleneck Anomaly"
             style={{ width: 24, height: 24 }}
           >

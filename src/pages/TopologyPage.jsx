@@ -542,7 +542,7 @@ export default function TopologyPage() {
                   <div key={node.id} className="flex flex-col gap-1.5 rounded-xl border border-amber-200 bg-amber-50/50 p-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="h-2 w-2 rounded-full bg-amber-500 animate-ping" />
+                        <span className="h-2 w-2 rounded-full bg-amber-500 shrink-0" />
                         <span className="text-[12.5px] font-bold text-slate-800">{node.label}</span>
                       </div>
                       <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-0.5 rounded border border-amber-200">
