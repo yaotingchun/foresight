@@ -2,7 +2,9 @@ import { useState, useMemo } from 'react'
 import ServiceMapPanel from '../components/ServiceMapPanel'
 import { useSimulatedNodes } from '../hooks/useSimulatedNodes'
 import { useSimulation } from '../context/SimulationContext'
-import { 
+import LiveBadge from '../components/servicemap/LiveBadge'
+import ServiceMapToolbar from '../components/servicemap/ServiceMapToolbar'
+import {
   Sparkles, TrendingUp, ShieldAlert, Cpu, Network, Info, 
   AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap 
 } from 'lucide-react'
@@ -37,6 +39,7 @@ export default function TopologyPage() {
   const [showDeepDive, setShowDeepDive] = useState(false)
   const [activeTab, setActiveTab] = useState('latency') // 'latency' | 'errors' | 'cpu'
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [query, setQuery] = useState('')
   const [appliedUpgrades, setAppliedUpgrades] = useState({
     authReplicas: false,
     dbReplicas: false,
@@ -128,24 +131,45 @@ export default function TopologyPage() {
   const { healthScore, degradedNodes } = healthMetrics
 
   return (
-    <div className="h-full min-h-0 flex flex-col xl:flex-row gap-4 p-4">
-      {/* Interactive Service Map Panel */}
-      <div className="flex-1 min-w-0 flex flex-col h-full bg-card border border-line rounded-card shadow-card p-5">
+    <div className="h-full flex flex-col gap-4 min-h-0">
+      {/* ── Page Header ─────────────────────────────────────────────────── */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4 shrink-0">
+        <div>
+          <div className="flex items-center gap-2.5">
+            <Network size={20} className="text-indigo-600" />
+            <h1 className="text-xl font-semibold tracking-tight text-ink">Topology</h1>
+            <LiveBadge />
+          </div>
+          <p className="mt-0.5 text-sm text-ink-soft">
+            Real-time service dependencies · Traffic flow visualization · AI SRE insights
+          </p>
+        </div>
+
+        {/* Header Controls */}
+        <div className="flex flex-wrap items-center gap-3">
+          <button 
+            onClick={() => setSidebarOpen(prev => !prev)}
+            className={`flex h-9 items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all cursor-pointer text-[12.5px] font-bold ${
+              sidebarOpen
+                ? 'bg-indigo-600 border-indigo-600 text-white hover:bg-indigo-700'
+                : 'border-indigo-100 bg-indigo-50 text-indigo-600 hover:bg-indigo-100/80'
+            }`}
+          >
+            <Sparkles size={13} className={`transition-transform duration-300 ${sidebarOpen ? 'scale-110' : 'animate-pulse'}`} />
+            SRE Insights
+          </button>
+          <ServiceMapToolbar query={query} onQueryChange={setQuery} />
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 min-h-0 flex flex-col xl:flex-row gap-4">
+        {/* Interactive Service Map Panel */}
         <ServiceMapPanel 
+          query={query}
           sidebarOpen={sidebarOpen}
           appliedUpgrades={appliedUpgrades}
-          headerActions={
-            !sidebarOpen && (
-              <button 
-                onClick={() => setSidebarOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-indigo-100 bg-indigo-50 text-[12px] font-bold text-indigo-600 hover:bg-indigo-100 transition-all cursor-pointer animate-fade-in mr-2"
-              >
-                <Sparkles size={13} className="text-indigo-500 animate-pulse" /> SRE Insights
-              </button>
-            )
-          }
         />
-      </div>
 
       {/* AI SRE Insights Panel (Right Sidebar) */}
       {sidebarOpen && (
@@ -588,6 +612,7 @@ export default function TopologyPage() {
           </div>
         </div>
       )}
+      </div>
     </div>
   )
 }

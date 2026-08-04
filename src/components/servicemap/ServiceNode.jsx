@@ -1,4 +1,5 @@
 import { statusOf } from './statusColors'
+import { AlertTriangle, ShieldAlert } from 'lucide-react'
 
 /**
  * A single service rendered as an absolutely-positioned HTML circle so text and
@@ -52,37 +53,29 @@ export default function ServiceNode({ node, state, primary, selected, onHover, o
           transition: 'box-shadow 200ms ease',
         }}
       >
-        {isBottleneck && (
-          <div
-            className="absolute rounded-full bg-red-500/25 animate-pulse pointer-events-none"
-            style={{
-              width: size + 16,
-              height: size + 16,
-              left: -8,
-              top: -8,
-              boxShadow: '0 0 16px 8px rgba(239, 68, 68, 0.45)',
-              zIndex: -1,
-            }}
-          />
-        )}
-        {isSPOF && (
-          <div
-            className="absolute rounded-full bg-amber-500/20 animate-pulse pointer-events-none"
-            style={{
-              width: size + 16,
-              height: size + 16,
-              left: -8,
-              top: -8,
-              boxShadow: '0 0 14px 6px rgba(245, 158, 11, 0.35)',
-              zIndex: -1,
-            }}
-          />
-        )}
         <Icon size={r * 0.82} strokeWidth={1.75} style={{ color: status.color }} />
-        <span
-          className="absolute right-0 top-0 block rounded-full ring-2 ring-white"
-          style={{ width: 11, height: 11, backgroundColor: status.color }}
-        />
+        {isBottleneck ? (
+          <div
+            className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-orange-500 text-white shadow-md ring-2 ring-white animate-pulse"
+            title="Active Bottleneck Anomaly"
+            style={{ width: 24, height: 24 }}
+          >
+            <AlertTriangle size={13} className="stroke-[2.5]" />
+          </div>
+        ) : isSPOF ? (
+          <div
+            className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-red-500 text-white shadow-md ring-2 ring-white"
+            title="Single Point of Failure (SPOF)"
+            style={{ width: 24, height: 24 }}
+          >
+            <ShieldAlert size={13} className="stroke-[2.5]" />
+          </div>
+        ) : (
+          <span
+            className="absolute right-0 top-0 block rounded-full ring-2 ring-white"
+            style={{ width: 11, height: 11, backgroundColor: status.color }}
+          />
+        )}
       </div>
 
       <div className="mt-2 flex flex-col items-center" style={{ width: Math.max(size + 40, 96) }}>

@@ -3,6 +3,7 @@ import EdgeLayer from './EdgeLayer'
 import NodeLayer from './NodeLayer'
 import ServiceMapControls from './ServiceMapControls'
 import ServiceDetailPanel from './ServiceDetailPanel'
+import ServiceMapLegend from './ServiceMapLegend'
 import { useZoomPan } from '../../hooks/useZoomPan'
 import { useSimulatedNodes } from '../../hooks/useSimulatedNodes'
 import { CANVAS, EDGES } from '../../data/serviceMapData'
@@ -68,8 +69,8 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
           const targetX = width > 450 ? (width - 300) / 2 : width / 2
           const scaleX = (width - paddingVal * 2) / boxWidth
           const scaleY = (height - paddingVal * 2) / boxHeight
-          // Clamp scale range between 0.75 and 1.1 so small chains aren't huge and hubs aren't tiny
-          const targetScale = Math.max(0.75, Math.min(scaleX, scaleY, 1.1))
+          // Clamp scale range between 0.6 and 0.8 so focused nodes aren't too huge
+          const targetScale = Math.max(0.6, Math.min(scaleX, scaleY, 0.8))
           controls.zoomTo(centroidX, centroidY, targetScale, targetX)
         }
       }
@@ -135,6 +136,10 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
           sidebarOpen={sidebarOpen}
           appliedUpgrades={appliedUpgrades}
         />
+      </div>
+
+      <div className="pointer-events-auto absolute bottom-4 left-4 z-30">
+        <ServiceMapLegend />
       </div>
 
       <ServiceMapControls

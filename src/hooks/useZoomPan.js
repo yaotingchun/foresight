@@ -26,11 +26,11 @@ export function useZoomPan(canvas, { padding = 28 } = {}) {
       (width - padding * 2) / canvas.width,
       (height - padding * 2) / canvas.height,
     )
-    const clamped = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale))
+    const clamped = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale * 1.10))
     setTransform({
       scale: clamped,
-      x: (width - canvas.width * clamped) / 2,
-      y: (height - canvas.height * clamped) / 2,
+      x: width / 2 - 755 * clamped,
+      y: height / 2 - 455 * clamped,
     })
   }, [canvas.width, canvas.height, padding])
 
