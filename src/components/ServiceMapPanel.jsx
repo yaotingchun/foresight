@@ -4,7 +4,7 @@ import ServiceMapToolbar from './servicemap/ServiceMapToolbar'
 import LiveBadge from './servicemap/LiveBadge'
 
 /** Card wrapper: header (title + live badge + toolbar) above the interactive map. */
-export default function ServiceMapPanel() {
+export default function ServiceMapPanel({ headerActions }) {
   const [query, setQuery] = useState('')
   const [expanded, setExpanded] = useState(false)
 
@@ -31,7 +31,8 @@ export default function ServiceMapPanel() {
         <span className="ml-3">
           <LiveBadge />
         </span>
-        <span className="ml-auto">
+        <span className="ml-auto flex items-center gap-2">
+          {headerActions}
           <ServiceMapToolbar query={query} onQueryChange={setQuery} />
         </span>
       </header>
