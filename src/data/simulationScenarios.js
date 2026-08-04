@@ -297,6 +297,25 @@ export const SCENARIOS = [
       { component: 'api-gateway', faultType: 'network_latency', severity: 'critical', offsetMs: 24000 },
     ],
   },
+  {
+    id: 'total-system-cascade-outage',
+    title: 'Total System-Wide Cascade Failure',
+    summary: 'A critical Primary DB outage propagates upstream through all dependent services, gateways, and edge entrypoints, taking the entire portal offline.',
+    chain: ['primary-db', 'payment-service', 'order-service', 'api-gateway', 'web-portal', 'load-balancer'],
+    txImpact: true,
+    stages: [
+      { component: 'primary-db', faultType: 'db_overload', severity: 'critical', offsetMs: 0 },
+      { component: 'auth-service', faultType: 'connection_pool_exhaustion', severity: 'high', offsetMs: 4000 },
+      { component: 'user-service', faultType: 'connection_pool_exhaustion', severity: 'high', offsetMs: 4000 },
+      { component: 'payment-service', faultType: 'connection_pool_exhaustion', severity: 'high', offsetMs: 4000 },
+      { component: 'search-service', faultType: 'cpu_spike', severity: 'medium', offsetMs: 6000 },
+      { component: 'inventory-service', faultType: 'connection_pool_exhaustion', severity: 'medium', offsetMs: 6000 },
+      { component: 'order-service', faultType: 'connection_pool_exhaustion', severity: 'high', offsetMs: 10000 },
+      { component: 'api-gateway', faultType: 'connection_pool_exhaustion', severity: 'critical', offsetMs: 14000 },
+      { component: 'web-portal', faultType: 'service_outage', severity: 'high', offsetMs: 18000 },
+      { component: 'load-balancer', faultType: 'network_latency', severity: 'critical', offsetMs: 22000 },
+    ],
+  },
 ]
 
 export const SCENARIOS_BY_ID = Object.fromEntries(SCENARIOS.map((s) => [s.id, s]))
