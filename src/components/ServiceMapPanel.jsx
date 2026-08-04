@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import ServiceMap from './servicemap/ServiceMap'
 
 /** Card wrapper: handles zoom pan fullscreen layout. */
-export default function ServiceMapPanel({ query, sidebarOpen, appliedUpgrades, isSimulating }) {
+export default function ServiceMapPanel({ query, onQueryChange, sidebarOpen, appliedUpgrades, isSimulating }) {
   const [expanded, setExpanded] = useState(false)
 
   // Escape exits fullscreen.
@@ -26,6 +26,7 @@ export default function ServiceMapPanel({ query, sidebarOpen, appliedUpgrades, i
       <div className="min-h-0 flex-1">
         <ServiceMap
           query={query}
+          onQueryChange={onQueryChange}
           expanded={expanded}
           onToggleExpand={() => setExpanded((v) => !v)}
           sidebarOpen={sidebarOpen}

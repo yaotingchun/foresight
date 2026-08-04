@@ -4,6 +4,7 @@ import NodeLayer from './NodeLayer'
 import ServiceMapControls from './ServiceMapControls'
 import ServiceDetailPanel from './ServiceDetailPanel'
 import ServiceMapLegend from './ServiceMapLegend'
+import ServiceMapToolbar from './ServiceMapToolbar'
 import { useZoomPan } from '../../hooks/useZoomPan'
 import { useSimulatedNodes } from '../../hooks/useSimulatedNodes'
 import { CANVAS, EDGES } from '../../data/serviceMapData'
@@ -12,7 +13,7 @@ import { CANVAS, EDGES } from '../../data/serviceMapData'
  * Interactive canvas. Owns hover / selection / search focus and derives the
  * per-node and per-edge visual state from it, then hands geometry to the layers.
  */
-export default function ServiceMap({ query = '', expanded = false, onToggleExpand, sidebarOpen, appliedUpgrades, isSimulating }) {
+export default function ServiceMap({ query = '', onQueryChange, expanded = false, onToggleExpand, sidebarOpen, appliedUpgrades, isSimulating }) {
   const [hoveredId, setHoveredId] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
   const { viewportRef, transform, animated, handlers, controls, hasDragged } = useZoomPan(CANVAS)
@@ -141,6 +142,13 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
 
       <div className="pointer-events-auto absolute bottom-4 left-4 z-30">
         <ServiceMapLegend />
+      </div>
+
+      <div 
+        className="absolute top-4 z-30 pointer-events-auto transition-all duration-300"
+        style={{ right: selectedId ? '320px' : '16px' }}
+      >
+        <ServiceMapToolbar query={query} onQueryChange={onQueryChange} />
       </div>
 
       <ServiceMapControls

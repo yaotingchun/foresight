@@ -417,24 +417,23 @@ export default function TopologyPage() {
         {/* Header Controls */}
         <div className="flex flex-wrap items-center gap-3">
           <button 
-            onClick={() => setShowTimeline(true)}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600 hover:bg-indigo-100/80 transition-all cursor-pointer"
-            title="Service Registration Timeline"
-          >
-            <History size={16} className="transition-transform duration-300 hover:rotate-[-45deg]" />
-          </button>
-          <button 
             onClick={() => setSidebarOpen(prev => !prev)}
             className={`flex h-9 items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all cursor-pointer text-[12.5px] font-bold ${
               sidebarOpen
-                ? 'bg-[#047857] border-[#047857] text-white'
-                : 'border-brand/20 bg-brand-tint text-brand-dark hover:bg-brand-hover'
+                ? 'bg-black border-black text-white shadow-inner'
+                : 'border-slate-900 bg-slate-900 text-white hover:bg-black shadow-sm'
             }`}
           >
             <Sparkles size={13} className={`transition-transform duration-300 ${sidebarOpen ? 'scale-110' : 'animate-pulse'}`} />
             SRE Insights
           </button>
-          <ServiceMapToolbar query={query} onQueryChange={setQuery} />
+          <button 
+            onClick={() => setShowTimeline(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-black hover:bg-slate-50 hover:border-slate-300 transition-all cursor-pointer shadow-sm"
+            title="Service Registration Timeline"
+          >
+            <History size={16} className="transition-transform duration-300 hover:rotate-[-45deg]" />
+          </button>
         </div>
       </div>
 
@@ -443,6 +442,7 @@ export default function TopologyPage() {
         {/* Interactive Service Map Panel */}
         <ServiceMapPanel 
           query={query}
+          onQueryChange={setQuery}
           sidebarOpen={sidebarOpen}
           appliedUpgrades={appliedUpgrades}
           isSimulating={Boolean(activeRun)}
@@ -872,10 +872,12 @@ export default function TopologyPage() {
                   <div className="flex flex-col min-w-[280px] flex-1">
                     <p className="text-[12.5px] font-bold text-slate-800">Deploy Auth Service Read Replicas (x3)</p>
                     <p className="text-[11px] text-slate-500 mt-0.5">Deploy additional auth-service instances behind a load-balancer.</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200">Impact: High</span>
+                      <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 3 days</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200">Impact: High</span>
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 3 days</span>
+                  <div className="flex items-center shrink-0">
                     {createdTickets.authReplicas ? (
                       <button
                         type="button"
@@ -891,7 +893,7 @@ export default function TopologyPage() {
                       <button
                         type="button"
                         onClick={() => handleCreateTicket('authReplicas')}
-                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
+                        className="flex items-center gap-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
                       >
                         <Ticket size={12} />
                         Create Ticket
@@ -905,10 +907,12 @@ export default function TopologyPage() {
                   <div className="flex flex-col min-w-[280px] flex-1">
                     <p className="text-[12.5px] font-bold text-slate-800">Implement DB Read Replica Pool</p>
                     <p className="text-[11px] text-slate-500 mt-0.5">Route inventory read inquiries onto dedicated read-replica instances.</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200">Impact: Critical</span>
+                      <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 2 weeks</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200">Impact: Critical</span>
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 2 weeks</span>
+                  <div className="flex items-center shrink-0">
                     {createdTickets.dbReplicas ? (
                       <button
                         type="button"
@@ -924,7 +928,7 @@ export default function TopologyPage() {
                       <button
                         type="button"
                         onClick={() => handleCreateTicket('dbReplicas')}
-                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
+                        className="flex items-center gap-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
                       >
                         <Ticket size={12} />
                         Create Ticket
@@ -938,10 +942,12 @@ export default function TopologyPage() {
                   <div className="flex flex-col min-w-[280px] flex-1">
                     <p className="text-[12.5px] font-bold text-slate-800">Configure Circuit Breaker for Payment Gateway</p>
                     <p className="text-[11px] text-slate-500 mt-0.5">Block downstream connections to payment-gateway if failure rate exceeds 20%.</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[9px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 px-2 py-0.5 rounded border border-amber-200">Impact: Medium</span>
+                      <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 1 day</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 px-2 py-0.5 rounded border border-amber-200">Impact: Medium</span>
-                    <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 1 day</span>
+                  <div className="flex items-center shrink-0">
                     {createdTickets.paymentCircuitBreaker ? (
                       <button
                         type="button"
@@ -957,7 +963,7 @@ export default function TopologyPage() {
                       <button
                         type="button"
                         onClick={() => handleCreateTicket('paymentCircuitBreaker')}
-                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
+                        className="flex items-center gap-1.5 rounded-lg bg-slate-900 hover:bg-black text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
                       >
                         <Ticket size={12} />
                         Create Ticket
@@ -991,9 +997,9 @@ export default function TopologyPage() {
           <div className="relative w-full max-w-2xl max-h-[85vh] transform overflow-hidden rounded-2xl bg-white shadow-2xl border border-slate-100 flex flex-col z-10 font-sans animate-scale-up">
             
             {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-gradient-to-r from-indigo-50/50 to-violet-50/50">
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-gradient-to-r from-slate-50 to-slate-100/50">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 text-white shadow-sm">
                   <History size={18} />
                 </div>
                 <div>
@@ -1004,10 +1010,10 @@ export default function TopologyPage() {
               <div className="flex items-center gap-3 shrink-0">
                 <button
                   onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
-                  className="px-2.5 py-1 text-[11px] font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg border border-indigo-100/50 shadow-sm transition-all cursor-pointer flex items-center gap-1"
+                  className="px-2.5 py-1 text-[11px] font-bold text-slate-800 bg-white hover:bg-slate-50 rounded-lg border border-slate-200 shadow-sm transition-all cursor-pointer flex items-center gap-1"
                   title="Toggle Chronological Sort"
                 >
-                  <History size={11} className={`transition-transform duration-300 ${sortOrder === 'desc' ? 'rotate-180' : ''}`} />
+                  <History size={11} className={`transition-transform duration-300 ${sortOrder === 'desc' ? 'rotate-180' : ''} text-black`} />
                   <span>Sort: {sortOrder === 'asc' ? 'Oldest First' : 'Newest First'}</span>
                 </button>
                 <button 
@@ -1027,10 +1033,10 @@ export default function TopologyPage() {
                   <div key={item.id} className="relative group">
                     {/* Glowing Node Indicator */}
                     <div className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-white border border-slate-200">
-                      <div className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse group-hover:scale-125 transition-transform" />
+                      <div className="h-2 w-2 rounded-full bg-slate-900 animate-pulse group-hover:scale-125 transition-transform" />
                     </div>
 
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border border-slate-100 bg-slate-50/40 hover:bg-indigo-50/20 rounded-xl p-4 transition-all duration-300 hover:border-indigo-100 shadow-sm hover:shadow">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border border-slate-100 bg-slate-50/40 hover:bg-slate-100/30 rounded-xl p-4 transition-all duration-300 hover:border-slate-300 shadow-sm hover:shadow">
                       <div>
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="text-[13.5px] font-bold text-slate-800">{item.label}</span>
@@ -1038,7 +1044,7 @@ export default function TopologyPage() {
                           <span className="text-[10px] font-bold uppercase bg-slate-100 text-slate-500 px-2 py-0.5 rounded border border-slate-200">
                             {item.kind}
                           </span>
-                          <span className="text-[10px] font-semibold bg-indigo-50 text-indigo-700 px-1.5 py-0.2 rounded border border-indigo-100/50">
+                          <span className="text-[10px] font-semibold bg-slate-100 text-slate-800 px-1.5 py-0.2 rounded border border-slate-200">
                             {item.version}
                           </span>
                         </div>
