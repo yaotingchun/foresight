@@ -50,22 +50,22 @@ export default function IncidentsPage() {
           <button
             type="button"
             onClick={openDrawer}
-            className="flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5
-                       text-xs font-semibold text-indigo-700 transition-colors hover:bg-indigo-100"
+            className="flex items-center gap-1.5 rounded-lg border border-brand-hover/30 bg-brand-tint px-3 py-1.5
+                       text-xs font-semibold text-brand transition-colors hover:bg-brand-tint/80"
           >
             <Zap size={13} />
             Simulate Event
           </button>
         </div>
 
-        <div className="flex items-center gap-1.5 rounded-lg border border-line bg-card p-1 shadow-card w-fit">
+        <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1 w-fit">
           {FILTERS.map((f) => (
             <button
               key={f.value}
               type="button"
               onClick={() => setFilter(f.value)}
-              className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors
-                ${filter === f.value ? 'bg-indigo-500 text-white' : 'text-ink-soft hover:bg-muted'}`}
+              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all duration-200
+                ${filter === f.value ? 'bg-slate-800 text-white shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
             >
               {f.label}
             </button>
@@ -73,7 +73,7 @@ export default function IncidentsPage() {
         </div>
 
         {filtered.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-line bg-card/50 py-16 text-center">
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-slate-200 bg-white py-16 text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <AlertOctagon size={32} className="text-ink-faint opacity-40" />
             <p className="text-sm font-medium text-ink-soft">
               {incidents.length === 0 ? 'No incidents yet' : 'No incidents match this filter'}
@@ -85,8 +85,8 @@ export default function IncidentsPage() {
               <button
                 type="button"
                 onClick={openDrawer}
-                className="mt-2 flex items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5
-                           text-xs font-semibold text-indigo-700 transition-colors hover:bg-indigo-100"
+                className="mt-2 flex items-center gap-1.5 rounded-lg border border-brand-hover/30 bg-brand-tint px-3 py-1.5
+                           text-xs font-semibold text-brand transition-colors hover:bg-brand-tint/80"
               >
                 <Zap size={13} />
                 Simulate an event

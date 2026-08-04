@@ -94,7 +94,7 @@ export default function LogsPage() {
     <div className="flex flex-col gap-3 pb-6">
 
       {/* ── Filter bar ──────────────────────────────────────────────────────── */}
-      <div className="bg-card border border-line rounded-xl px-3 py-2 shadow-card">
+      <div className="bg-white border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <LogFilters
           rangeMs={rangeMs}
           onRangeChange={handleRangeChange}
@@ -112,7 +112,7 @@ export default function LogsPage() {
       </div>
 
       {/* ── Log volume chart ─────────────────────────────────────────────────── */}
-      <div className="bg-card border border-line rounded-xl px-4 pt-2.5 pb-2 shadow-card">
+      <div className="bg-white border border-slate-200 rounded-2xl px-4 pt-2.5 pb-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <div className="flex items-center justify-between mb-1.5">
           <div className="flex items-center gap-1.5">
             <Activity size={13} className="text-ink-faint" />
@@ -121,14 +121,14 @@ export default function LogsPage() {
           </div>
           {bucketWindow && (
             <div className="flex items-center gap-1.5">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200 text-[11px] font-mono text-indigo-700">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-brand-tint/30 border border-brand/20 text-[11px] font-mono text-brand">
                 <span>Time bucket: {bucketWindow.label}</span>
                 <button
                   onClick={() => {
                     setSelectedBucketIndex(null)
                     setSelectedBucketData(null)
                   }}
-                  className="p-0.5 hover:bg-indigo-100 rounded text-indigo-700 transition-colors ml-0.5"
+                  className="p-0.5 hover:bg-brand-tint/30 rounded text-brand transition-colors ml-0.5"
                   title="Clear time bucket filter"
                 >
                   <X size={12} />
@@ -147,7 +147,7 @@ export default function LogsPage() {
       </div>
 
       {/* ── Log table ───────────────────────────────────────────────────────── */}
-      <div className="bg-card border border-line rounded-xl shadow-card overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
         <LogTable logs={tableFiltered} newIds={newIds} />
       </div>
     </div>

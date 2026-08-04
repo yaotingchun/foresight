@@ -110,7 +110,7 @@ export default function ForecastChart({ metric, chartData, isLoading }) {
   const lastActual      = chartData.historical.values.at(-1)
 
   return (
-    <div className="flex flex-col rounded-xl border border-line bg-card shadow-card overflow-hidden transition-shadow hover:shadow-md">
+    <div className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-shadow hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]">
       {/* ── header ── */}
       <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-line">
         <div className="flex items-center gap-2.5">
@@ -243,10 +243,10 @@ export default function ForecastChart({ metric, chartData, isLoading }) {
 
       {/* ── per-chart insight ── */}
       {insight && (
-        <div className="mx-4 mb-4 flex items-start gap-2 rounded-lg border border-indigo-100 bg-indigo-50 px-3 py-2">
+        <div className="mx-4 mb-4 flex items-start gap-2 rounded-lg border border-brand/20 bg-brand-tint/30 px-3 py-2">
           <span className="text-[11px] mt-0.5 shrink-0">🤖</span>
           <p
-            className="text-[11.5px] leading-relaxed text-indigo-900"
+            className="text-[11.5px] leading-relaxed text-emerald-900"
             dangerouslySetInnerHTML={{
               __html: insight.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             }}

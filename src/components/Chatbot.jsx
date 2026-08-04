@@ -92,7 +92,7 @@ export default function Chatbot() {
         <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white shrink-0">
           <div className="flex items-center gap-2">
             <Bot size={20} />
-            <span className="font-bold text-sm">Foresight AI</span>
+            <span className="font-bold text-sm">Foresight<span className="text-[#21c085]">.ai</span></span>
           </div>
           <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1 rounded transition-colors">
             <X size={18} />

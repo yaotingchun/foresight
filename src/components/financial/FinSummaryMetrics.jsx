@@ -22,7 +22,7 @@ function pct(a, b) {
 
 function Tile({ icon: Icon, iconBg, iconColor, label, value, sub, badge, badgeColor }) {
   return (
-    <div className="flex flex-col justify-between rounded-xl border border-line bg-card p-4 shadow-card">
+    <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
       <div className="flex items-start gap-3">
         <span
           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
@@ -101,8 +101,8 @@ export default function FinSummaryMetrics({ metrics }) {
       {/* Blocked */}
       <Tile
         icon={Zap}
-        iconBg="#EDE9FE"
-        iconColor="#8B5CF6"
+        iconBg="#E6F8F2"
+        iconColor="#21C085"
         label="Auto-Blocked"
         value={metrics.blockedCount}
         sub="Score ≥ 0.75 — blocked by policy"

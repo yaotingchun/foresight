@@ -11,7 +11,7 @@ export default function SearchInput() {
       <input
         type="text"
         placeholder="Search components, services, or alerts..."
-        className="h-full w-full rounded-[10px] bg-muted pl-10 pr-12 text-sm text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-status-indigo/30"
+        className="h-full w-full rounded-[10px] bg-muted pl-10 pr-12 text-sm text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-brand/30"
       />
       <kbd className="pointer-events-none absolute right-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded border border-line bg-card text-[11px] text-ink-faint">
         /

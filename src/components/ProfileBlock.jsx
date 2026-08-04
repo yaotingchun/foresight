@@ -24,7 +24,7 @@ export default function ProfileBlock() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2.5 rounded-lg px-1.5 py-1 transition-colors hover:bg-muted"
+        className="flex items-center gap-2.5 rounded-lg px-1.5 py-1 transition-colors hover:bg-brand-hover"
       >
         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted">
           <User size={18} strokeWidth={1.75} className="text-ink-faint" />

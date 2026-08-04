@@ -12,7 +12,7 @@ function Toggle({ checked, onChange }) {
         <button
             type="button"
             onClick={() => onChange(!checked)}
-            className={`relative inline-flex h-4 w-7 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${checked ? 'bg-indigo-500' : 'bg-slate-200'
+            className={`relative inline-flex h-4 w-7 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${checked ? 'bg-brand' : 'bg-slate-200'
                 }`}
         >
             <span
@@ -37,7 +37,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             type="number"
                             value={thresholds.latency}
                             onChange={e => setThresholds(p => ({ ...p, latency: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -46,7 +46,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             type="number"
                             value={thresholds.errorRate}
                             onChange={e => setThresholds(p => ({ ...p, errorRate: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -55,7 +55,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             type="number"
                             value={thresholds.connectionPool ?? 95}
                             onChange={e => setThresholds(p => ({ ...p, connectionPool: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -64,7 +64,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             type="number"
                             value={thresholds.cpu ?? 85}
                             onChange={e => setThresholds(p => ({ ...p, cpu: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -73,7 +73,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             type="number"
                             value={thresholds.memory ?? 90}
                             onChange={e => setThresholds(p => ({ ...p, memory: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -83,7 +83,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             step="0.1"
                             value={thresholds.zScore ?? 2.5}
                             onChange={e => setThresholds(p => ({ ...p, zScore: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -93,7 +93,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             step="0.05"
                             value={thresholds.isolationForest ?? 0.70}
                             onChange={e => setThresholds(p => ({ ...p, isolationForest: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                     <div className="flex flex-col gap-1.5">
@@ -102,7 +102,7 @@ function GeneralSettings({ thresholds, setThresholds }) {
                             type="number"
                             value={thresholds.rpsDrop}
                             onChange={e => setThresholds(p => ({ ...p, rpsDrop: Number(e.target.value) }))}
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none"
                         />
                     </div>
                 </div>
@@ -122,13 +122,13 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                     <div>
                         <div className="flex items-center justify-between mb-1">
                             <label className="text-xs font-semibold text-ink">Tier 1: Auto-Execute Threshold</label>
-                            <span className="text-xs font-bold text-indigo-600">{riskTiers.tier1}%</span>
+                            <span className="text-xs font-bold text-brand">{riskTiers.tier1}%</span>
                         </div>
                         <input
                             type="range" min="1" max="100"
                             value={riskTiers.tier1}
                             onChange={(e) => setRiskTiers(prev => ({ ...prev, tier1: Number(e.target.value) }))}
-                            className="w-full h-1 bg-slate-200 rounded appearance-none cursor-pointer accent-indigo-500"
+                            className="w-full h-1 bg-slate-200 rounded appearance-none cursor-pointer accent-emerald-500"
                         />
                     </div>
                     <div>
@@ -174,7 +174,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                 <p className="text-xs text-slate-500 mb-4">Provide context to the AI for smarter plans.</p>
 
                 <div className="flex flex-col gap-4">
-                    <label className="border border-dashed border-indigo-200 bg-indigo-50/30 rounded flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-indigo-50/50 transition-colors">
+                    <label className="border border-dashed border-brand/30 bg-brand-tint/20 rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-brand-tint/30 transition-colors">
                         <input
                             type="file"
                             className="hidden"
@@ -208,7 +208,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                                 }
                             }}
                         />
-                        <div className="flex items-center gap-2 text-indigo-600">
+                        <div className="flex items-center gap-2 text-brand">
                             <Upload size={14} />
                             <span className="text-xs font-bold">Upload Architecture Docs (PDF, TXT, JSON)</span>
                         </div>
@@ -219,7 +219,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Indexed Documents</span>
                             {businessContext.uploadedFiles.map((file, idx) => (
                                 <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded border border-line">
-                                    <FileText size={12} className="text-indigo-500" />
+                                    <FileText size={12} className="text-brand" />
                                     <span className="text-xs text-ink">{file.name || file}</span>
                                 </div>
                             ))}
@@ -233,7 +233,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                             value={businessContext?.instructions || ''}
                             onChange={e => setBusinessContext(p => ({ ...p, instructions: e.target.value }))}
                             placeholder="e.g. Always prioritize checkout..."
-                            className="w-full rounded border border-line px-2.5 py-1.5 text-xs focus:border-indigo-500 focus:outline-none min-h-[100px]"
+                            className="w-full rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none min-h-[100px]"
                         />
                     </div>
                 </div>
@@ -306,7 +306,7 @@ function RoutingSettings({ escalation, setEscalation }) {
                         </div>
                     ))}
 
-                    <button onClick={addRule} className="mt-2 flex items-center justify-center gap-1.5 w-full py-2 border border-dashed border-slate-300 rounded text-xs font-bold text-indigo-600 hover:bg-indigo-50/50 transition-colors">
+                    <button onClick={addRule} className="mt-2 flex items-center justify-center gap-1.5 w-full py-2 border border-dashed border-brand/30 rounded-lg text-xs font-bold text-brand hover:bg-brand-tint/20 transition-colors">
                         <Plus size={14} /> Add Routing Rule
                     </button>
                 </div>
@@ -363,7 +363,7 @@ function AdaptiveLearningSettings({ experienceLogs }) {
                         {experienceLogs.map((log, idx) => (
                             <div key={idx} className="flex flex-col gap-2 p-3 rounded-lg border border-line bg-slate-50">
                                 <div className="flex items-center gap-2">
-                                    <BrainCircuit size={14} className="text-indigo-500" />
+                                    <BrainCircuit size={14} className="text-brand" />
                                     <span className="text-xs font-bold text-ink">{log.incidentContext || 'General Context'}</span>
                                     <span className="text-[10px] text-slate-400 ml-auto">{new Date(log.timestamp).toLocaleString()}</span>
                                 </div>
@@ -405,23 +405,23 @@ export default function SettingsPage() {
     return (
         <div className="h-full bg-white flex flex-col">
             <div className="border-b border-line px-6 py-4 flex items-center gap-2">
-                <Settings2 size={18} className="text-indigo-600" />
+                <Settings2 size={18} className="text-brand" />
                 <h1 className="text-base font-bold text-ink">Settings</h1>
             </div>
 
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
-                <div className="w-56 border-r border-line bg-slate-50/50 p-4 flex flex-col gap-1 shrink-0">
+                <div className="w-56 border-r border-slate-200 bg-[#f8fdf9] p-4 flex flex-col gap-1 shrink-0">
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`flex items-center gap-2.5 px-3 py-2 rounded text-xs font-semibold transition-colors ${activeTab === tab.id
-                                    ? 'bg-indigo-50 text-indigo-700'
-                                    : 'text-slate-600 hover:bg-slate-100 hover:text-ink'
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${activeTab === tab.id
+                                    ? 'bg-brand-tint text-brand'
+                                    : 'text-slate-600 hover:bg-[#e8f3eb] hover:text-ink'
                                 }`}
                         >
-                            <tab.icon size={14} className={activeTab === tab.id ? 'text-indigo-600' : 'text-slate-400'} />
+                            <tab.icon size={14} className={activeTab === tab.id ? 'text-brand' : 'text-slate-400'} />
                             {tab.label}
                         </button>
                     ))}

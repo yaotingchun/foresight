@@ -6,10 +6,10 @@ export default function NavItem({ to, label, icon: Icon }) {
       to={to}
       className={({ isActive }) =>
         [
-          'flex h-10 items-center gap-3 rounded-lg px-3 text-sm transition-colors',
+          'group flex h-10 items-center gap-3 rounded-lg px-3 text-sm transition-colors',
           isActive
-            ? 'bg-status-indigo-tint font-semibold text-status-indigo'
-            : 'font-medium text-ink-soft hover:bg-muted',
+            ? 'bg-brand-tint font-bold text-[#047857] text-brand-dark'
+            : 'font-medium text-ink-soft hover:bg-brand-hover hover:text-[#047857] hover:text-brand-dark hover:font-bold',
         ].join(' ')
       }
     >
@@ -18,7 +18,7 @@ export default function NavItem({ to, label, icon: Icon }) {
           <Icon
             size={18}
             strokeWidth={1.75}
-            className={isActive ? 'text-status-indigo' : 'text-ink-faint'}
+            className={isActive ? 'text-[#047857] text-brand-dark' : 'text-ink-faint group-hover:text-[#047857] group-hover:text-brand-dark'}
           />
           <span>{label}</span>
         </>

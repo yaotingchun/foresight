@@ -46,7 +46,7 @@ function LoginModal({ isOpen, onClose }) {
             <img src={foresightLogo} alt="Logo" className="h-full w-full object-contain" />
           </div>
           
-          <h2 className="mb-2 text-2xl font-bold text-ink tracking-tight">Welcome to Foresight.ai</h2>
+          <h2 className="mb-2 text-2xl font-bold text-ink tracking-tight">Welcome to Foresight<span className="text-brand">.ai</span></h2>
           <p className="mb-8 text-center text-[13px] text-slate-500">
             Sign in to access your AI-powered reliability engineering dashboard.
           </p>
@@ -117,12 +117,12 @@ export default function LandingPage() {
       <nav className="relative z-10 flex items-center justify-between px-8 py-6 md:px-16 md:py-8">
         <div className="flex items-center gap-3">
           <img src={foresightLogo} alt="Logo" className="h-9 w-9 object-contain drop-shadow-sm" />
-          <span className="text-xl font-black tracking-tight text-ink">Foresight.ai</span>
+          <span className="text-xl font-black tracking-tight text-ink">Foresight<span className="text-brand">.ai</span></span>
         </div>
         
         <button 
           onClick={() => setIsLoginModalOpen(true)}
-          className="rounded-full border border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-indigo-200 hover:text-indigo-700"
+          className="rounded-full border border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all hover:border-brand/40 hover:text-brand"
         >
           Sign In
         </button>

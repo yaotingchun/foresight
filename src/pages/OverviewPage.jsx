@@ -72,15 +72,15 @@ export default function OverviewPage() {
           />
           <MetricCard
             icon={Gauge}
-            tint="#EDE9FE"
-            iconColor="#4F46E5"
+            tint="#E6F8F2"
+            iconColor="#21C085"
             label="p95 Latency"
             value={kpis.latency.value}
             unit="ms"
             delta={kpis.latency.delta}
             polarity="down-good"
             spark={kpis.latency.spark}
-            sparkColor="#4F46E5"
+            sparkColor="#21C085"
             footnote="response time"
           />
           <MetricCard

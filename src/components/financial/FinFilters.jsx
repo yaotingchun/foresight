@@ -77,15 +77,15 @@ export default function FinFilters({
       <div className="h-5 w-px bg-line" />
 
       {/* Time window */}
-      <div className="flex items-center gap-1">
+      <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
         {TIME_OPTS.map(({ label, ms }) => (
           <button
             key={ms}
             onClick={() => onTimeMs(ms)}
-            className={`px-2.5 py-1 rounded-lg border text-xs font-semibold transition-colors
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all duration-200
               ${timeMs === ms
-                ? 'bg-ink text-white border-ink'
-                : 'bg-muted text-ink-soft border-line hover:bg-line'}`}
+                ? 'bg-slate-800 text-white shadow-sm'
+                : 'text-slate-500 hover:text-slate-800'}`}
           >
             {label}
           </button>
@@ -125,7 +125,7 @@ export default function FinFilters({
           placeholder="Min $"
           value={minAmount}
           onChange={(e) => onMinAmount(e.target.value)}
-          className="w-20 px-2 py-1 rounded-lg border border-line bg-muted text-xs text-ink-soft focus:outline-none focus:ring-1 focus:ring-indigo-400"
+          className="w-20 px-2 py-1 rounded-lg border border-slate-200 bg-white text-xs text-ink-soft focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
         />
         <span className="text-xs text-ink-faint">–</span>
         <input
@@ -133,7 +133,7 @@ export default function FinFilters({
           placeholder="Max $"
           value={maxAmount}
           onChange={(e) => onMaxAmount(e.target.value)}
-          className="w-24 px-2 py-1 rounded-lg border border-line bg-muted text-xs text-ink-soft focus:outline-none focus:ring-1 focus:ring-indigo-400"
+          className="w-24 px-2 py-1 rounded-lg border border-slate-200 bg-white text-xs text-ink-soft focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition-all"
         />
       </div>
 

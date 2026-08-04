@@ -34,8 +34,8 @@ export default function IncidentCard({ incident, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full flex-col gap-2.5 rounded-xl border border-line bg-card p-4 text-left shadow-card
-                 transition-colors hover:border-indigo-200 hover:bg-indigo-50/30"
+      className="flex w-full flex-col gap-2.5 rounded-2xl border border-slate-200 bg-white p-4 text-left shadow-[0_8px_30px_rgb(0,0,0,0.04)]
+                 transition-all duration-200 hover:border-brand/30 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)]"
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="text-[14px] font-semibold leading-snug text-ink">{incident.title}</h3>

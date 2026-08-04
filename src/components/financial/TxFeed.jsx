@@ -176,7 +176,7 @@ function TxRow({ tx, isNew, onAction }) {
         {tx.actionHistory?.length > 0 && (
           <div className="shrink-0">
             <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded
-                             bg-indigo-100 text-indigo-600 border border-indigo-200">
+                             bg-brand-tint/30 text-brand border border-brand/20">
               {tx.actionHistory.length} action{tx.actionHistory.length !== 1 ? 's' : ''}
             </span>
           </div>
@@ -242,8 +242,8 @@ export default function TxFeed({ txs, newIds = new Set(), onAction }) {
       {pendingCount > 0 && page > 0 && (
         <button
           onClick={jumpToTop}
-          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-indigo-500
-                     text-white text-xs font-semibold hover:bg-indigo-600 transition-colors animate-slide-fade"
+          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-brand
+                     text-white text-xs font-semibold hover:bg-brand-hover transition-colors animate-slide-fade"
         >
           <ArrowUp size={12} />
           {pendingCount} new {pendingCount === 1 ? 'transaction' : 'transactions'} — jump to latest
@@ -290,7 +290,7 @@ export default function TxFeed({ txs, newIds = new Set(), onAction }) {
                 <button key={p}
                   onClick={() => { setPage(p); if (p === 0) setPendingCount(0) }}
                   className={`w-7 h-7 rounded-lg text-xs font-medium transition-colors
-                    ${p === page ? 'bg-indigo-500 text-white' : 'hover:bg-muted text-ink-soft'}`}>
+                    ${p === page ? 'bg-slate-800 text-white' : 'hover:bg-muted text-ink-soft'}`}>
                   {p + 1}
                 </button>
               ))

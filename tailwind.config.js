@@ -7,9 +7,18 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        page: '#F8FAFC',
+        brand: {
+          DEFAULT: '#21c085',
+          dark: '#065f46',
+          tint: '#1cb07a57',
+          hover: '#1cb07a60',
+        },
+        'brand-dark': '#065f46',
+        'brand-tint': '#1cb07a57',
+        'brand-hover': '#1cb07a60',
+        page: '#ECFDF5',
         card: '#FFFFFF',
-        muted: '#F1F5F9',
+        muted: '#E6F8F2',
         line: {
           DEFAULT: '#E5E7EB',
           subtle: '#F1F5F9',

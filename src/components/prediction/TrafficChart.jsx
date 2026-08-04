@@ -63,7 +63,7 @@ function mergeTrafficData(trafficData) {
 export default function TrafficChart({ trafficData, isLoading, component }) {
   if (isLoading) {
     return (
-      <div className="flex flex-col rounded-xl border border-line bg-card shadow-card p-5 min-h-[280px]">
+      <div className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-5 min-h-[280px]">
         <div className="flex items-center gap-2 mb-4">
           <div className="h-8 w-8 rounded-lg bg-muted animate-pulse" />
           <div className="h-4 w-32 rounded bg-muted animate-pulse" />
@@ -81,7 +81,7 @@ export default function TrafficChart({ trafficData, isLoading, component }) {
   const hasNetwork = !!(trafficData.bandwidth || trafficData.connections)
 
   return (
-    <div className="flex flex-col rounded-xl border border-line bg-card shadow-card overflow-hidden">
+    <div className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-5 pt-4 pb-3 border-b border-line">
         <div className="flex items-center gap-2.5">

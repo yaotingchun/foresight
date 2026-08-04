@@ -10,7 +10,7 @@ export default function Logo() {
       />
       <div className="leading-tight">
         <div className="text-[20px] font-bold text-ink">
-          Foresight<span className="text-status-blue">.ai</span>
+          Foresight<span className="text-brand">.ai</span>
         </div>
         <div className="text-[10px] font-medium text-ink-faint tracking-tight">
           IT System Monitoring

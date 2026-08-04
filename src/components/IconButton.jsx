@@ -3,7 +3,7 @@ export default function IconButton({ icon: Icon, badge, label }) {
     <button
       type="button"
       aria-label={label}
-      className="relative flex h-9 w-9 items-center justify-center rounded-lg text-ink-soft transition-colors hover:bg-muted"
+      className="relative flex h-9 w-9 items-center justify-center rounded-lg text-ink-soft transition-colors hover:bg-brand-hover hover:text-brand-dark"
     >
       <Icon size={20} strokeWidth={1.75} />
       {badge != null && (

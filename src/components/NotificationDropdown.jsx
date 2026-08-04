@@ -161,7 +161,7 @@ export default function NotificationDropdown() {
         type="button"
         onClick={handleToggleOpen}
         className={`relative flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${
-          isOpen ? 'bg-indigo-50 text-indigo-700' : 'text-ink-soft hover:bg-muted'
+          isOpen ? 'bg-brand-tint text-brand' : 'text-ink-soft hover:bg-brand-hover hover:text-brand'
         }`}
       >
         <Bell size={20} strokeWidth={1.75} />

@@ -633,8 +633,8 @@ export default function LogTable({ logs, newIds = new Set() }) {
       {pendingCount > 0 && page > 0 && (
         <button
           onClick={jumpToTop}
-          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-indigo-500 text-white text-xs font-semibold
-                     hover:bg-indigo-600 transition-colors animate-slide-fade"
+          className="flex items-center justify-center gap-1.5 w-full py-1.5 bg-brand text-white text-xs font-semibold
+                     hover:bg-brand-hover transition-colors animate-slide-fade"
         >
           <ArrowUp size={12} />
           {pendingCount} new {pendingCount === 1 ? 'entry' : 'entries'} — jump to latest
@@ -695,7 +695,7 @@ export default function LogTable({ logs, newIds = new Set() }) {
                   key={p}
                   onClick={() => { setPage(p); if (p === 0) setPendingCount(0) }}
                   className={`w-7 h-7 rounded-lg text-xs font-medium transition-colors
-                    ${p === page ? 'bg-indigo-500 text-white' : 'hover:bg-muted text-ink-soft'}`}
+                    ${p === page ? 'bg-slate-800 text-white' : 'hover:bg-muted text-ink-soft'}`}
                 >
                   {p + 1}
                 </button>

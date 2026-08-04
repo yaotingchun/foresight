@@ -184,7 +184,7 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
               y={0}
               width={bucketPx}
               height={BAR_H}
-              fill="#6366F1"
+              fill="#21C085"
               fillOpacity={0.15}
               rx={2}
             />
@@ -193,7 +193,7 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
               y={0}
               width={bucketPx}
               height={2}
-              fill="#6366F1"
+              fill="#21C085"
               rx={1}
             />
           </g>
@@ -316,7 +316,7 @@ export default function LogChart({ logs, rangeMs, selectedBucketIndex = null, on
               y={BAR_H + LABEL_H - 3}
               textAnchor="middle"
               fontSize={10}
-              fill={i === selectedBucketIndex ? '#4F46E5' : '#94A3B8'}
+              fill={i === selectedBucketIndex ? '#21C085' : '#94A3B8'}
               fontWeight={i === selectedBucketIndex ? 600 : 400}
               fontFamily="Inter, system-ui, sans-serif"
             >

@@ -173,13 +173,13 @@ export default function TxAnomalyDetail({ tx, onAction }) {
           
           {/* AI Explanation block */}
           {tx.mlExplanation && (
-            <div className="mt-1 ml-7 flex items-start gap-2.5 rounded-xl border border-indigo-100 bg-indigo-50/50 p-3">
-              <Zap size={14} className="text-indigo-500 shrink-0 mt-0.5" />
+            <div className="mt-1 ml-7 flex items-start gap-2.5 rounded-xl border border-brand/20 bg-brand-tint/30 p-3">
+              <Zap size={14} className="text-brand shrink-0 mt-0.5" />
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-indigo-800 mb-0.5">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 mb-0.5">
                   AI Explanation
                 </p>
-                <p className="text-[12.5px] leading-relaxed text-indigo-950">
+                <p className="text-[12.5px] leading-relaxed text-emerald-950">
                   {tx.mlExplanation}
                 </p>
               </div>

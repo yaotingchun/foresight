@@ -90,7 +90,7 @@ function SystemAnalysisBanner({ systemAnalysis, systemLoading, onSelectComponent
     return (
       <div className="rounded-xl border border-line bg-card shadow-card p-5">
         <div className="flex items-center gap-3 text-ink-soft">
-          <Loader2 size={16} className="animate-spin text-indigo-500" />
+          <Loader2 size={16} className="animate-spin text-brand" />
           <span className="text-[13px]">Analysing all {16} components across the system with Gemini AI…</span>
         </div>
       </div>
@@ -161,12 +161,12 @@ function SystemAnalysisBanner({ systemAnalysis, systemLoading, onSelectComponent
                   <button
                     key={row.component}
                     onClick={() => onSelectComponent(row.component)}
-                    className="flex items-center justify-between rounded-lg border border-line bg-muted/50 px-3 py-2.5 hover:border-indigo-300 hover:bg-indigo-50/40 transition-all group text-left"
+                    className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2.5 hover:border-brand/30 hover:bg-brand-tint/20 transition-all group text-left"
                   >
                     <div className="flex items-center gap-2">
                       <span className={`h-2 w-2 rounded-full shrink-0 ${s.dot}`} />
                       <div>
-                        <p className="text-[12px] font-semibold text-ink group-hover:text-indigo-700">{row.component}</p>
+                        <p className="text-[12px] font-semibold text-ink group-hover:text-brand">{row.component}</p>
                         <p className="text-[10px] text-ink-faint">
                           {row.anomaly_windows} windows · top: {row.top_metric?.replace('_', ' ')}
                         </p>
@@ -176,7 +176,7 @@ function SystemAnalysisBanner({ systemAnalysis, systemLoading, onSelectComponent
                       <span className={`text-[10px] font-bold rounded-full border px-1.5 py-0.5 ${s.badge}`}>
                         {s.label}
                       </span>
-                      <ChevronRight size={12} className="text-ink-faint group-hover:text-indigo-500" />
+                      <ChevronRight size={12} className="text-ink-faint group-hover:text-brand" />
                     </div>
                   </button>
                 )
@@ -221,7 +221,7 @@ export default function PredictionPage() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
           <div>
             <div className="flex items-center gap-2.5">
-              <TrendingUp size={20} className="text-indigo-500" />
+              <TrendingUp size={20} className="text-brand" />
               <h1 className="text-xl font-semibold tracking-tight text-ink">Prediction & Forecasting</h1>
               <LiveBadge />
             </div>
@@ -256,14 +256,14 @@ export default function PredictionPage() {
         />
 
         {/* ── Selectors ───────────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-line bg-card shadow-card p-4 flex flex-wrap gap-6 items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-4 flex flex-wrap gap-6 items-center justify-between">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Drill-Down Telemetry Component</span>
               <select
                 value={component}
                 onChange={(e) => setComponent(e.target.value)}
-                className="rounded-lg border border-line bg-card px-3 py-1.5 text-xs font-semibold text-ink focus:border-indigo-500 focus:outline-none shadow-sm cursor-pointer"
+                className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink focus:border-brand focus:outline-none shadow-sm cursor-pointer"
               >
                 {COMPONENTS.map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -273,15 +273,15 @@ export default function PredictionPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Time Horizon</span>
-              <div className="flex items-center gap-1 rounded-lg border border-line bg-muted p-1">
+              <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
                 {HOURS_OPTIONS.map(opt => (
                   <button
                     key={opt.value}
                     onClick={() => setHours(opt.value)}
-                    className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
+                    className={`rounded-lg px-3 py-1 text-xs font-bold transition-all duration-200 ${
                       hours === opt.value
-                        ? 'bg-indigo-500 text-white shadow-sm'
-                        : 'text-ink-soft hover:text-ink'
+                        ? 'bg-slate-800 text-white shadow-sm'
+                        : 'text-slate-500 hover:text-slate-800'
                     }`}
                   >
                     {opt.label}
@@ -292,15 +292,15 @@ export default function PredictionPage() {
 
             <div className="flex flex-col gap-1">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">Forecast Horizon</span>
-              <div className="flex items-center gap-1 rounded-lg border border-line bg-muted p-1">
+              <div className="inline-flex items-center gap-1 rounded-xl bg-[#e8f3eb] border border-brand-tint p-1">
                 {FORECAST_OPTIONS.map(opt => (
                   <button
                     key={opt.value}
                     onClick={() => setForecastMinutes(opt.value)}
-                    className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${
+                    className={`rounded-lg px-3 py-1 text-xs font-bold transition-all duration-200 ${
                       forecastMinutes === opt.value
-                        ? 'bg-indigo-500 text-white shadow-sm'
-                        : 'text-ink-soft hover:text-ink'
+                        ? 'bg-slate-800 text-white shadow-sm'
+                        : 'text-slate-500 hover:text-slate-800'
                     }`}
                   >
                     {opt.label}
@@ -311,19 +311,19 @@ export default function PredictionPage() {
           </div>
 
           <div className="text-[11px] text-ink-faint">
-            Telemetry Target: <strong className="text-indigo-600 font-semibold">{component}</strong>
+            Telemetry Target: <strong className="text-brand font-semibold">{component}</strong>
           </div>
         </div>
 
         {/* ── AI Summary (collapsable) ─────────────────────────────────────── */}
-        <div className="rounded-xl border border-line bg-card shadow-card overflow-hidden">
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
           <button
             onClick={() => setSummaryOpen(v => !v)}
             className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-muted transition-colors"
           >
             <div className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-50 border border-indigo-100">
-                <Sparkles size={13} className="text-indigo-500" />
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-tint border border-brand/20">
+                <Sparkles size={13} className="text-brand" />
               </span>
               <div className="text-left">
                 <p className="text-[13px] font-semibold text-ink">AI Forecast Summary</p>
@@ -343,10 +343,10 @@ export default function PredictionPage() {
           </button>
 
           {summaryOpen && (
-            <div className="border-t border-line px-5 py-4 bg-slate-50/50">
+            <div className="border-t border-slate-100 px-5 py-4 bg-[#f8fdf9]">
               {summaryLoading ? (
                 <div className="flex items-center gap-2.5 text-ink-soft">
-                  <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent" />
+                  <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-brand border-t-transparent" />
                   <span className="text-[13px]">Generating AI analysis…</span>
                 </div>
               ) : summary ? (
@@ -368,7 +368,7 @@ export default function PredictionPage() {
                     { icon: Clock,         label: 'Forecast horizon',  value: '30 min' },
                     { icon: Radio,          label: 'Detector',         value: 'IsoForest + z-score' },
                   ].map(({ icon: Icon, label, value, alert }) => (
-                    <div key={label} className="flex items-center gap-2 rounded-lg border border-line bg-card px-3 py-2">
+                    <div key={label} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
                       <Icon size={13} className={alert ? 'text-amber-500' : 'text-ink-faint'} />
                       <div>
                         <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-faint">{label}</p>
@@ -392,7 +392,7 @@ export default function PredictionPage() {
         {/* ── Legend ────────────────────────────────────────────────────────── */}
         <div className="flex flex-wrap items-center gap-5 text-[11px] text-ink-faint">
           <span className="flex items-center gap-1.5">
-            <span className="h-0.5 w-7 rounded bg-indigo-500 inline-block" />
+            <span className="h-0.5 w-7 rounded bg-brand inline-block" />
             Actual (historical)
           </span>
           <span className="flex items-center gap-1.5">
