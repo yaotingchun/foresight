@@ -1,17 +1,35 @@
 import { statusOf } from './statusColors'
+import { AlertTriangle, ShieldAlert } from 'lucide-react'
 
 /**
  * A single service rendered as an absolutely-positioned HTML circle so text and
  * icons stay crisp and hover states are trivial. `state` is
  * 'active' | 'dim' | 'normal'; `primary` marks the hovered/selected focus node.
  */
-export default function ServiceNode({ node, state, primary, selected, onHover, onSelect }) {
+export default function ServiceNode({ node, state, primary, selected, onHover, onSelect, sidebarOpen, appliedUpgrades, isSimulating }) {
   const { icon: Icon, r, x, y, health, label, kind } = node
-  const status = statusOf(health)
+  
+  // If no simulation is active and sidebar is open, inject payment warning health
+  let nodeHealth = health
+  if (!isSimulating && sidebarOpen) {
+    if (node.id === 'payment-service') {
+      nodeHealth = 'warning'
+    }
+  }
+
+  const status = statusOf(nodeHealth)
   const size = r * 2
 
   const dim = state === 'dim'
   const emphasized = primary || selected
+
+  const isPerformanceBottleneck = sidebarOpen && nodeHealth !== 'healthy'
+  const isBottleneck = isPerformanceBottleneck
+
+  const isSPOF = sidebarOpen && !isBottleneck && (
+    (node.id === 'auth-service' && !appliedUpgrades?.authReplicas) ||
+    (node.id === 'primary-db' && !appliedUpgrades?.dbReplicas)
+  )
 
   return (
     <div
@@ -47,10 +65,28 @@ export default function ServiceNode({ node, state, primary, selected, onHover, o
         }}
       >
         <Icon size={r * 0.82} strokeWidth={1.75} style={{ color: status.color }} />
-        <span
-          className="absolute right-0 top-0 block rounded-full ring-2 ring-white"
-          style={{ width: 11, height: 11, backgroundColor: status.color }}
-        />
+        {isBottleneck ? (
+          <div
+            className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-orange-500 text-white shadow-md ring-2 ring-white animate-pulse"
+            title="Active Bottleneck Anomaly"
+            style={{ width: 24, height: 24 }}
+          >
+            <AlertTriangle size={13} className="stroke-[2.5]" />
+          </div>
+        ) : isSPOF ? (
+          <div
+            className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-red-500 text-white shadow-md ring-2 ring-white"
+            title="Single Point of Failure (SPOF)"
+            style={{ width: 24, height: 24 }}
+          >
+            <ShieldAlert size={13} className="stroke-[2.5]" />
+          </div>
+        ) : (
+          <span
+            className="absolute right-0 top-0 block rounded-full ring-2 ring-white"
+            style={{ width: 11, height: 11, backgroundColor: status.color }}
+          />
+        )}
       </div>
 
       <div className="mt-2 flex flex-col items-center" style={{ width: Math.max(size + 40, 96) }}>

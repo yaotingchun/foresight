@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import EdgeLayer from './EdgeLayer'
 import NodeLayer from './NodeLayer'
-import ServiceMapLegend from './ServiceMapLegend'
 import ServiceMapControls from './ServiceMapControls'
 import ServiceDetailPanel from './ServiceDetailPanel'
+import ServiceMapLegend from './ServiceMapLegend'
 import { useZoomPan } from '../../hooks/useZoomPan'
 import { useSimulatedNodes } from '../../hooks/useSimulatedNodes'
 import { CANVAS, EDGES } from '../../data/serviceMapData'
@@ -12,19 +12,13 @@ import { CANVAS, EDGES } from '../../data/serviceMapData'
  * Interactive canvas. Owns hover / selection / search focus and derives the
  * per-node and per-edge visual state from it, then hands geometry to the layers.
  */
-export default function ServiceMap({ query = '', expanded = false, onToggleExpand }) {
+export default function ServiceMap({ query = '', expanded = false, onToggleExpand, sidebarOpen, appliedUpgrades, isSimulating }) {
   const [hoveredId, setHoveredId] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
-  const { viewportRef, transform, animated, handlers, controls } = useZoomPan(CANVAS)
+  const { viewportRef, transform, animated, handlers, controls, hasDragged } = useZoomPan(CANVAS)
   const nodes = useSimulatedNodes()
+  
   const nodeById = useMemo(() => Object.fromEntries(nodes.map((n) => [n.id, n])), [nodes])
-
-  // Re-fit after the container resizes between windowed and fullscreen. Two
-  // rAFs let the fixed-position relayout settle before we measure.
-  useEffect(() => {
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => controls.fit()))
-    return () => cancelAnimationFrame(id)
-  }, [expanded, controls])
 
   const NEIGHBORS = useMemo(() => {
     const map = {}
@@ -35,6 +29,55 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
     })
     return map
   }, [nodes])
+
+  // Re-fit after the container resizes between windowed and fullscreen. Two
+  // rAFs let the fixed-position relayout settle before we measure.
+  useEffect(() => {
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => controls.fit()))
+    return () => cancelAnimationFrame(id)
+  }, [expanded, controls])
+
+  // Centroid-aware zoom effect
+  useEffect(() => {
+    if (selectedId) {
+      const neighborsSet = NEIGHBORS[selectedId]
+      const connectedIds = [selectedId, ...Array.from(neighborsSet || [])]
+      const connectedNodes = connectedIds.map(id => nodeById[id]).filter(Boolean)
+
+      if (connectedNodes.length > 0) {
+        let minX = Infinity, maxX = -Infinity
+        let minY = Infinity, maxY = -Infinity
+
+        connectedNodes.forEach(node => {
+          const r = node.r || 30
+          if (node.x - r < minX) minX = node.x - r
+          if (node.x + r > maxX) maxX = node.x + r
+          if (node.y - r < minY) minY = node.y - r
+          if (node.y + r > maxY) maxY = node.y + r
+        })
+
+        const boxWidth = maxX - minX
+        const boxHeight = maxY - minY
+        const centroidX = (minX + maxX) / 2
+        const centroidY = (minY + maxY) / 2
+
+        const el = viewportRef.current
+        if (el) {
+          const { width, height } = el.getBoundingClientRect()
+          const paddingVal = 80
+          // If the container is wide enough, center the target in the left area (excluding the 300px panel)
+          const targetX = width > 450 ? (width - 300) / 2 : width / 2
+          const scaleX = (width - paddingVal * 2) / boxWidth
+          const scaleY = (height - paddingVal * 2) / boxHeight
+          // Clamp scale range between 0.6 and 0.8 so focused nodes aren't too huge
+          const targetScale = Math.max(0.6, Math.min(scaleX, scaleY, 0.8))
+          controls.zoomTo(centroidX, centroidY, targetScale, targetX)
+        }
+      }
+    } else {
+      controls.fit()
+    }
+  }, [selectedId, nodeById, NEIGHBORS, controls])
 
   const matches = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -66,7 +109,11 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
       ref={viewportRef}
       className="relative h-full w-full touch-none overflow-hidden rounded-xl border border-line bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.16)_1px,transparent_0)] [background-size:22px_22px]"
       style={{ cursor: 'grab' }}
-      onClick={() => setSelectedId(null)}
+      onClick={() => {
+        if (hasDragged && !hasDragged.current) {
+          setSelectedId(null)
+        }
+      }}
       {...handlers}
     >
       <div
@@ -75,7 +122,7 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
           width: CANVAS.width,
           height: CANVAS.height,
           transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
-          transition: animated ? 'transform 260ms ease' : 'none',
+          transition: animated ? 'transform 450ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
         }}
       >
         <EdgeLayer edgeState={edgeState} nodeById={nodeById} />
@@ -86,10 +133,16 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
           selectedId={selectedId}
           onHover={setHoveredId}
           onSelect={setSelectedId}
+          sidebarOpen={sidebarOpen}
+          appliedUpgrades={appliedUpgrades}
+          isSimulating={isSimulating}
         />
       </div>
 
-      <ServiceMapLegend />
+      <div className="pointer-events-auto absolute bottom-4 left-4 z-30">
+        <ServiceMapLegend />
+      </div>
+
       <ServiceMapControls
         onZoomIn={controls.zoomIn}
         onZoomOut={controls.zoomOut}
@@ -97,7 +150,14 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
         expanded={expanded}
         onToggleExpand={onToggleExpand}
       />
-      <ServiceDetailPanel nodeId={selectedId} nodeById={nodeById} onClose={() => setSelectedId(null)} />
+      <ServiceDetailPanel 
+        nodeId={selectedId} 
+        nodeById={nodeById} 
+        onClose={() => setSelectedId(null)} 
+        appliedUpgrades={appliedUpgrades} 
+        isSimulating={isSimulating}
+        sidebarOpen={sidebarOpen}
+      />
     </div>
   )
 }

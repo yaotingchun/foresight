@@ -1,8 +1,7 @@
-import { Search, Layers3, ChevronDown } from 'lucide-react'
+import { Search } from 'lucide-react'
 
 /**
- * Header controls. The environment/view dropdowns are placeholders; the search
- * box is live — it highlights matching services and dims the rest.
+ * Header controls. The search box is live — it highlights matching services and dims the rest.
  */
 export default function ServiceMapToolbar({ query, onQueryChange }) {
   return (
@@ -20,15 +19,6 @@ export default function ServiceMapToolbar({ query, onQueryChange }) {
           className="h-9 w-52 rounded-lg border border-line bg-white pl-8 pr-3 text-[13px] text-ink placeholder:text-ink-faint focus:outline-none focus:ring-2 focus:ring-status-indigo/25"
         />
       </div>
-
-      <button
-        type="button"
-        className="flex h-9 items-center gap-2 rounded-lg border border-line bg-white px-3 transition-colors hover:bg-muted"
-      >
-        <Layers3 size={15} strokeWidth={1.75} className="text-status-blue" />
-        <span className="text-[13px] font-medium text-ink-soft">Environment: Production</span>
-        <ChevronDown size={15} strokeWidth={1.75} className="text-ink-faint" />
-      </button>
     </div>
   )
 }
