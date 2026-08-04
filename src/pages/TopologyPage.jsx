@@ -6,7 +6,8 @@ import LiveBadge from '../components/servicemap/LiveBadge'
 import ServiceMapToolbar from '../components/servicemap/ServiceMapToolbar'
 import {
   Sparkles, TrendingUp, ShieldAlert, Cpu, Network, Info, 
-  AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap 
+  AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap,
+  History
 } from 'lucide-react'
 
 // Mock SRE telemetry data for 24 hours (12 points, every 2 hours)
@@ -33,11 +34,202 @@ const TELEMETRY_DATA = {
 
 const HOURS = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00']
 
+const REGISTRATION_TIMELINE = [
+  {
+    id: 1,
+    service: 'users',
+    label: 'Users',
+    kind: 'Entrypoint',
+    timestamp: '2026-08-01 08:00',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'External user traffic ingress endpoint established. Initial connection point.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 2,
+    service: 'load-balancer',
+    label: 'Load Balancer',
+    kind: 'Network',
+    timestamp: '2026-08-01 08:30',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'High-availability load balancer configured. Distributes ingress traffic to web and api layer.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 3,
+    service: 'web-portal',
+    label: 'Web Portal',
+    kind: 'Frontend',
+    timestamp: '2026-08-01 09:00',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'Client-facing web application portal deployed. React frontend application online.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 4,
+    service: 'api-gateway',
+    label: 'API Gateway',
+    kind: 'Gateway',
+    timestamp: '2026-08-01 09:30',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'Core API routing gateway registered. Rate limiting rules initialized.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 5,
+    service: 'auth-service',
+    label: 'Auth Service',
+    kind: 'Service',
+    timestamp: '2026-08-01 10:15',
+    version: 'v1.0.2',
+    status: 'Active',
+    description: 'User identity and authorization service registered. OAuth2 token validation configured.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 6,
+    service: 'user-service',
+    label: 'User Service',
+    kind: 'Service',
+    timestamp: '2026-08-01 11:00',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'User profile management service registered. Provides core account query routing.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 7,
+    service: 'order-service',
+    label: 'Order Service',
+    kind: 'Service',
+    timestamp: '2026-08-01 15:20',
+    version: 'v1.0.5',
+    status: 'Active',
+    description: 'Order placement and lifecycle tracking service registered.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 8,
+    service: 'payment-service',
+    label: 'Payment Service',
+    kind: 'Service',
+    timestamp: '2026-08-02 09:10',
+    version: 'v1.2.0',
+    status: 'Active',
+    description: 'Secure transaction processing and ledger billing service registered.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 9,
+    service: 'search-service',
+    label: 'Search Service',
+    kind: 'Service',
+    timestamp: '2026-08-02 11:30',
+    version: 'v1.0.1',
+    status: 'Active',
+    description: 'Product catalog indexer and elastic search API service onboarded.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 10,
+    service: 'inventory-service',
+    label: 'Inventory Service',
+    kind: 'Service',
+    timestamp: '2026-08-02 13:45',
+    version: 'v1.1.0',
+    status: 'Active',
+    description: 'Warehouse stock levels and catalog tracking database connector registered.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 11,
+    service: 'notification-service',
+    label: 'Notification Service',
+    kind: 'Service',
+    timestamp: '2026-08-02 14:00',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'Transactional alerts dispatcher and delivery routing backend service registered.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 12,
+    service: 'redis-cache',
+    label: 'Redis Cache',
+    kind: 'Cache',
+    timestamp: '2026-08-03 08:00',
+    version: 'v6.2.6',
+    status: 'Active',
+    description: 'In-memory data store cache registered to offload database query amplification.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 13,
+    service: 'primary-db',
+    label: 'Primary DB',
+    kind: 'Datastore',
+    timestamp: '2026-08-03 08:30',
+    version: 'v14.1',
+    status: 'Active',
+    description: 'Primary PostgreSQL database instance registered.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 14,
+    service: 'message-queue',
+    label: 'Message Queue',
+    kind: 'Streaming',
+    timestamp: '2026-08-03 10:00',
+    version: 'v3.9.12',
+    status: 'Active',
+    description: 'Asynchronous AMQP message broker cluster registered for cross-service event streaming.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 15,
+    service: 'data-warehouse',
+    label: 'Data Warehouse',
+    kind: 'Datastore',
+    timestamp: '2026-08-03 11:30',
+    version: 'v2.0.0',
+    status: 'Active',
+    description: 'Long-term analytical database and ETL telemetry target pipeline onboarded.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 16,
+    service: 'payment-gateway',
+    label: 'Payment Gateway',
+    kind: 'External',
+    timestamp: '2026-08-03 12:00',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'Third-party credit processor secure integration bridge established.',
+    color: 'bg-emerald-500',
+  },
+  {
+    id: 17,
+    service: 'email-provider',
+    label: 'Email Provider',
+    kind: 'External',
+    timestamp: '2026-08-03 14:00',
+    version: 'v1.0.0',
+    status: 'Active',
+    description: 'External SMTP notification channel gateway verified and connected.',
+    color: 'bg-emerald-500',
+  }
+]
 
 export default function TopologyPage() {
   const nodes = useSimulatedNodes()
   const { activeRun } = useSimulation()
   const [showDeepDive, setShowDeepDive] = useState(false)
+  const [showTimeline, setShowTimeline] = useState(false)
+  const [sortOrder, setSortOrder] = useState('asc') // 'asc' | 'desc'
   const [activeTab, setActiveTab] = useState('latency') // 'latency' | 'errors' | 'cpu'
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -46,6 +238,15 @@ export default function TopologyPage() {
     dbReplicas: false,
     paymentCircuitBreaker: false
   })
+
+  // Dynamic sorted timeline array
+  const sortedTimeline = useMemo(() => {
+    return [...REGISTRATION_TIMELINE].sort((a, b) => {
+      const timeA = new Date(a.timestamp).getTime()
+      const timeB = new Date(b.timestamp).getTime()
+      return sortOrder === 'asc' ? timeA - timeB : timeB - timeA
+    })
+  }, [sortOrder])
 
   // Dynamic scenario-aware AI summary text
   const aiSummaryText = useMemo(() => {
@@ -153,6 +354,13 @@ export default function TopologyPage() {
 
         {/* Header Controls */}
         <div className="flex flex-wrap items-center gap-3">
+          <button 
+            onClick={() => setShowTimeline(true)}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-100 bg-indigo-50 text-indigo-600 hover:bg-indigo-100/80 transition-all cursor-pointer"
+            title="Service Registration Timeline"
+          >
+            <History size={16} className="transition-transform duration-300 hover:rotate-[-45deg]" />
+          </button>
           <button 
             onClick={() => setSidebarOpen(prev => !prev)}
             className={`flex h-9 items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all cursor-pointer text-[12.5px] font-bold ${
@@ -663,6 +871,104 @@ export default function TopologyPage() {
               </div>
             </div>
             
+          </div>
+        </div>
+      )}
+
+      {/* Service Onboarding & Registry Timeline Popout Modal */}
+      {showTimeline && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" 
+            onClick={() => setShowTimeline(false)}
+          />
+          
+          {/* Modal Container */}
+          <div className="relative w-full max-w-2xl max-h-[85vh] transform overflow-hidden rounded-2xl bg-white shadow-2xl border border-slate-100 flex flex-col z-10 font-sans animate-scale-up">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-gradient-to-r from-indigo-50/50 to-violet-50/50">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm">
+                  <History size={18} />
+                </div>
+                <div>
+                  <h3 className="text-[16px] font-extrabold text-slate-800">Service Onboarding & Registry Timeline</h3>
+                  <p className="text-[11.5px] text-slate-500">Historical trace of microservice registrations in Foresight.ai</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
+                  className="px-2.5 py-1 text-[11px] font-bold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg border border-indigo-100/50 shadow-sm transition-all cursor-pointer flex items-center gap-1"
+                  title="Toggle Chronological Sort"
+                >
+                  <History size={11} className={`transition-transform duration-300 ${sortOrder === 'desc' ? 'rotate-180' : ''}`} />
+                  <span>Sort: {sortOrder === 'asc' ? 'Oldest First' : 'Newest First'}</span>
+                </button>
+                <button 
+                  onClick={() => setShowTimeline(false)}
+                  className="text-slate-400 hover:text-slate-600 rounded-lg p-1 hover:bg-slate-100 transition-all cursor-pointer"
+                  title="Close"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body (Timeline List) */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 max-h-[60vh]">
+              <div className="relative border-l-2 border-slate-100 pl-6 ml-3 space-y-6">
+                {sortedTimeline.map((item) => (
+                  <div key={item.id} className="relative group">
+                    {/* Glowing Node Indicator */}
+                    <div className="absolute -left-[31px] top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-white border border-slate-200">
+                      <div className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse group-hover:scale-125 transition-transform" />
+                    </div>
+
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 border border-slate-100 bg-slate-50/40 hover:bg-indigo-50/20 rounded-xl p-4 transition-all duration-300 hover:border-indigo-100 shadow-sm hover:shadow">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-[13.5px] font-bold text-slate-800">{item.label}</span>
+                          <span className="text-[10.5px] font-semibold text-slate-400 font-mono">({item.service})</span>
+                          <span className="text-[10px] font-bold uppercase bg-slate-100 text-slate-500 px-2 py-0.5 rounded border border-slate-200">
+                            {item.kind}
+                          </span>
+                          <span className="text-[10px] font-semibold bg-indigo-50 text-indigo-700 px-1.5 py-0.2 rounded border border-indigo-100/50">
+                            {item.version}
+                          </span>
+                        </div>
+                        <p className="text-[12px] text-slate-600 mt-1.5 leading-relaxed font-medium">
+                          {item.description}
+                        </p>
+                      </div>
+                      
+                      <div className="flex md:flex-col items-center md:items-end justify-between shrink-0 gap-1.5">
+                        <span className="text-[11px] font-semibold text-slate-400 font-mono">
+                          {item.timestamp}
+                        </span>
+                        <span className="text-[9px] font-extrabold uppercase tracking-wide bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-100">
+                          {item.status}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="border-t border-slate-100 px-6 py-4 bg-slate-50/50 flex items-center justify-between">
+              <span className="text-[11px] font-semibold text-slate-400">Total Registered Services: {REGISTRATION_TIMELINE.length}</span>
+              <button 
+                onClick={() => setShowTimeline(false)}
+                className="px-4 py-2 text-xs font-bold text-slate-600 bg-white hover:bg-slate-50 rounded-lg border border-slate-200 shadow-sm cursor-pointer transition-all hover:border-slate-300"
+              >
+                Close Timeline
+              </button>
+            </div>
+
           </div>
         </div>
       )}
