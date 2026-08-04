@@ -174,7 +174,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                 <p className="text-xs text-slate-500 mb-4">Provide context to the AI for smarter plans.</p>
 
                 <div className="flex flex-col gap-4">
-                    <label className="border border-dashed border-brand/30 bg-brand-tint/20 rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-brand-tint/30 transition-colors">
+                    <label className="border border-dashed border-slate-200 bg-slate-50/50 rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-slate-100/50 hover:border-slate-300 transition-all duration-200">
                         <input
                             type="file"
                             className="hidden"
@@ -208,7 +208,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                                 }
                             }}
                         />
-                        <div className="flex items-center gap-2 text-brand">
+                        <div className="flex items-center gap-2 text-slate-700">
                             <Upload size={14} />
                             <span className="text-xs font-bold">Upload Architecture Docs (PDF, TXT, JSON)</span>
                         </div>
@@ -219,7 +219,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Indexed Documents</span>
                             {businessContext.uploadedFiles.map((file, idx) => (
                                 <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded border border-line">
-                                    <FileText size={12} className="text-brand" />
+                                    <FileText size={12} className="text-slate-500" />
                                     <span className="text-xs text-ink">{file.name || file}</span>
                                 </div>
                             ))}
@@ -267,24 +267,19 @@ function RoutingSettings({ escalation, setEscalation }) {
     const rules = escalation.routingRules || [];
 
     return (
-        <div className="flex flex-col gap-6 animate-slide-fade max-w-5xl">
-            <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-6 animate-slide-fade">
+            <div className="flex items-center justify-between mb-2">
                 <div>
-                    <h3 className="text-lg font-bold text-ink flex items-center gap-2 mb-1">
-                        <div className="p-1.5 bg-brand-tint/50 rounded-lg">
-                            <BellRing className="text-[#047857]" size={18} />
-                        </div>
-                        Escalation Routing
-                    </h3>
-                    <p className="text-sm text-slate-500 max-w-2xl">
+                    <h3 className="text-sm font-bold text-ink mb-1">Escalation Routing</h3>
+                    <p className="text-xs text-slate-500">
                         Configure how alerts and incidents are routed. Map service patterns to specific response teams. Rules are evaluated top-down.
                     </p>
                 </div>
                 <button 
                     onClick={addRule} 
-                    className="flex items-center gap-1.5 px-4 py-2 bg-brand text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-brand-hover transition-all active:scale-95"
+                    className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-black text-white text-xs font-semibold rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
                 >
-                    <Plus size={16} />
+                    <Plus size={14} />
                     Add Rule
                 </button>
             </div>
@@ -301,7 +296,7 @@ function RoutingSettings({ escalation, setEscalation }) {
                         </p>
                         <button 
                             onClick={addRule} 
-                            className="flex items-center gap-1.5 px-4 py-2 border border-brand text-brand text-sm font-semibold rounded-lg hover:bg-brand-tint/30 transition-colors"
+                            className="flex items-center gap-1.5 px-4 py-2 border border-slate-300 text-ink text-sm font-semibold rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                             <Plus size={16} />
                             Create your first rule
