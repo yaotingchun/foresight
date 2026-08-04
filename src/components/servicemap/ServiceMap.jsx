@@ -12,7 +12,7 @@ import { CANVAS, EDGES } from '../../data/serviceMapData'
  * Interactive canvas. Owns hover / selection / search focus and derives the
  * per-node and per-edge visual state from it, then hands geometry to the layers.
  */
-export default function ServiceMap({ query = '', expanded = false, onToggleExpand, sidebarOpen, appliedUpgrades }) {
+export default function ServiceMap({ query = '', expanded = false, onToggleExpand, sidebarOpen, appliedUpgrades, isSimulating }) {
   const [hoveredId, setHoveredId] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
   const { viewportRef, transform, animated, handlers, controls, hasDragged } = useZoomPan(CANVAS)
@@ -135,6 +135,7 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
           onSelect={setSelectedId}
           sidebarOpen={sidebarOpen}
           appliedUpgrades={appliedUpgrades}
+          isSimulating={isSimulating}
         />
       </div>
 
@@ -149,7 +150,14 @@ export default function ServiceMap({ query = '', expanded = false, onToggleExpan
         expanded={expanded}
         onToggleExpand={onToggleExpand}
       />
-      <ServiceDetailPanel nodeId={selectedId} nodeById={nodeById} onClose={() => setSelectedId(null)} />
+      <ServiceDetailPanel 
+        nodeId={selectedId} 
+        nodeById={nodeById} 
+        onClose={() => setSelectedId(null)} 
+        appliedUpgrades={appliedUpgrades} 
+        isSimulating={isSimulating}
+        sidebarOpen={sidebarOpen}
+      />
     </div>
   )
 }

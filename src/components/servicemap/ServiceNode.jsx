@@ -6,15 +6,26 @@ import { AlertTriangle, ShieldAlert } from 'lucide-react'
  * icons stay crisp and hover states are trivial. `state` is
  * 'active' | 'dim' | 'normal'; `primary` marks the hovered/selected focus node.
  */
-export default function ServiceNode({ node, state, primary, selected, onHover, onSelect, sidebarOpen, appliedUpgrades }) {
+export default function ServiceNode({ node, state, primary, selected, onHover, onSelect, sidebarOpen, appliedUpgrades, isSimulating }) {
   const { icon: Icon, r, x, y, health, label, kind } = node
-  const status = statusOf(health)
+  
+  // If no simulation is active and sidebar is open, inject payment warning health
+  let nodeHealth = health
+  if (!isSimulating && sidebarOpen) {
+    if (node.id === 'payment-service') {
+      nodeHealth = 'warning'
+    }
+  }
+
+  const status = statusOf(nodeHealth)
   const size = r * 2
 
   const dim = state === 'dim'
   const emphasized = primary || selected
 
-  const isBottleneck = sidebarOpen && health !== 'healthy'
+  const isPerformanceBottleneck = sidebarOpen && nodeHealth !== 'healthy'
+  const isBottleneck = isPerformanceBottleneck
+
   const isSPOF = sidebarOpen && !isBottleneck && (
     (node.id === 'auth-service' && !appliedUpgrades?.authReplicas) ||
     (node.id === 'primary-db' && !appliedUpgrades?.dbReplicas)

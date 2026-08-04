@@ -33,6 +33,7 @@ const TELEMETRY_DATA = {
 
 const HOURS = ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00']
 
+
 export default function TopologyPage() {
   const nodes = useSimulatedNodes()
   const { activeRun } = useSimulation()
@@ -115,20 +116,25 @@ export default function TopologyPage() {
   }, [activeRun, appliedUpgrades])
 
   // Calculate live health metrics based on runtime simulation
-  const healthMetrics = useMemo(() => {
-    const total = nodes.length
-    if (total === 0) return { healthScore: 100, degradedNodes: [] }
-
-    const degraded = nodes.filter(n => n.health !== 'healthy')
-    const healthScore = Math.max(0, 100 - (degraded.length * 25))
-
-    return {
-      healthScore,
-      degradedNodes: degraded
+  const performanceBottlenecks = useMemo(() => {
+    const list = nodes.filter(n => n.health !== 'healthy')
+    if (list.length === 0 && !activeRun) {
+      // Inject payment-service as baseline performance bottleneck
+      const payNode = nodes.find(n => n.id === 'payment-service')
+      if (payNode) {
+        list.push({
+          ...payNode,
+          health: 'warning',
+          metrics: { ...payNode.metrics, latency: 125, errorRate: 1.2 }
+        })
+      }
     }
-  }, [nodes])
+    return list
+  }, [nodes, activeRun])
 
-  const { healthScore, degradedNodes } = healthMetrics
+  const healthScore = useMemo(() => {
+    return Math.max(0, 100 - (performanceBottlenecks.length * 25))
+  }, [performanceBottlenecks])
 
   return (
     <div className="h-full flex flex-col gap-4 min-h-0">
@@ -169,6 +175,7 @@ export default function TopologyPage() {
           query={query}
           sidebarOpen={sidebarOpen}
           appliedUpgrades={appliedUpgrades}
+          isSimulating={Boolean(activeRun)}
         />
 
       {/* AI SRE Insights Panel (Right Sidebar) */}
@@ -230,7 +237,7 @@ export default function TopologyPage() {
             <p className="text-[11px] text-ink-soft leading-relaxed mt-0.5">
               {healthScore === 100
                 ? 'All 17 nodes operating within SRE baseline SLA limits.'
-                : `${degradedNodes.length} node(s) showing runtime anomalies. SRE action required.`}
+                : `${performanceBottlenecks.length} issue(s) detected. SRE action required.`}
             </p>
           </div>
         </div>
@@ -246,36 +253,51 @@ export default function TopologyPage() {
           </div>
         </div>
 
-        {/* Runtime Bottlenecks */}
-        <div className="flex flex-col gap-2.5 mb-4">
-          <h3 className="text-[11.5px] font-bold text-ink-soft uppercase tracking-wider flex items-center gap-1.5">
-            <TrendingUp size={13} className="text-amber-600" />
-            Runtime Bottlenecks
-          </h3>
-          {degradedNodes.length === 0 ? (
-            <div className="flex items-center gap-2 rounded-xl border border-line bg-card p-3">
-              <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
-              <span className="text-[12px] text-ink-soft font-semibold">No active runtime bottlenecks.</span>
-            </div>
-          ) : (
-            degradedNodes.map(node => (
-              <div key={node.id} className="flex flex-col gap-1.5 rounded-xl border border-amber-200 bg-amber-50/50 p-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-amber-500 animate-ping" />
-                    <span className="text-[12.5px] font-bold text-slate-800">{node.label}</span>
-                  </div>
-                  <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-0.5 rounded border border-amber-200">
-                    {node.health}
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-[11px] font-medium text-slate-600 mt-0.5">
-                  <div>RPS: <span className="font-bold text-slate-800">{node.metrics?.rps ?? 0}</span></div>
-                  <div>Latency: <span className="font-bold text-slate-800">{(node.metrics?.latency ?? 0).toFixed(1)}ms</span></div>
-                </div>
+        {/* Bottleneck Engine (Performance Only) */}
+        <div className="flex flex-col gap-4 mb-4">
+          {/* Performance Bottlenecks */}
+          <div className="flex flex-col gap-2.5">
+            <h3 className="text-[11.5px] font-bold text-ink-soft uppercase tracking-wider flex items-center gap-1.5">
+              <TrendingUp size={13} className="text-amber-600" />
+              Performance Bottlenecks
+            </h3>
+            {performanceBottlenecks.length === 0 ? (
+              <div className="flex items-center gap-2 rounded-xl border border-line bg-card p-3">
+                <CheckCircle2 size={14} className="text-emerald-500 shrink-0" />
+                <span className="text-[12px] text-ink-soft font-semibold">No performance bottlenecks.</span>
               </div>
-            ))
-          )}
+            ) : (
+              <>
+                {performanceBottlenecks.map(node => (
+                  <div key={node.id} className="flex flex-col gap-1.5 rounded-xl border border-amber-200 bg-amber-50/50 p-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-amber-500 animate-ping" />
+                        <span className="text-[12.5px] font-bold text-slate-800">{node.label}</span>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-0.5 rounded border border-amber-200">
+                        {node.health}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[11px] font-medium text-slate-600 mt-0.5">
+                      <div>Latency: <span className="font-bold text-slate-800">{(node.metrics?.latency ?? 0).toFixed(1)}ms</span></div>
+                      <div>Errors: <span className="font-bold text-slate-800">{(node.metrics?.errorRate ?? 0).toFixed(2)}%</span></div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Hardcoded Performance Bottleneck Logic Explanation */}
+                <div className="text-[11px] font-medium text-amber-800 bg-amber-50/40 p-2.5 rounded-xl border border-amber-200/50 mt-1 leading-relaxed">
+                  <span className="font-bold">SRE Bottleneck Logic:</span> {
+                    !activeRun ? "payment-service is experiencing a transient response warning (125ms latency), triggering a performance bottleneck alert."
+                    : activeRun.scenario.id.includes('db') ? "primary-db is flagged as a performance bottleneck because its latency (280ms) and CPU utilization (98%) are heavily saturated under query load, dragging down upstream queues."
+                    : activeRun.scenario.id.includes('traffic') ? "auth-service is flagged as a performance bottleneck. High traffic (3,000 RPS) has pushed CPU utilization to 92%, causing transaction queues to backlog."
+                    : "payment-service is flagged as a performance bottleneck. Elevated processing latency (2.9s) and error rates indicate downstream gateway timeouts."
+                  }
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Static SPOFs */}
@@ -371,8 +393,8 @@ export default function TopologyPage() {
               </div>
               <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-xl flex flex-col">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Active Bottlenecks</span>
-                <span className={`text-[18px] font-extrabold mt-1 ${degradedNodes.length > 0 ? 'text-amber-500' : 'text-emerald-600'}`}>
-                  {degradedNodes.length}
+                <span className={`text-[18px] font-extrabold mt-1 ${performanceBottlenecks.length > 0 ? 'text-amber-500' : 'text-emerald-600'}`}>
+                  {performanceBottlenecks.length}
                 </span>
               </div>
               <div className="bg-slate-50 border border-slate-100 p-3.5 rounded-xl flex flex-col">
@@ -535,6 +557,38 @@ export default function TopologyPage() {
                 <p className="text-[12px] leading-relaxed text-slate-500 mt-1 font-semibold">
                   SRE Recommendation: Spin up read-replicas specifically for inventory queries to take load off the primary database. Migrate order historical storage and reporting transactions onto a dedicated write-through read-pool.
                 </p>
+              </div>
+            </div>
+
+            {/* Active Bottlenecks & Remediation Plans */}
+            <div className="border border-slate-200/80 rounded-xl p-4 bg-slate-50/20 flex flex-col gap-3">
+              <div className="flex items-center gap-2 border-b border-slate-200/60 pb-2">
+                <Sparkles size={16} className="text-violet-600" />
+                <h4 className="text-[13px] font-bold text-slate-800">Active Bottlenecks & Suggested Remediation Plans</h4>
+              </div>
+              
+              <div className="flex flex-col gap-3">
+                {/* Performance Bottlenecks Remediation */}
+                {performanceBottlenecks.length > 0 ? (
+                  performanceBottlenecks.map(node => (
+                    <div key={node.id} className="bg-amber-50/40 border border-amber-200/60 p-3 rounded-lg flex flex-col gap-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[12.5px] font-bold text-amber-900">{node.label} (Performance Bottleneck)</span>
+                        <span className="text-[10px] font-bold uppercase bg-amber-100 text-amber-800 px-2 py-0.5 rounded border border-amber-200">{node.health}</span>
+                      </div>
+                      <p className="text-[12px] text-slate-600 leading-relaxed font-medium">
+                        <strong>Remediation Plan:</strong> {
+                          node.id === 'primary-db' ? "Deploy DB Read Replica Pool to distribute reading load, optimize transaction locking, and increase DB queries limit to 9,000 RPS."
+                          : node.id === 'auth-service' ? "Scale Auth Service instances to 3x replicas, provision caching layers (Redis Cache) for JWT tokens to alleviate validation load."
+                          : node.id === 'payment-service' ? "Route order confirmation requests via asynchronous message-queue handlers. Configure gateway timeout circuit breakers to prevent thread exhaustion."
+                          : "Configure a circuit breaker and retry queues for the external service dependencies to prevent thread depletion."
+                        }
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-[12px] text-slate-500 font-semibold italic">No active performance bottlenecks requiring immediate plan.</div>
+                )}
               </div>
             </div>
 

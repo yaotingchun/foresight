@@ -28,13 +28,28 @@ function DepRow({ node, direction }) {
 }
 
 /** Right-hand inspector. Rendered mounted at all times; slides via translate. */
-export default function ServiceDetailPanel({ nodeId, nodeById, onClose }) {
+export default function ServiceDetailPanel({ nodeId, nodeById, onClose, appliedUpgrades, isSimulating, sidebarOpen }) {
   const node = nodeId ? nodeById[nodeId] : null
   const open = Boolean(node)
-  const status = node ? statusOf(node.health) : null
 
   const upstream = node ? upstreamIdsOf(node.id).map((id) => nodeById[id]).filter(Boolean) : []
   const downstream = node ? downstreamIdsOf(node.id).map((id) => nodeById[id]).filter(Boolean) : []
+
+  // If no simulation is active and sidebar is open, inject payment warning health and database traffic at 95% utilization
+  let healthState = node ? node.health : 'healthy'
+  let rps = node ? node.metrics.rps : 0
+  let latency = node ? node.metrics.latency : 0
+  let errorRate = node ? node.metrics.errorRate : 0
+
+  if (node && !isSimulating && sidebarOpen) {
+    if (node.id === 'payment-service') {
+      healthState = 'warning'
+      latency = 125
+      errorRate = 1.2
+    }
+  }
+
+  const status = node ? statusOf(healthState) : null
 
   return (
     <div
@@ -72,19 +87,19 @@ export default function ServiceDetailPanel({ nodeId, nodeById, onClose }) {
           </div>
 
           <div className="flex-1 overflow-y-auto px-4 py-4">
-            <HealthBadge health={node.health} />
+            <HealthBadge health={healthState} />
 
             <div className="mt-4 grid grid-cols-2 gap-2">
-              <Metric label="Requests / sec" value={node.metrics.rps.toLocaleString()} />
+              <Metric label="Requests / sec" value={rps.toLocaleString()} />
               <Metric
                 label="p95 Latency"
-                value={`${node.metrics.latency} ms`}
-                tone={node.metrics.latency > 200 ? '#EF4444' : node.metrics.latency > 100 ? '#F59E0B' : undefined}
+                value={`${latency} ms`}
+                tone={latency > 200 ? '#EF4444' : latency > 100 ? '#F59E0B' : undefined}
               />
               <Metric
                 label="Error Rate"
-                value={`${node.metrics.errorRate}%`}
-                tone={node.metrics.errorRate > 5 ? '#EF4444' : node.metrics.errorRate > 1 ? '#F59E0B' : undefined}
+                value={`${errorRate}%`}
+                tone={errorRate > 5 ? '#EF4444' : errorRate > 1 ? '#F59E0B' : undefined}
               />
               <Metric label="Uptime" value={`${node.metrics.uptime}%`} />
             </div>
