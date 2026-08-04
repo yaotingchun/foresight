@@ -460,10 +460,10 @@ export default function PredictionPage() {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="mx-auto flex max-w-[1600px] flex-col gap-5 pb-8">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 p-4 lg:p-6">
 
         {/* ── Page header ─────────────────────────────────────────────────── */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2.5">
               <TrendingUp size={20} className="text-brand" />

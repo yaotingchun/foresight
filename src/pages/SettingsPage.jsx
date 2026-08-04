@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSettings } from '../context/SettingsContext'
 import {
-    Settings2, SlidersHorizontal, Share2,
+    Settings, Settings2, SlidersHorizontal, Share2,
     BellRing, Activity, Terminal, CreditCard,
     Network, Shield, Bot, Plus, Trash2,
     Upload, FileText, BrainCircuit
@@ -264,53 +264,136 @@ function RoutingSettings({ escalation, setEscalation }) {
         }))
     }
 
+    const rules = escalation.routingRules || [];
+
     return (
-        <div className="flex flex-col gap-6 animate-slide-fade">
-            <div>
-                <h3 className="text-sm font-bold text-ink mb-1">Escalation Routing</h3>
-                <p className="text-xs text-slate-500 mb-4">Map affected services to specific response teams. Rules are evaluated top-down.</p>
-
-                <div className="flex flex-col gap-2">
-                    <div className="grid grid-cols-12 gap-2 px-3 py-2 bg-slate-50 rounded border border-line">
-                        <div className="col-span-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Service Pattern</div>
-                        <div className="col-span-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Team Name</div>
-                        <div className="col-span-4 text-[11px] font-bold text-slate-500 uppercase tracking-wider">Contact Details</div>
-                        <div className="col-span-1"></div>
-                    </div>
-
-                    {(escalation.routingRules || []).map(rule => (
-                        <div key={rule.id} className="grid grid-cols-12 gap-2 items-center">
-                            <div className="col-span-4">
-                                <input
-                                    type="text" value={rule.serviceMatch} onChange={e => updateRule(rule.id, 'serviceMatch', e.target.value)}
-                                    placeholder="e.g. payment-*" className="w-full rounded border border-line px-2 py-1.5 text-xs"
-                                />
-                            </div>
-                            <div className="col-span-3">
-                                <input
-                                    type="text" value={rule.team} onChange={e => updateRule(rule.id, 'team', e.target.value)}
-                                    placeholder="Billing" className="w-full rounded border border-line px-2 py-1.5 text-xs"
-                                />
-                            </div>
-                            <div className="col-span-4">
-                                <input
-                                    type="text" value={rule.emails} onChange={e => updateRule(rule.id, 'emails', e.target.value)}
-                                    placeholder="bill@co.com" className="w-full rounded border border-line px-2 py-1.5 text-xs"
-                                />
-                            </div>
-                            <div className="col-span-1 flex justify-center">
-                                <button onClick={() => removeRule(rule.id)} className="text-slate-400 hover:text-red-500 transition-colors">
-                                    <Trash2 size={14} />
-                                </button>
-                            </div>
+        <div className="flex flex-col gap-6 animate-slide-fade max-w-5xl">
+            <div className="flex items-start justify-between">
+                <div>
+                    <h3 className="text-lg font-bold text-ink flex items-center gap-2 mb-1">
+                        <div className="p-1.5 bg-brand-tint/50 rounded-lg">
+                            <BellRing className="text-[#047857]" size={18} />
                         </div>
-                    ))}
-
-                    <button onClick={addRule} className="mt-2 flex items-center justify-center gap-1.5 w-full py-2 border border-dashed border-brand/30 rounded-lg text-xs font-bold text-brand hover:bg-brand-tint/20 transition-colors">
-                        <Plus size={14} /> Add Routing Rule
-                    </button>
+                        Escalation Routing
+                    </h3>
+                    <p className="text-sm text-slate-500 max-w-2xl">
+                        Configure how alerts and incidents are routed. Map service patterns to specific response teams. Rules are evaluated top-down.
+                    </p>
                 </div>
+                <button 
+                    onClick={addRule} 
+                    className="flex items-center gap-1.5 px-4 py-2 bg-brand text-white text-sm font-semibold rounded-lg shadow-sm hover:bg-brand-hover transition-all active:scale-95"
+                >
+                    <Plus size={16} />
+                    Add Rule
+                </button>
             </div>
+
+            <div className="flex flex-col gap-3 mt-2">
+                {rules.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-14 px-4 border border-dashed border-slate-300 rounded-xl bg-slate-50/50">
+                        <div className="w-12 h-12 bg-white border border-slate-100 shadow-sm rounded-full flex items-center justify-center mb-4">
+                            <BellRing size={20} className="text-slate-400" />
+                        </div>
+                        <h4 className="text-sm font-bold text-ink">No routing rules</h4>
+                        <p className="text-sm text-slate-500 mt-1 mb-5 text-center max-w-sm">
+                            You haven't set up any escalation paths. Alerts will use the default fallback contact.
+                        </p>
+                        <button 
+                            onClick={addRule} 
+                            className="flex items-center gap-1.5 px-4 py-2 border border-brand text-brand text-sm font-semibold rounded-lg hover:bg-brand-tint/30 transition-colors"
+                        >
+                            <Plus size={16} />
+                            Create your first rule
+                        </button>
+                    </div>
+                ) : (
+                    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                        {/* Table Header */}
+                        <div className="grid grid-cols-12 gap-4 px-5 py-3.5 bg-slate-50 border-b border-slate-200">
+                            <div className="col-span-4 text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                                <Network size={14} className="text-slate-400" /> Service Pattern
+                            </div>
+                            <div className="col-span-3 text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                                <Shield size={14} className="text-slate-400" /> Team Name
+                            </div>
+                            <div className="col-span-4 text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                                <BellRing size={14} className="text-slate-400" /> Contact Details
+                            </div>
+                            <div className="col-span-1"></div>
+                        </div>
+
+                        {/* Rules List */}
+                        <div className="divide-y divide-slate-100">
+                            {rules.map((rule, idx) => (
+                                <div key={rule.id} className="grid grid-cols-12 gap-4 px-5 py-3.5 items-center group hover:bg-slate-50/50 transition-colors">
+                                    
+                                    {/* Pattern Input */}
+                                    <div className="col-span-4 relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span className="text-slate-400 text-xs font-mono font-bold">#</span>
+                                        </div>
+                                        <input
+                                            type="text" 
+                                            value={rule.serviceMatch} 
+                                            onChange={e => updateRule(rule.id, 'serviceMatch', e.target.value)}
+                                            placeholder="e.g. payment-*" 
+                                            className="w-full pl-7 pr-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:border-brand focus:ring-1 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 text-ink font-mono"
+                                        />
+                                    </div>
+
+                                    {/* Team Input */}
+                                    <div className="col-span-3">
+                                        <input
+                                            type="text" 
+                                            value={rule.team} 
+                                            onChange={e => updateRule(rule.id, 'team', e.target.value)}
+                                            placeholder="e.g. Billing Team" 
+                                            className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:border-brand focus:ring-1 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 text-ink font-medium"
+                                        />
+                                    </div>
+
+                                    {/* Email Input */}
+                                    <div className="col-span-4">
+                                        <input
+                                            type="text" 
+                                            value={rule.emails} 
+                                            onChange={e => updateRule(rule.id, 'emails', e.target.value)}
+                                            placeholder="e.g. alerts@team.com" 
+                                            className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:border-brand focus:ring-1 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 text-ink"
+                                        />
+                                    </div>
+
+                                    {/* Actions */}
+                                    <div className="col-span-1 flex justify-end">
+                                        <button 
+                                            onClick={() => removeRule(rule.id)} 
+                                            className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                                            title="Remove rule"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+            
+            {rules.length > 0 && (
+                <div className="flex items-start gap-3 p-4 bg-brand-tint/20 border border-brand/20 rounded-xl mt-2">
+                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
+                        <Bot size={16} className="text-brand" />
+                    </div>
+                    <div>
+                        <h4 className="text-sm font-bold text-ink">AI-Powered Routing</h4>
+                        <p className="text-xs text-slate-600 font-medium mt-0.5 leading-relaxed">
+                            Foresight AI will automatically interpret these patterns to tag and notify the appropriate teams during an incident. The system falls back to default routing if no patterns match.
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
@@ -404,9 +487,16 @@ export default function SettingsPage() {
 
     return (
         <div className="h-full bg-card flex flex-col">
-            <div className="border-b border-line px-6 py-4 flex items-center gap-2">
-                <Settings2 size={18} className="text-brand" />
-                <h1 className="text-base font-bold text-ink">Settings</h1>
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line p-4 lg:p-6 shrink-0">
+                <div>
+                    <div className="flex items-center gap-2.5">
+                        <Settings size={20} className="text-brand" />
+                        <h1 className="text-xl font-semibold tracking-tight text-ink">Settings</h1>
+                    </div>
+                    <p className="mt-0.5 text-sm text-ink-soft">
+                        Manage workspace configurations, AI automations, and escalation routing
+                    </p>
+                </div>
             </div>
 
             <div className="flex flex-1 overflow-hidden">
@@ -416,12 +506,12 @@ export default function SettingsPage() {
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${activeTab === tab.id
-                                    ? 'bg-brand-tint text-brand'
-                                    : 'text-slate-600 hover:bg-[#e6f4ea] hover:text-ink'
+                            className={`group flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${activeTab === tab.id
+                                    ? 'bg-black text-white'
+                                    : 'text-slate-600 hover:bg-black hover:text-white'
                                 }`}
                         >
-                            <tab.icon size={14} className={activeTab === tab.id ? 'text-brand' : 'text-slate-400'} />
+                            <tab.icon size={14} className={activeTab === tab.id ? 'text-white' : 'text-slate-400 group-hover:text-white transition-colors'} />
                             {tab.label}
                         </button>
                     ))}

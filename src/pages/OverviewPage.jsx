@@ -1,4 +1,4 @@
-import { Activity, Gauge, AlertTriangle, ShieldCheck } from 'lucide-react'
+import { Activity, Gauge, AlertTriangle, ShieldCheck, LayoutGrid } from 'lucide-react'
 import { useLiveDashboard } from '../hooks/useLiveDashboard'
 import { formatCompact, clockLabel } from '../components/overview/chartUtils'
 import LiveBadge from '../components/servicemap/LiveBadge'
@@ -25,15 +25,16 @@ export default function OverviewPage() {
 
   return (
     <div className="h-full overflow-y-auto animate-slide-fade">
-      <div className="mx-auto flex max-w-[1600px] flex-col gap-6 pb-8">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 p-4 lg:p-6">
         {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 pb-2 border-b border-slate-100">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold tracking-tight text-slate-800">Overview</h1>
+            <div className="flex items-center gap-2.5">
+              <LayoutGrid size={20} className="text-brand" />
+              <h1 className="text-xl font-semibold tracking-tight text-ink">Overview</h1>
               <LiveBadge />
             </div>
-            <p className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs font-semibold text-slate-500">
+            <p className="mt-0.5 flex flex-wrap items-center gap-1.5 text-sm text-ink-soft">
               <span>Real-time infrastructure &amp; service health</span>
               <span className="text-slate-300">•</span>
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/50 bg-white/60 px-2 py-0.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">

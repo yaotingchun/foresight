@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Activity, X } from 'lucide-react'
+import { Activity, X, Logs } from 'lucide-react'
 import { SERVICES } from '../data/logsData'
 import { useLogsStream }  from '../hooks/useLogsStream'
 import LogChart   from '../components/logs/LogChart'
@@ -91,10 +91,23 @@ export default function LogsPage() {
   }, [chartLogs, bucketWindow])
 
   return (
-    <div className="flex flex-col gap-3 pb-6">
+    <div className="h-full overflow-y-auto">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 p-4 lg:p-6">
+        {/* ── Page Header ─────────────────────────────────────────────────── */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <Logs size={20} className="text-brand" />
+              <h1 className="text-xl font-semibold tracking-tight text-ink">Logs</h1>
+            </div>
+            <p className="mt-0.5 text-sm text-ink-soft">
+              Real-time log stream · Centralized system events
+            </p>
+          </div>
+        </div>
 
-      {/* ── Filter bar ──────────────────────────────────────────────────────── */}
-      <div className="bg-card border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        {/* ── Filter bar ──────────────────────────────────────────────────────── */}
+        <div className="bg-card border border-slate-200 rounded-2xl px-3 py-2 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <LogFilters
           rangeMs={rangeMs}
           onRangeChange={handleRangeChange}
@@ -150,6 +163,7 @@ export default function LogsPage() {
       <div className="bg-card border border-slate-200 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
         <LogTable logs={tableFiltered} newIds={newIds} />
       </div>
+    </div>
     </div>
   )
 }

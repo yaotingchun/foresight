@@ -38,7 +38,7 @@ function MultiSelectDropdown({ label, options, selected, onToggle, colorDot }) {
         onClick={() => setOpen((v) => !v)}
         className={`flex items-center gap-1.5 h-8 px-2.5 rounded-lg border text-xs font-medium transition-all
           ${open
-            ? 'border-brand bg-brand-tint/30 text-brand'
+            ? 'border-brand bg-[#fafcfa] text-black'
             : 'border-slate-200 bg-card text-ink-soft hover:border-ink-faint hover:text-ink'
           }`}
       >
@@ -73,7 +73,7 @@ function MultiSelectDropdown({ label, options, selected, onToggle, colorDot }) {
                   key={opt.value}
                   onClick={() => onToggle(opt.value)}
                   className={`w-full flex items-center gap-2.5 px-3 py-1.5 text-xs transition-colors
-                    ${isSelected ? 'bg-brand-tint/30 text-brand' : 'text-ink hover:bg-muted'}`}
+                    ${isSelected ? 'bg-[#fafcfa] text-black font-medium' : 'text-ink hover:bg-muted'}`}
                 >
                   {colorDot && (
                     <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${opt.dot ?? 'bg-ink-faint'}`} />
