@@ -343,7 +343,7 @@ export default function PredictionPage() {
           </button>
 
           {summaryOpen && (
-            <div className="border-t border-slate-100 px-5 py-4 bg-[#f8fdf9]">
+            <div className="border-t border-slate-100 px-5 py-4 bg-white">
               {summaryLoading ? (
                 <div className="flex items-center gap-2.5 text-ink-soft">
                   <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-brand border-t-transparent" />

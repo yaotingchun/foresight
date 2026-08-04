@@ -411,7 +411,7 @@ export default function SettingsPage() {
 
             <div className="flex flex-1 overflow-hidden">
                 {/* Sidebar */}
-                <div className="w-56 border-r border-slate-200 bg-[#f8fdf9] p-4 flex flex-col gap-1 shrink-0">
+                <div className="w-56 border-r border-slate-200 bg-white p-4 flex flex-col gap-1 shrink-0">
                     {tabs.map(tab => (
                         <button
                             key={tab.id}

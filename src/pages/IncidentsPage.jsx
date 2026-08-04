@@ -50,8 +50,8 @@ export default function IncidentsPage() {
           <button
             type="button"
             onClick={openDrawer}
-            className="flex items-center gap-1.5 rounded-lg border border-brand-hover/30 bg-brand-tint px-3 py-1.5
-                       text-xs font-semibold text-brand transition-colors hover:bg-brand-tint/80"
+            className="flex items-center gap-1.5 rounded-lg border border-slate-900 bg-slate-900 px-3 py-1.5
+                       text-xs font-semibold text-white shadow-sm transition-all duration-200 hover:bg-black hover:border-black cursor-pointer"
           >
             <Zap size={13} />
             Simulate Event

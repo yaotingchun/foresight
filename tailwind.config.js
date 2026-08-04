@@ -16,9 +16,9 @@ export default {
         'brand-dark': '#065f46',
         'brand-tint': '#1cb07a57',
         'brand-hover': '#1cb07a60',
-        page: '#ECFDF5',
-        card: '#fafcfa',
-        muted: '#E6F8F2',
+        page: '#FFFFFF',
+        card: '#FFFFFF',
+        muted: '#F8FAFC',
         line: {
           DEFAULT: '#E5E7EB',
           subtle: '#F1F5F9',

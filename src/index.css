@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-page font-sans text-ink antialiased;
+    @apply bg-white font-sans text-ink antialiased;
     margin: 0;
   }
 }

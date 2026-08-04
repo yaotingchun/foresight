@@ -6,11 +6,11 @@ import Chatbot from './Chatbot'
 
 export default function AppLayout() {
   return (
-    <div className="flex h-screen overflow-hidden bg-page">
+    <div className="flex h-screen overflow-hidden bg-white">
       <Sidebar />
-      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden bg-white">
         <TopBar />
-        <main className="flex flex-col flex-1 min-w-0 overflow-y-auto p-6 lg:p-8">
+        <main className="flex flex-col flex-1 min-w-0 overflow-y-auto p-6 lg:p-8 bg-white">
           <Outlet />
         </main>
       </div>
