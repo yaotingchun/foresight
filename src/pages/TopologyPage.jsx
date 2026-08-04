@@ -132,6 +132,8 @@ export default function TopologyPage() {
       {/* Interactive Service Map Panel */}
       <div className="flex-1 min-w-0 flex flex-col h-full bg-card border border-line rounded-card shadow-card p-5">
         <ServiceMapPanel 
+          sidebarOpen={sidebarOpen}
+          appliedUpgrades={appliedUpgrades}
           headerActions={
             !sidebarOpen && (
               <button 

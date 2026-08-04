@@ -2,18 +2,18 @@ import { LEGEND_ITEMS, statusOf } from './statusColors'
 
 export default function ServiceMapLegend() {
   return (
-    <div className="pointer-events-auto absolute bottom-4 left-4 z-30 rounded-xl border border-line bg-white/85 px-4 py-3 shadow-card backdrop-blur">
-      <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-ink-faint">
-        Service Health
+    <div className="flex items-center gap-3 rounded-lg border border-line bg-muted/40 px-2.5 py-1 select-none">
+      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+        Status:
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-row items-center gap-3">
         {LEGEND_ITEMS.map(({ health, label }) => (
-          <div key={health} className="flex items-center gap-2.5">
+          <div key={health} className="flex items-center gap-1.5">
             <span
-              className="h-2.5 w-2.5 rounded-full"
+              className="h-2 w-2 rounded-full"
               style={{ backgroundColor: statusOf(health).color }}
             />
-            <span className="text-[12px] font-medium text-ink-soft">{label}</span>
+            <span className="text-[11px] font-bold text-slate-500">{label}</span>
           </div>
         ))}
       </div>

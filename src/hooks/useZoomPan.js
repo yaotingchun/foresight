@@ -85,11 +85,14 @@ export function useZoomPan(canvas, { padding = 28 } = {}) {
     return () => el.removeEventListener('wheel', onWheel)
   }, [onWheel])
 
+  const hasDragged = useRef(false)
+
   const onPointerDown = useCallback(
     (e) => {
       if (e.target.closest('[data-node]') || e.target.closest('button')) return
       setAnimated(false)
-      drag.current = { px: e.clientX, py: e.clientY }
+      drag.current = { px: e.clientX, py: e.clientY, startX: e.clientX, startY: e.clientY }
+      hasDragged.current = false
       e.currentTarget.setPointerCapture?.(e.pointerId)
     },
     [],
@@ -99,7 +102,15 @@ export function useZoomPan(canvas, { padding = 28 } = {}) {
     if (!drag.current) return
     const dx = e.clientX - drag.current.px
     const dy = e.clientY - drag.current.py
-    drag.current = { px: e.clientX, py: e.clientY }
+    
+    // Set hasDragged true if pointer moved more than 5px
+    const dist = Math.hypot(e.clientX - drag.current.startX, e.clientY - drag.current.startY)
+    if (dist > 5) {
+      hasDragged.current = true
+    }
+
+    drag.current.px = e.clientX
+    drag.current.py = e.clientY
     setTransform((t) => ({ ...t, x: t.x + dx, y: t.y + dy }))
   }, [])
 
@@ -114,9 +125,23 @@ export function useZoomPan(canvas, { padding = 28 } = {}) {
     fit()
   }, [fit])
 
+  const zoomTo = useCallback((cx, cy, targetScale, viewportCenterX) => {
+    const el = viewportRef.current
+    if (!el) return
+    const { width, height } = el.getBoundingClientRect()
+    setAnimated(true)
+    const clamped = Math.max(MIN_SCALE, Math.min(MAX_SCALE, targetScale))
+    const targetX = viewportCenterX !== undefined ? viewportCenterX : width / 2
+    setTransform({
+      scale: clamped,
+      x: targetX - cx * clamped,
+      y: height / 2 - cy * clamped,
+    })
+  }, [])
+
   const controls = useMemo(
-    () => ({ zoomIn, zoomOut, fit: fitAnimated }),
-    [zoomIn, zoomOut, fitAnimated],
+    () => ({ zoomIn, zoomOut, fit: fitAnimated, zoomTo }),
+    [zoomIn, zoomOut, fitAnimated, zoomTo],
   )
 
   const handlers = useMemo(
@@ -124,5 +149,5 @@ export function useZoomPan(canvas, { padding = 28 } = {}) {
     [onPointerDown, onPointerMove, onPointerUp],
   )
 
-  return { viewportRef, transform, animated, handlers, controls }
+  return { viewportRef, transform, animated, handlers, controls, hasDragged }
 }

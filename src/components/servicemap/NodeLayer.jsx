@@ -1,7 +1,7 @@
 import ServiceNode from './ServiceNode'
 
 /** Absolutely-positioned HTML node layer, sitting on top of the edge SVG. */
-export default function NodeLayer({ nodes, nodeState, focusId, selectedId, onHover, onSelect }) {
+export default function NodeLayer({ nodes, nodeState, focusId, selectedId, onHover, onSelect, sidebarOpen, appliedUpgrades }) {
   return (
     <div className="absolute inset-0">
       {nodes.map((node) => (
@@ -13,6 +13,8 @@ export default function NodeLayer({ nodes, nodeState, focusId, selectedId, onHov
           selected={node.id === selectedId}
           onHover={onHover}
           onSelect={onSelect}
+          sidebarOpen={sidebarOpen}
+          appliedUpgrades={appliedUpgrades}
         />
       ))}
     </div>

@@ -5,13 +5,19 @@ import { statusOf } from './statusColors'
  * icons stay crisp and hover states are trivial. `state` is
  * 'active' | 'dim' | 'normal'; `primary` marks the hovered/selected focus node.
  */
-export default function ServiceNode({ node, state, primary, selected, onHover, onSelect }) {
+export default function ServiceNode({ node, state, primary, selected, onHover, onSelect, sidebarOpen, appliedUpgrades }) {
   const { icon: Icon, r, x, y, health, label, kind } = node
   const status = statusOf(health)
   const size = r * 2
 
   const dim = state === 'dim'
   const emphasized = primary || selected
+
+  const isBottleneck = sidebarOpen && health !== 'healthy'
+  const isSPOF = sidebarOpen && !isBottleneck && (
+    (node.id === 'auth-service' && !appliedUpgrades?.authReplicas) ||
+    (node.id === 'primary-db' && !appliedUpgrades?.dbReplicas)
+  )
 
   return (
     <div
@@ -46,6 +52,32 @@ export default function ServiceNode({ node, state, primary, selected, onHover, o
           transition: 'box-shadow 200ms ease',
         }}
       >
+        {isBottleneck && (
+          <div
+            className="absolute rounded-full bg-red-500/25 animate-pulse pointer-events-none"
+            style={{
+              width: size + 16,
+              height: size + 16,
+              left: -8,
+              top: -8,
+              boxShadow: '0 0 16px 8px rgba(239, 68, 68, 0.45)',
+              zIndex: -1,
+            }}
+          />
+        )}
+        {isSPOF && (
+          <div
+            className="absolute rounded-full bg-amber-500/20 animate-pulse pointer-events-none"
+            style={{
+              width: size + 16,
+              height: size + 16,
+              left: -8,
+              top: -8,
+              boxShadow: '0 0 14px 6px rgba(245, 158, 11, 0.35)',
+              zIndex: -1,
+            }}
+          />
+        )}
         <Icon size={r * 0.82} strokeWidth={1.75} style={{ color: status.color }} />
         <span
           className="absolute right-0 top-0 block rounded-full ring-2 ring-white"
