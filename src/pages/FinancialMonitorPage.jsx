@@ -121,13 +121,13 @@ export default function FinancialMonitorPage() {
 
   return (
     <div className="h-full overflow-y-auto">
-      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 pb-6">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-4 p-4 lg:p-6">
 
         {/* ── Header ──────────────────────────────────────────────────────────── */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2.5">
-              <CircleDollarSign size={20} className="text-emerald-600" />
+              <CircleDollarSign size={20} className="text-brand" />
               <h1 className="text-xl font-semibold tracking-tight text-ink">Financial Monitor</h1>
               <LiveBadge />
             </div>

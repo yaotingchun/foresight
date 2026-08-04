@@ -6,7 +6,7 @@ import LiveBadge from '../components/servicemap/LiveBadge'
 import ServiceMapToolbar from '../components/servicemap/ServiceMapToolbar'
 import {
   Sparkles, TrendingUp, ShieldAlert, Cpu, Network, Info, 
-  AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap 
+  AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap, Share2
 } from 'lucide-react'
 
 // Mock SRE telemetry data for 24 hours (12 points, every 2 hours)
@@ -137,12 +137,12 @@ export default function TopologyPage() {
   }, [performanceBottlenecks])
 
   return (
-    <div className="h-full flex flex-col gap-4 min-h-0">
+    <div className="h-full flex flex-col gap-4 min-h-0 p-4 lg:p-6 max-w-[1600px] mx-auto w-full">
       {/* ── Page Header ─────────────────────────────────────────────────── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4 shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-3 shrink-0">
         <div>
           <div className="flex items-center gap-2.5">
-            <Network size={20} className="text-indigo-600" />
+            <Share2 size={20} className="text-brand" />
             <h1 className="text-xl font-semibold tracking-tight text-ink">Topology</h1>
             <LiveBadge />
           </div>
@@ -157,8 +157,8 @@ export default function TopologyPage() {
             onClick={() => setSidebarOpen(prev => !prev)}
             className={`flex h-9 items-center gap-1.5 px-3 py-1.5 rounded-lg border transition-all cursor-pointer text-[12.5px] font-bold ${
               sidebarOpen
-                ? 'bg-indigo-600 border-indigo-600 text-white hover:bg-indigo-700'
-                : 'border-indigo-100 bg-indigo-50 text-indigo-600 hover:bg-indigo-100/80'
+                ? 'bg-[#047857] border-[#047857] text-white'
+                : 'border-brand/20 bg-brand-tint text-brand-dark hover:bg-brand-hover'
             }`}
           >
             <Sparkles size={13} className={`transition-transform duration-300 ${sidebarOpen ? 'scale-110' : 'animate-pulse'}`} />
@@ -183,7 +183,7 @@ export default function TopologyPage() {
         <div className="w-full xl:w-96 shrink-0 flex flex-col h-full bg-card border border-line rounded-card p-5 shadow-card overflow-y-auto animate-slide-in">
           <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
             <div className="flex items-center gap-2">
-              <Sparkles size={18} className="text-violet-600 animate-pulse shrink-0" />
+              <Sparkles size={18} className="text-brand animate-pulse shrink-0" />
               <div>
                 <h2 className="text-[15px] font-bold text-ink">AI SRE Insights</h2>
                 <p className="text-[11px] text-ink-soft">Real-time architecture bottleneck audits</p>
@@ -243,11 +243,11 @@ export default function TopologyPage() {
         </div>
 
         {/* AI summary */}
-        <div className="rounded-xl border border-indigo-100 bg-indigo-50/40 p-4 mb-4 flex gap-3">
-          <Zap size={16} className="text-indigo-600 shrink-0 mt-0.5" />
+        <div className="rounded-xl border border-brand/20 bg-brand-tint p-4 mb-4 flex gap-3">
+          <Zap size={16} className="text-brand shrink-0 mt-0.5" />
           <div className="flex-1">
-            <h3 className="text-xs font-bold text-indigo-900 uppercase tracking-wider">AI SRE Summary</h3>
-            <p className="text-[12px] text-indigo-950/80 leading-relaxed mt-1 font-medium">
+            <h3 className="text-xs font-bold text-brand-dark uppercase tracking-wider">AI SRE Summary</h3>
+            <p className="text-[12px] text-brand-dark/80 leading-relaxed mt-1 font-medium">
               {aiSummaryText}
             </p>
           </div>
@@ -308,8 +308,8 @@ export default function TopologyPage() {
           </h3>
 
           {/* SPOF 1: Auth Service */}
-          <div className={`flex items-start gap-3 rounded-xl border p-3.5 hover:border-indigo-100 transition-colors ${appliedUpgrades.authReplicas ? 'bg-emerald-50/20 border-emerald-200' : 'bg-card border-line'}`}>
-            <ShieldCheck size={16} className={appliedUpgrades.authReplicas ? 'text-emerald-600 shrink-0 mt-0.5' : 'text-indigo-600 shrink-0 mt-0.5'} />
+          <div className={`flex items-start gap-3 rounded-xl border p-3.5 hover:border-brand/30 transition-colors ${appliedUpgrades.authReplicas ? 'bg-emerald-50/20 border-emerald-200' : 'bg-card border-line'}`}>
+            <ShieldCheck size={16} className={appliedUpgrades.authReplicas ? 'text-emerald-600 shrink-0 mt-0.5' : 'text-brand shrink-0 mt-0.5'} />
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[12.5px] font-bold text-ink">auth-service</span>
@@ -326,8 +326,8 @@ export default function TopologyPage() {
           </div>
 
           {/* SPOF 2: Primary DB */}
-          <div className={`flex items-start gap-3 rounded-xl border p-3.5 hover:border-indigo-100 transition-colors ${appliedUpgrades.dbReplicas ? 'bg-emerald-50/20 border-emerald-200' : 'bg-card border-line'}`}>
-            <Database size={16} className={appliedUpgrades.dbReplicas ? 'text-emerald-600 shrink-0 mt-0.5' : 'text-teal-600 shrink-0 mt-0.5'} />
+          <div className={`flex items-start gap-3 rounded-xl border p-3.5 hover:border-brand/30 transition-colors ${appliedUpgrades.dbReplicas ? 'bg-emerald-50/20 border-emerald-200' : 'bg-card border-line'}`}>
+            <Database size={16} className={appliedUpgrades.dbReplicas ? 'text-emerald-600 shrink-0 mt-0.5' : 'text-brand shrink-0 mt-0.5'} />
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[12.5px] font-bold text-ink">primary-db</span>
@@ -347,7 +347,7 @@ export default function TopologyPage() {
         {/* Deep Dive Action Button */}
         <button
           onClick={() => setShowDeepDive(true)}
-          className="w-full mt-6 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 px-4 py-3 text-[13px] font-bold text-white shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer shrink-0"
+          className="w-full mt-6 flex items-center justify-center gap-2 rounded-xl bg-brand hover:bg-brand-dark px-4 py-3 text-[13px] font-bold text-white shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer shrink-0"
         >
           <Sparkles size={14} className="text-white/90" />
           See Details & Trends
