@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 import ServiceMapPanel from '../components/ServiceMapPanel'
 import { useSimulatedNodes } from '../hooks/useSimulatedNodes'
 import { useSimulation } from '../context/SimulationContext'
@@ -6,7 +8,7 @@ import LiveBadge from '../components/servicemap/LiveBadge'
 import ServiceMapToolbar from '../components/servicemap/ServiceMapToolbar'
 import {
   Sparkles, TrendingUp, ShieldAlert, Cpu, Network, Info, 
-  AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap 
+  AlertTriangle, CheckCircle2, Database, ShieldCheck, X, Zap, Ticket 
 } from 'lucide-react'
 
 // Mock SRE telemetry data for 24 hours (12 points, every 2 hours)
@@ -46,6 +48,67 @@ export default function TopologyPage() {
     dbReplicas: false,
     paymentCircuitBreaker: false
   })
+  const [createdTickets, setCreatedTickets] = useState(() => {
+    try {
+      const saved = localStorage.getItem('sre_created_tickets')
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        // Reset dbReplicas and paymentCircuitBreaker to false as requested
+        const resetObj = { ...parsed, dbReplicas: false, paymentCircuitBreaker: false }
+        localStorage.setItem('sre_created_tickets', JSON.stringify(resetObj))
+        return resetObj
+      }
+    } catch (e) {
+      console.error(e)
+    }
+    const defaultObj = { authReplicas: true, dbReplicas: false, paymentCircuitBreaker: false }
+    try {
+      localStorage.setItem('sre_created_tickets', JSON.stringify(defaultObj))
+    } catch {}
+    return defaultObj
+  })
+
+  const handleCreateTicket = (key) => {
+    setCreatedTickets((prev) => {
+      const updated = { ...prev, [key]: true }
+      try {
+        localStorage.setItem('sre_created_tickets', JSON.stringify(updated))
+      } catch (e) {
+        console.error(e)
+      }
+      return updated
+    })
+
+    Swal.fire({
+      title: 'Ticket Created Successfully!',
+      text: 'Your optimization request has been logged for the SRE Infrastructure team.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#059669', // Emerald green system theme
+      customClass: {
+        popup: 'rounded-2xl shadow-xl border border-slate-100 font-sans',
+        title: 'text-[18px] font-bold text-slate-800',
+        confirmButton: 'rounded-xl px-6 py-2.5 font-bold text-[13px] text-white cursor-pointer shadow-md',
+      }
+    })
+  }
+
+  const handleResetTicket = (key) => {
+    setCreatedTickets((prev) => {
+      const updated = { ...prev, [key]: false }
+      try {
+        localStorage.setItem('sre_created_tickets', JSON.stringify(updated))
+      } catch (e) {
+        console.error(e)
+      }
+      return updated
+    })
+  }
+
+
+
+
+
 
   // Dynamic scenario-aware AI summary text
   const aiSummaryText = useMemo(() => {
@@ -597,68 +660,109 @@ export default function TopologyPage() {
               <h4 className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Architectural Optimization Checklist</h4>
               <div className="flex flex-col gap-2 border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-100">
                 
-                {/* Checkbox item 1 */}
-                <div className={`flex items-center justify-between p-3.5 transition-all duration-300 ${appliedUpgrades.authReplicas ? 'bg-emerald-50/35 text-slate-800' : 'bg-white text-slate-800'}`}>
-                  <div className="flex items-start gap-3">
-                    <input 
-                      type="checkbox" 
-                      id="opt-auth"
-                      checked={appliedUpgrades.authReplicas}
-                      onChange={(e) => setAppliedUpgrades(prev => ({ ...prev, authReplicas: e.target.checked }))}
-                      className="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer accent-indigo-600"
-                    />
-                    <label htmlFor="opt-auth" className="cursor-pointer select-none">
-                      <p className={`text-[12.5px] font-bold transition-all ${appliedUpgrades.authReplicas ? 'text-emerald-800 line-through decoration-emerald-500/50' : 'text-slate-800'}`}>Deploy Auth Service Read Replicas (x3)</p>
-                      <p className="text-[11px] text-slate-500">Deploy additional auth-service instances behind a load-balancer.</p>
-                    </label>
+                {/* Item 1 */}
+                <div className={`flex flex-wrap items-center justify-between gap-3 p-3.5 transition-all duration-300 ${appliedUpgrades.authReplicas ? 'bg-emerald-50/35 text-slate-800' : 'bg-white text-slate-800'}`}>
+                  <div className="flex flex-col min-w-[280px] flex-1">
+                    <p className="text-[12.5px] font-bold text-slate-800">Deploy Auth Service Read Replicas (x3)</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Deploy additional auth-service instances behind a load-balancer.</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200">Impact: High</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 3 days</span>
+                    {createdTickets.authReplicas ? (
+                      <button
+                        type="button"
+                        onClick={() => handleResetTicket('authReplicas')}
+                        title="Click to reset ticket status"
+                        className="flex items-center gap-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-700 font-bold text-[11px] px-3 py-1.5 shadow-xs shrink-0 ml-1 cursor-pointer transition-all active:scale-95 group"
+                      >
+                        <CheckCircle2 size={13} className="text-emerald-600 group-hover:hidden" />
+                        <X size={13} className="text-emerald-600 hidden group-hover:inline" />
+                        <span>Ticket Created</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleCreateTicket('authReplicas')}
+                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
+                      >
+                        <Ticket size={12} />
+                        Create Ticket
+                      </button>
+                    )}
                   </div>
                 </div>
 
-                {/* Checkbox item 2 */}
-                <div className={`flex items-center justify-between p-3.5 transition-all duration-300 ${appliedUpgrades.dbReplicas ? 'bg-emerald-50/35 text-slate-800' : 'bg-white text-slate-800'}`}>
-                  <div className="flex items-start gap-3">
-                    <input 
-                      type="checkbox" 
-                      id="opt-db"
-                      checked={appliedUpgrades.dbReplicas}
-                      onChange={(e) => setAppliedUpgrades(prev => ({ ...prev, dbReplicas: e.target.checked }))}
-                      className="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer accent-indigo-600"
-                    />
-                    <label htmlFor="opt-db" className="cursor-pointer select-none">
-                      <p className={`text-[12.5px] font-bold transition-all ${appliedUpgrades.dbReplicas ? 'text-emerald-800 line-through decoration-emerald-500/50' : 'text-slate-800'}`}>Implement DB Read Replica Pool</p>
-                      <p className="text-[11px] text-slate-500">Route inventory read inquiries onto dedicated read-replica instances.</p>
-                    </label>
+                {/* Item 2 */}
+                <div className={`flex flex-wrap items-center justify-between gap-3 p-3.5 transition-all duration-300 ${appliedUpgrades.dbReplicas ? 'bg-emerald-50/35 text-slate-800' : 'bg-white text-slate-800'}`}>
+                  <div className="flex flex-col min-w-[280px] flex-1">
+                    <p className="text-[12.5px] font-bold text-slate-800">Implement DB Read Replica Pool</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Route inventory read inquiries onto dedicated read-replica instances.</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200">Impact: Critical</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 2 weeks</span>
+                    {createdTickets.dbReplicas ? (
+                      <button
+                        type="button"
+                        onClick={() => handleResetTicket('dbReplicas')}
+                        title="Click to reset ticket status"
+                        className="flex items-center gap-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-700 font-bold text-[11px] px-3 py-1.5 shadow-xs shrink-0 ml-1 cursor-pointer transition-all active:scale-95 group"
+                      >
+                        <CheckCircle2 size={13} className="text-emerald-600 group-hover:hidden" />
+                        <X size={13} className="text-emerald-600 hidden group-hover:inline" />
+                        <span>Ticket Created</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleCreateTicket('dbReplicas')}
+                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
+                      >
+                        <Ticket size={12} />
+                        Create Ticket
+                      </button>
+                    )}
                   </div>
                 </div>
 
-                {/* Checkbox item 3 */}
-                <div className={`flex items-center justify-between p-3.5 transition-all duration-300 ${appliedUpgrades.paymentCircuitBreaker ? 'bg-emerald-50/35 text-slate-800' : 'bg-white text-slate-800'}`}>
-                  <div className="flex items-start gap-3">
-                    <input 
-                      type="checkbox" 
-                      id="opt-circuit"
-                      checked={appliedUpgrades.paymentCircuitBreaker}
-                      onChange={(e) => setAppliedUpgrades(prev => ({ ...prev, paymentCircuitBreaker: e.target.checked }))}
-                      className="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer accent-indigo-600"
-                    />
-                    <label htmlFor="opt-circuit" className="cursor-pointer select-none">
-                      <p className={`text-[12.5px] font-bold transition-all ${appliedUpgrades.paymentCircuitBreaker ? 'text-emerald-800 line-through decoration-emerald-500/50' : 'text-slate-800'}`}>Configure Circuit Breaker for Payment Gateway</p>
-                      <p className="text-[11px] text-slate-500">Block downstream connections to payment-gateway if failure rate exceeds 20%.</p>
-                    </label>
+                {/* Item 3 */}
+                <div className={`flex flex-wrap items-center justify-between gap-3 p-3.5 transition-all duration-300 ${appliedUpgrades.paymentCircuitBreaker ? 'bg-emerald-50/35 text-slate-800' : 'bg-white text-slate-800'}`}>
+                  <div className="flex flex-col min-w-[280px] flex-1">
+                    <p className="text-[12.5px] font-bold text-slate-800">Configure Circuit Breaker for Payment Gateway</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Block downstream connections to payment-gateway if failure rate exceeds 20%.</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 px-2 py-0.5 rounded border border-amber-200">Impact: Medium</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">Effort: 1 day</span>
+                    {createdTickets.paymentCircuitBreaker ? (
+                      <button
+                        type="button"
+                        onClick={() => handleResetTicket('paymentCircuitBreaker')}
+                        title="Click to reset ticket status"
+                        className="flex items-center gap-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-700 font-bold text-[11px] px-3 py-1.5 shadow-xs shrink-0 ml-1 cursor-pointer transition-all active:scale-95 group"
+                      >
+                        <CheckCircle2 size={13} className="text-emerald-600 group-hover:hidden" />
+                        <X size={13} className="text-emerald-600 hidden group-hover:inline" />
+                        <span>Ticket Created</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleCreateTicket('paymentCircuitBreaker')}
+                        className="flex items-center gap-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] px-3 py-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer shrink-0 ml-1"
+                      >
+                        <Ticket size={12} />
+                        Create Ticket
+                      </button>
+                    )}
                   </div>
                 </div>
+
+
+
+
+
 
               </div>
             </div>
