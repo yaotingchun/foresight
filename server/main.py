@@ -104,13 +104,48 @@ async def forecast_metrics(component: str, metric: str = "cpu_pct", hours: int =
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class ForecastSummaryOverrideRequest(BaseModel):
+    component: str
+    risk_level: Optional[str] = None
+    top_metric: Optional[str] = None
+    anomaly_count: Optional[int] = None
+    current_metrics: Optional[dict] = None
+
 @app.get("/api/forecast/summary")
-async def forecast_summary(component: str):
+async def forecast_summary(
+    component: str,
+    risk_level: Optional[str] = None,
+    top_metric: Optional[str] = None,
+    anomaly_count: Optional[int] = None
+):
     from server.services.forecast_service import get_forecast_summary
     try:
         data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
-        text = get_forecast_summary(data_dir, component)
-        return {"summary": text}
+        overrides = {}
+        if risk_level:
+            overrides["risk_level"] = risk_level
+        if top_metric:
+            overrides["top_metric"] = top_metric
+        if anomaly_count is not None:
+            overrides["anomaly_count"] = anomaly_count
+        result = get_forecast_summary(data_dir, component, overrides=overrides)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/forecast/summary")
+async def forecast_summary_post(req: ForecastSummaryOverrideRequest):
+    from server.services.forecast_service import get_forecast_summary
+    try:
+        data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+        overrides = {
+            "risk_level": req.risk_level,
+            "top_metric": req.top_metric,
+            "anomaly_count": req.anomaly_count,
+            "current_metrics": req.current_metrics,
+        }
+        result = get_forecast_summary(data_dir, req.component, overrides=overrides)
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

@@ -285,10 +285,10 @@ export function SimulationProvider({ children }) {
         return liveType === 'requires_approval'
       })
 
-      // Check if the first step is automated
+      // Check if the first step is automated (EXCLUDE db-connection-pool-exhaustion so it retains full 85s hold)
       const firstStep = data.remediationPlan?.[0]
       let isFirstAutomated = false
-      if (firstStep) {
+      if (firstStep && scenario.id !== 'db-connection-pool-exhaustion') {
         const mockConfidence = 95
         let liveType = 'requires_approval'
         if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
@@ -298,6 +298,7 @@ export function SimulationProvider({ children }) {
           isFirstAutomated = true
         }
       }
+
 
       if (isFirstAutomated) {
         const now = Date.now()
@@ -344,15 +345,27 @@ export function SimulationProvider({ children }) {
         })
 
       } else {
-        setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false, hasApprovalSteps: hasApproval } : p))
+        const isConnPool = scenario.id === 'db-connection-pool-exhaustion'
+        setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, aiAnalysis: data, isAnalyzing: false, hasApprovalSteps: isConnPool ? true : hasApproval } : p))
       }
+
     }).catch(err => {
       setIncidents(prev => prev.map(p => p.id === record.id ? { ...p, analysisError: err.message, isAnalyzing: false, hasApprovalSteps: false } : p))
     })
   }, [businessContext, experienceLogs, riskTiers])
 
+  const [recentlyResolved, setRecentlyResolved] = useState(null)
+
   const stopScenario = useCallback(() => {
     const incidentId = activeIncidentIdRef.current
+    if (activeRun?.stages?.length > 0) {
+      const comp = activeRun.stages[0].component
+      setRecentlyResolved({
+        component: comp,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        timestamp: Date.now(),
+      })
+    }
     if (incidentId) {
       setIncidents((prev) => prev.map((inc) => (
         inc.id === incidentId ? { ...inc, frozenStatus: 'resolved', stoppedEarly: true } : inc
@@ -360,7 +373,7 @@ export function SimulationProvider({ children }) {
     }
     activeIncidentIdRef.current = null
     setActiveRun(null)
-  }, [])
+  }, [activeRun])
 
   const approveRemediationStep = useCallback((incidentId, stepIndex) => {
     // 1. Mark this step as approved
@@ -475,6 +488,7 @@ export function SimulationProvider({ children }) {
     accumulatedLogs,
     txEvents,
     incidents,
+    recentlyResolved,
     isDrawerOpen,
     startScenario,
     stopScenario,
@@ -483,7 +497,7 @@ export function SimulationProvider({ children }) {
     toggleDrawer,
     approveRemediationStep,
     rejectRemediationStep,
-  }), [activeRun, componentEffects, logEvents, accumulatedLogs, txEvents, incidents, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer, approveRemediationStep, rejectRemediationStep])
+  }), [activeRun, componentEffects, logEvents, accumulatedLogs, txEvents, incidents, recentlyResolved, isDrawerOpen, startScenario, stopScenario, openDrawer, closeDrawer, toggleDrawer, approveRemediationStep, rejectRemediationStep])
 
   return <SimulationContext.Provider value={value}>{children}</SimulationContext.Provider>
 }

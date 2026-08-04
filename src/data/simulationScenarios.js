@@ -182,9 +182,9 @@ export const FAULT_ANALYSIS = {
 }
 
 // ─── Default stage timing (compressed for a watchable demo) ────────────────
-export const DEFAULT_RAMP_MS = 6000
-export const DEFAULT_HOLD_MS = 10000
-export const DEFAULT_RESOLVE_MS = 6000
+export const DEFAULT_RAMP_MS = 5000
+export const DEFAULT_HOLD_MS = 85000
+export const DEFAULT_RESOLVE_MS = 10000
 
 export const SCENARIOS = [
   {
