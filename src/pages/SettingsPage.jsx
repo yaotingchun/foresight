@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 import { useSettings } from '../context/SettingsContext'
 import {
     Settings, Settings2, SlidersHorizontal, Share2,
     BellRing, Activity, Terminal, CreditCard,
     Network, Shield, Bot, Plus, Trash2,
-    Upload, FileText, BrainCircuit
+    Upload, FileText, BrainCircuit, ChevronDown, ChevronUp, Play
 } from 'lucide-react'
 
 function Toggle({ checked, onChange }) {
@@ -111,7 +113,78 @@ function GeneralSettings({ thresholds, setThresholds }) {
     )
 }
 
-function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowedActions, businessContext, setBusinessContext }) {
+function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowedActions, businessContext, setBusinessContext, policyMcpConfigs = {}, setPolicyMcpConfigs }) {
+    const [expandedPolicies, setExpandedPolicies] = useState({
+        restart_service: false,
+        scale_up: false,
+        block_ip: false,
+        revert_deployment: false,
+        drop_database: false
+    })
+    
+    const [testingKey, setTestingKey] = useState(null)
+
+    const togglePolicyExpanded = (key) => {
+        setExpandedPolicies(prev => ({ ...prev, [key]: !prev[key] }))
+    }
+
+    const handleMcpChange = (key, field, value) => {
+        setPolicyMcpConfigs(prev => ({
+            ...prev,
+            [key]: {
+                ...prev[key],
+                [field]: value
+            }
+        }))
+    }
+
+    const handleTestMcp = (key) => {
+        setTestingKey(key)
+        handleMcpChange(key, 'status', 'testing')
+        
+        setTimeout(() => {
+            const config = policyMcpConfigs[key] || {}
+            const isInvalid = config.transport === 'stdio' ? !config.command : !config.url
+            if (isInvalid) {
+                Swal.fire({
+                    title: 'Connection Failed',
+                    text: `Missing command or endpoint URL for this policy's MCP tool.`,
+                    icon: 'error',
+                    confirmButtonColor: '#4f46e5'
+                })
+                handleMcpChange(key, 'status', 'disconnected')
+                setTestingKey(null)
+                return
+            }
+            
+            let mockTools = config.tools || []
+            if (mockTools.length === 0) {
+                if (key === 'restart_service') mockTools = ['kube:restart-pod', 'kube:get-pod-logs']
+                else if (key === 'scale_up') mockTools = ['aws:scale-asg', 'aws:get-metric']
+                else if (key === 'block_ip') mockTools = ['cloudflare:block-ip', 'cloudflare:get-analytics']
+                else if (key === 'revert_deployment') mockTools = ['github:revert-pr']
+                else mockTools = ['db:failover-primary', 'db:kill-long-queries']
+                handleMcpChange(key, 'tools', mockTools)
+            }
+            
+            Swal.fire({
+                title: 'MCP Connected Successfully',
+                html: `<div style="text-align: left; font-size: 13.5px; font-family: sans-serif;">
+                         <p style="font-weight: 600; margin-bottom: 8px; color: #10b981;">Successfully loaded policy tool signature!</p>
+                         <p style="font-weight: 500; margin-bottom: 4px; color: #475569;">Available Tools:</p>
+                         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px;">
+                           ${mockTools.map(t => `<code style="display: block; margin-bottom: 4px; color: #0f172a; font-family: monospace; font-size: 11.5px;">${t}</code>`).join('')}
+                         </div>
+                       </div>`,
+                icon: 'success',
+                confirmButtonColor: '#10b981'
+            })
+            
+            handleMcpChange(key, 'status', 'connected')
+            setTestingKey(null)
+        }, 1500)
+    }
+
     return (
         <div className="flex flex-col gap-8 animate-slide-fade">
             <div>
@@ -148,30 +221,183 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
 
             <div className="border-t border-line pt-6">
                 <h3 className="text-sm font-bold text-ink mb-1">AI Automation Policies</h3>
-                <p className="text-xs text-slate-500 mb-4">Allow or block AI from performing specific actions.</p>
+                <p className="text-xs text-slate-500 mb-4">Allow or block AI from performing specific actions, and customize their Model Context Protocol (MCP) executor tool.</p>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4">
                     {[
-                        { key: 'restart_service', label: 'Restart Services' },
-                        { key: 'scale_up', label: 'Scale Up Resources' },
-                        { key: 'block_ip', label: 'Block IP Ranges' },
-                        { key: 'revert_deployment', label: 'Revert Deployments' },
-                        { key: 'drop_database', label: 'Drop Database Tables' }
-                    ].map(action => (
-                        <div key={action.key} className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0">
-                            <span className="text-xs font-medium text-ink">{action.label}</span>
-                            <Toggle
-                                checked={allowedActions[action.key]}
-                                onChange={v => setAllowedActions(p => ({ ...p, [action.key]: v }))}
-                            />
-                        </div>
-                    ))}
+                        { key: 'restart_service', label: 'Restart Services', desc: 'Allows AI to rolling-restart pods/services during outages.' },
+                        { key: 'scale_up', label: 'Scale Up Resources', desc: 'Allows AI to increase replicas or provision larger node capacities.' },
+                        { key: 'block_ip', label: 'Block IP Ranges', desc: 'Allows AI to update WAF/CDN rules to mitigate DDoS or anomalous traffic.' },
+                        { key: 'revert_deployment', label: 'Revert Deployments', desc: 'Allows AI to roll back recent bad git deployments.' },
+                        { key: 'drop_database', label: 'Drop Database Tables', desc: 'Allows AI to drop schemas or clean up database records.' }
+                    ].map(action => {
+                        const isAllowed = allowedActions[action.key]
+                        const config = policyMcpConfigs[action.key] || {}
+                        const isExpanded = expandedPolicies[action.key]
+                        
+                        return (
+                            <div key={action.key} className="border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow transition-all bg-white">
+                                {/* Header / Toggle Bar */}
+                                <div className="flex items-center justify-between p-4 bg-slate-50/50">
+                                    <div className="flex flex-col gap-0.5">
+                                        <span className="text-xs font-bold text-ink">{action.label}</span>
+                                        <span className="text-[11px] text-slate-500">{action.desc}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        {isAllowed && (
+                                            <button
+                                                onClick={() => togglePolicyExpanded(action.key)}
+                                                className="text-[10px] font-bold text-indigo-600 hover:text-indigo-850 flex items-center gap-0.5 px-2 py-1 rounded bg-indigo-50 border border-indigo-100 transition-colors"
+                                            >
+                                                <span>Configure MCP</span>
+                                                {isExpanded ? <ChevronUp size={11} /> : <ChevronDown size={11} />}
+                                            </button>
+                                        )}
+                                        <Toggle
+                                            checked={isAllowed}
+                                            onChange={v => {
+                                                setAllowedActions(p => ({ ...p, [action.key]: v }))
+                                                setExpandedPolicies(p => ({ ...p, [action.key]: v }))
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* MCP Sub-Panel */}
+                                {isAllowed && isExpanded && (
+                                    <div className="border-t border-slate-100 p-4 bg-white flex flex-col gap-4 animate-slide-fade">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="flex flex-col gap-1">
+                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Transport Protocol</label>
+                                                <select
+                                                    value={config.transport || 'stdio'}
+                                                    onChange={e => handleMcpChange(action.key, 'transport', e.target.value)}
+                                                    className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none bg-slate-50/50"
+                                                >
+                                                    <option value="stdio">Stdio (Standard I/O Process)</option>
+                                                    <option value="sse">SSE (Server-Sent Events HTTP)</option>
+                                                </select>
+                                            </div>
+
+                                            {config.transport === 'stdio' ? (
+                                                <div className="flex flex-col gap-1">
+                                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Stdio Command</label>
+                                                    <input
+                                                        type="text"
+                                                        value={config.command || ''}
+                                                        onChange={e => handleMcpChange(action.key, 'command', e.target.value)}
+                                                        placeholder="e.g. npx, uvx, python"
+                                                        className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none bg-slate-55/50 font-mono"
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="flex flex-col gap-1">
+                                                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">SSE Endpoint URL</label>
+                                                    <input
+                                                        type="text"
+                                                        value={config.url || ''}
+                                                        onChange={e => handleMcpChange(action.key, 'url', e.target.value)}
+                                                        placeholder="e.g. http://localhost:3000/sse"
+                                                        className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none bg-slate-55/50 font-mono"
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {config.transport === 'stdio' && (
+                                            <div className="flex flex-col gap-1">
+                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Command Arguments</label>
+                                                <input
+                                                    type="text"
+                                                    value={config.args || ''}
+                                                    onChange={e => handleMcpChange(action.key, 'args', e.target.value)}
+                                                    placeholder="e.g. -y @modelcontextprotocol/server-kubernetes restart-pod"
+                                                    className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none bg-slate-55/50 font-mono"
+                                                />
+                                            </div>
+                                        )}
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="flex flex-col gap-1">
+                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Arguments Template (JSON Payload)</label>
+                                                <textarea
+                                                    rows={3}
+                                                    value={config.template || ''}
+                                                    onChange={e => handleMcpChange(action.key, 'template', e.target.value)}
+                                                    placeholder='e.g. {"service": "{{component}}-service"}'
+                                                    className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none bg-slate-55/50 font-mono min-h-[60px]"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col gap-1">
+                                                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Environment Variables (KEY=VALUE)</label>
+                                                <textarea
+                                                    rows={3}
+                                                    value={config.env || ''}
+                                                    onChange={e => handleMcpChange(action.key, 'env', e.target.value)}
+                                                    placeholder="e.g. KUBECONFIG=~/.kube/config&#10;NAMESPACE=prod"
+                                                    className="rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs focus:border-brand focus:outline-none bg-slate-55/50 font-mono min-h-[60px]"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Status and Action Buttons */}
+                                        <div className="flex items-center justify-between border-t border-slate-50 pt-3 mt-1">
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mr-1">Status:</span>
+                                                {config.status === 'testing' ? (
+                                                    <span className="text-[9px] font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded flex items-center gap-1 animate-pulse">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-spin mr-1" />
+                                                        Testing...
+                                                    </span>
+                                                ) : config.status === 'connected' ? (
+                                                    <span className="text-[9px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded flex items-center gap-1">
+                                                        <span className="relative flex h-1.5 w-1.5 mr-1">
+                                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                                                        </span>
+                                                        Connected & Ready
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-[9px] font-semibold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
+                                                        Disconnected
+                                                    </span>
+                                                )}
+                                            </div>
+                                            
+                                            <button
+                                                onClick={() => handleTestMcp(action.key)}
+                                                disabled={config.status === 'testing'}
+                                                className="flex items-center gap-1 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg shadow-sm transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                                            >
+                                                <Play size={11} className={config.status === 'testing' ? 'animate-spin mr-0.5' : 'mr-0.5'} />
+                                                Test MCP Tool
+                                            </button>
+                                        </div>
+
+                                        {/* Exposed Tools Mini List */}
+                                        {config.status === 'connected' && config.tools && config.tools.length > 0 && (
+                                            <div className="mt-2 bg-slate-50 border border-slate-100 rounded-lg p-2.5">
+                                                <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1.5">Connected Exposed Tools</span>
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {config.tools.map(tool => (
+                                                        <code key={tool} className="text-[10px] font-semibold bg-white border border-slate-200 px-1.5 py-0.5 rounded text-indigo-700 font-mono">
+                                                            {tool}
+                                                        </code>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
 
             <div className="border-t border-line pt-6">
                 <h3 className="text-sm font-bold text-ink mb-1">Business Context (RAG)</h3>
-                <p className="text-xs text-slate-500 mb-4">Provide context to the AI for smarter plans.</p>
+                <p className="text-xs text-slate-505 mb-4">Provide context to the AI for smarter plans.</p>
 
                 <div className="flex flex-col gap-4">
                     <label className="border border-dashed border-slate-200 bg-slate-50/50 rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-slate-100/50 hover:border-slate-300 transition-all duration-200">
@@ -218,7 +444,7 @@ function AutomationSettings({ riskTiers, setRiskTiers, allowedActions, setAllowe
                         <div className="flex flex-col gap-1.5 mt-1">
                             <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Indexed Documents</span>
                             {businessContext.uploadedFiles.map((file, idx) => (
-                                <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-slate-50 rounded border border-line">
+                                <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-slate-55 rounded border border-line">
                                     <FileText size={12} className="text-slate-500" />
                                     <span className="text-xs text-ink">{file.name || file}</span>
                                 </div>
@@ -275,8 +501,8 @@ function RoutingSettings({ escalation, setEscalation }) {
                         Configure how alerts and incidents are routed. Map service patterns to specific response teams. Rules are evaluated top-down.
                     </p>
                 </div>
-                <button 
-                    onClick={addRule} 
+                <button
+                    onClick={addRule}
                     className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-black text-white text-xs font-semibold rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
                 >
                     <Plus size={14} />
@@ -294,8 +520,8 @@ function RoutingSettings({ escalation, setEscalation }) {
                         <p className="text-sm text-slate-500 mt-1 mb-5 text-center max-w-sm">
                             You haven't set up any escalation paths. Alerts will use the default fallback contact.
                         </p>
-                        <button 
-                            onClick={addRule} 
+                        <button
+                            onClick={addRule}
                             className="flex items-center gap-1.5 px-4 py-2 border border-slate-300 text-ink text-sm font-semibold rounded-lg hover:bg-slate-50 transition-colors cursor-pointer"
                         >
                             <Plus size={16} />
@@ -322,17 +548,17 @@ function RoutingSettings({ escalation, setEscalation }) {
                         <div className="divide-y divide-slate-100">
                             {rules.map((rule, idx) => (
                                 <div key={rule.id} className="grid grid-cols-12 gap-4 px-5 py-3.5 items-center group hover:bg-slate-50/50 transition-colors">
-                                    
+
                                     {/* Pattern Input */}
                                     <div className="col-span-4 relative">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <span className="text-slate-400 text-xs font-mono font-bold">#</span>
                                         </div>
                                         <input
-                                            type="text" 
-                                            value={rule.serviceMatch} 
+                                            type="text"
+                                            value={rule.serviceMatch}
                                             onChange={e => updateRule(rule.id, 'serviceMatch', e.target.value)}
-                                            placeholder="e.g. payment-*" 
+                                            placeholder="e.g. payment-*"
                                             className="w-full pl-7 pr-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:border-brand focus:ring-1 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 text-ink font-mono"
                                         />
                                     </div>
@@ -340,10 +566,10 @@ function RoutingSettings({ escalation, setEscalation }) {
                                     {/* Team Input */}
                                     <div className="col-span-3">
                                         <input
-                                            type="text" 
-                                            value={rule.team} 
+                                            type="text"
+                                            value={rule.team}
                                             onChange={e => updateRule(rule.id, 'team', e.target.value)}
-                                            placeholder="e.g. Billing Team" 
+                                            placeholder="e.g. Billing Team"
                                             className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:border-brand focus:ring-1 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 text-ink font-medium"
                                         />
                                     </div>
@@ -351,18 +577,18 @@ function RoutingSettings({ escalation, setEscalation }) {
                                     {/* Email Input */}
                                     <div className="col-span-4">
                                         <input
-                                            type="text" 
-                                            value={rule.emails} 
+                                            type="text"
+                                            value={rule.emails}
                                             onChange={e => updateRule(rule.id, 'emails', e.target.value)}
-                                            placeholder="e.g. alerts@team.com" 
+                                            placeholder="e.g. alerts@team.com"
                                             className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:border-brand focus:ring-1 focus:ring-brand/20 outline-none transition-all placeholder:text-slate-300 text-ink"
                                         />
                                     </div>
 
                                     {/* Actions */}
                                     <div className="col-span-1 flex justify-end">
-                                        <button 
-                                            onClick={() => removeRule(rule.id)} 
+                                        <button
+                                            onClick={() => removeRule(rule.id)}
                                             className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
                                             title="Remove rule"
                                         >
@@ -375,7 +601,7 @@ function RoutingSettings({ escalation, setEscalation }) {
                     </div>
                 )}
             </div>
-            
+
             {rules.length > 0 && (
                 <div className="flex items-start gap-3 p-4 bg-brand-tint/20 border border-brand/20 rounded-xl mt-2">
                     <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0 shadow-sm">
@@ -459,7 +685,6 @@ function AdaptiveLearningSettings({ experienceLogs }) {
         </div>
     )
 }
-
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState('general')
     const {
@@ -469,6 +694,7 @@ export default function SettingsPage() {
         businessContext, setBusinessContext,
         allowedActions, setAllowedActions,
         dataSources, setDataSources,
+        policyMcpConfigs, setPolicyMcpConfigs,
         experienceLogs
     } = useSettings()
 
@@ -502,8 +728,8 @@ export default function SettingsPage() {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`group flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${activeTab === tab.id
-                                    ? 'bg-black text-white'
-                                    : 'text-slate-600 hover:bg-black hover:text-white'
+                                ? 'bg-black text-white'
+                                : 'text-slate-600 hover:bg-black hover:text-white'
                                 }`}
                         >
                             <tab.icon size={14} className={activeTab === tab.id ? 'text-white' : 'text-slate-400 group-hover:text-white transition-colors'} />
@@ -523,6 +749,7 @@ export default function SettingsPage() {
                                 riskTiers={riskTiers} setRiskTiers={setRiskTiers}
                                 allowedActions={allowedActions} setAllowedActions={setAllowedActions}
                                 businessContext={businessContext} setBusinessContext={setBusinessContext}
+                                policyMcpConfigs={policyMcpConfigs} setPolicyMcpConfigs={setPolicyMcpConfigs}
                             />
                         )}
                         {activeTab === 'routing' && (

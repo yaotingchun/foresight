@@ -27,6 +27,52 @@ const defaultDataSources = {
     security: false
 }
 
+const defaultPolicyMcpConfigs = {
+    restart_service: {
+        transport: 'stdio',
+        command: 'npx',
+        args: '-y @modelcontextprotocol/server-kubernetes restart-pod',
+        env: 'KUBECONFIG=~/.kube/config\nNAMESPACE=prod',
+        template: '{"pod_name": "{{component}}-service", "namespace": "prod"}',
+        status: 'connected',
+        tools: ['kube:restart-pod', 'kube:get-pod-logs']
+    },
+    scale_up: {
+        transport: 'stdio',
+        command: 'uvx',
+        args: 'mcp-server-aws scale-asg',
+        env: 'AWS_DEFAULT_REGION=us-east-1',
+        template: '{"asg_name": "{{component}}-asg", "replicas": 5}',
+        status: 'connected',
+        tools: ['aws:scale-asg', 'aws:get-metric']
+    },
+    block_ip: {
+        transport: 'sse',
+        url: 'http://localhost:4000/sse',
+        env: 'CLOUDFLARE_API_TOKEN=xxxx',
+        template: '{"action": "block", "ip": "{{ip_range}}"}',
+        status: 'connected',
+        tools: ['cloudflare:block-ip', 'cloudflare:get-analytics']
+    },
+    revert_deployment: {
+        transport: 'stdio',
+        command: 'npx',
+        args: '-y @modelcontextprotocol/server-github revert-pr',
+        env: 'GITHUB_TOKEN=xxxx',
+        template: '{"repo": "org/{{component}}", "pr_number": 12}',
+        status: 'disconnected',
+        tools: []
+    },
+    drop_database: {
+        transport: 'sse',
+        url: 'http://localhost:4001/sse',
+        env: '',
+        template: '{"query": "DROP TABLE {{table}}"}',
+        status: 'disconnected',
+        tools: []
+    }
+}
+
 const STORAGE_KEY = 'foresight.experienceLogs'
 const BUSINESS_CONTEXT_KEY = 'foresight.businessContext'
 const THRESHOLDS_KEY = 'foresight.thresholds'
@@ -34,6 +80,7 @@ const RISK_TIERS_KEY = 'foresight.riskTiers'
 const ESCALATION_KEY = 'foresight.escalation'
 const ALLOWED_ACTIONS_KEY = 'foresight.allowedActions'
 const DATA_SOURCES_KEY = 'foresight.dataSources'
+const POLICY_MCP_CONFIGS_KEY = 'foresight.policyMcpConfigs'
 
 function loadStoredExperienceLogs() {
     try {
@@ -98,6 +145,15 @@ function loadStoredDataSources() {
     }
 }
 
+function loadStoredPolicyMcpConfigs() {
+    try {
+        const raw = localStorage.getItem(POLICY_MCP_CONFIGS_KEY)
+        return raw ? JSON.parse(raw) : defaultPolicyMcpConfigs
+    } catch {
+        return defaultPolicyMcpConfigs
+    }
+}
+
 export function SettingsProvider({ children }) {
     const [thresholds, setThresholds] = useState(loadStoredThresholds)
     const [riskTiers, setRiskTiers] = useState(loadStoredRiskTiers)
@@ -105,6 +161,7 @@ export function SettingsProvider({ children }) {
     const [businessContext, setBusinessContext] = useState(loadStoredBusinessContext)
     const [allowedActions, setAllowedActions] = useState(loadStoredAllowedActions)
     const [dataSources, setDataSources] = useState(loadStoredDataSources)
+    const [policyMcpConfigs, setPolicyMcpConfigs] = useState(loadStoredPolicyMcpConfigs)
     const [experienceLogs, setExperienceLogs] = useState(loadStoredExperienceLogs)
 
     useEffect(() => {
@@ -163,6 +220,14 @@ export function SettingsProvider({ children }) {
         }
     }, [dataSources])
 
+    useEffect(() => {
+        try {
+            localStorage.setItem(POLICY_MCP_CONFIGS_KEY, JSON.stringify(policyMcpConfigs))
+        } catch (err) {
+            console.error('Failed to save policy MCP configs to localStorage', err)
+        }
+    }, [policyMcpConfigs])
+
     const value = useMemo(() => ({
         thresholds,
         setThresholds,
@@ -176,9 +241,11 @@ export function SettingsProvider({ children }) {
         setAllowedActions,
         dataSources,
         setDataSources,
+        policyMcpConfigs,
+        setPolicyMcpConfigs,
         experienceLogs,
         setExperienceLogs
-    }), [thresholds, riskTiers, escalation, businessContext, allowedActions, dataSources, experienceLogs])
+    }), [thresholds, riskTiers, escalation, businessContext, allowedActions, dataSources, policyMcpConfigs, experienceLogs])
 
     return (
         <SettingsContext.Provider value={value}>
