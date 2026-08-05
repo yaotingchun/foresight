@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { MessageSquare, X, Send, Bot, User, Loader2 } from 'lucide-react'
+import { X, Send, Bot, User, Loader2 } from 'lucide-react'
 import { useSimulation } from '../context/SimulationContext'
 import { useSettings } from '../context/SettingsContext'
 import { api } from '../lib/api'
@@ -79,9 +79,10 @@ export default function Chatbot() {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(true)}
+        title="Ask Foresight AI"
         className={`fixed bottom-6 right-6 h-14 w-14 rounded-full bg-brand flex items-center justify-center shadow-lg hover:bg-brand-dark hover:shadow-xl transition-all duration-300 z-50 ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'} cursor-pointer`}
       >
-        <MessageSquare className="text-white" size={24} />
+        <Bot className="text-white animate-pulse-subtle" size={24} />
       </button>
 
       {/* Chat Window */}
