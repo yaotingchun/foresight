@@ -81,6 +81,8 @@ const ESCALATION_KEY = 'foresight.escalation'
 const ALLOWED_ACTIONS_KEY = 'foresight.allowedActions'
 const DATA_SOURCES_KEY = 'foresight.dataSources'
 const POLICY_MCP_CONFIGS_KEY = 'foresight.policyMcpConfigs'
+const CUSTOM_POLICIES_KEY = 'foresight.customPolicies'
+
 
 function loadStoredExperienceLogs() {
     try {
@@ -154,6 +156,15 @@ function loadStoredPolicyMcpConfigs() {
     }
 }
 
+function loadStoredCustomPolicies() {
+    try {
+        const raw = localStorage.getItem(CUSTOM_POLICIES_KEY)
+        return raw ? JSON.parse(raw) : []
+    } catch {
+        return []
+    }
+}
+
 export function SettingsProvider({ children }) {
     const [thresholds, setThresholds] = useState(loadStoredThresholds)
     const [riskTiers, setRiskTiers] = useState(loadStoredRiskTiers)
@@ -162,6 +173,7 @@ export function SettingsProvider({ children }) {
     const [allowedActions, setAllowedActions] = useState(loadStoredAllowedActions)
     const [dataSources, setDataSources] = useState(loadStoredDataSources)
     const [policyMcpConfigs, setPolicyMcpConfigs] = useState(loadStoredPolicyMcpConfigs)
+    const [customPolicies, setCustomPolicies] = useState(loadStoredCustomPolicies)
     const [experienceLogs, setExperienceLogs] = useState(loadStoredExperienceLogs)
 
     useEffect(() => {
@@ -228,6 +240,14 @@ export function SettingsProvider({ children }) {
         }
     }, [policyMcpConfigs])
 
+    useEffect(() => {
+        try {
+            localStorage.setItem(CUSTOM_POLICIES_KEY, JSON.stringify(customPolicies))
+        } catch (err) {
+            console.error('Failed to save custom policies to localStorage', err)
+        }
+    }, [customPolicies])
+
     const value = useMemo(() => ({
         thresholds,
         setThresholds,
@@ -243,9 +263,11 @@ export function SettingsProvider({ children }) {
         setDataSources,
         policyMcpConfigs,
         setPolicyMcpConfigs,
+        customPolicies,
+        setCustomPolicies,
         experienceLogs,
         setExperienceLogs
-    }), [thresholds, riskTiers, escalation, businessContext, allowedActions, dataSources, policyMcpConfigs, experienceLogs])
+    }), [thresholds, riskTiers, escalation, businessContext, allowedActions, dataSources, policyMcpConfigs, customPolicies, experienceLogs])
 
     return (
         <SettingsContext.Provider value={value}>
