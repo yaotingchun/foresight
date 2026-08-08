@@ -26,6 +26,15 @@ const PAYMENT_PATH = ['payment-service', 'payment-gateway', 'order-service']
 const INCIDENTS_STORAGE_KEY = 'foresight.incidents'
 const MAX_INCIDENTS = 50
 
+export function getMockConfidence(scenarioIdOrId, idx) {
+  const isDelay = scenarioIdOrId === 'data-processing-delay' || 
+                  (typeof scenarioIdOrId === 'string' && scenarioIdOrId.startsWith('data-processing-delay'));
+  if (isDelay) {
+    return idx === 0 ? 82 : Math.max(70, 82 - (idx * 6))
+  }
+  return Math.max(0, 95 - (idx * 12))
+}
+
 function loadStoredIncidents() {
   try {
     const raw = localStorage.getItem(INCIDENTS_STORAGE_KEY)
@@ -95,7 +104,7 @@ export function SimulationProvider({ children }) {
     if (activeIncident.hasApprovalSteps !== undefined) return activeIncident.hasApprovalSteps
     if (!activeIncident.aiAnalysis?.remediationPlan) return false
     return activeIncident.aiAnalysis.remediationPlan.some((p, idx) => {
-      const mockConfidence = Math.max(0, 95 - (idx * 12))
+      const mockConfidence = getMockConfidence(activeIncident.scenarioId || activeIncident.id, idx)
       let liveType = 'requires_approval'
       if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
       else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
@@ -278,7 +287,7 @@ export function SimulationProvider({ children }) {
     // Fire off AI analysis in the background immediately
     api.analyzeIncident({ ...record, businessContext, experienceLogs }).then(data => {
       const hasApproval = data.remediationPlan?.some((p, idx) => {
-        const mockConfidence = Math.max(0, 95 - (idx * 12))
+        const mockConfidence = getMockConfidence(record.scenarioId || record.id, idx)
         let liveType = 'requires_approval'
         if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
         else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
@@ -289,7 +298,7 @@ export function SimulationProvider({ children }) {
       const firstStep = data.remediationPlan?.[0]
       let isFirstAutomated = false
       if (firstStep && scenario.id !== 'db-connection-pool-exhaustion') {
-        const mockConfidence = 95
+        const mockConfidence = getMockConfidence(scenario.id, 0)
         let liveType = 'requires_approval'
         if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
         else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
@@ -445,7 +454,7 @@ export function SimulationProvider({ children }) {
         const remainingPlan = plan.slice(stepIndex + 1)
         const hasApproval = remainingPlan.some((p, idx) => {
           const actualIdx = stepIndex + 1 + idx
-          const mockConfidence = Math.max(0, 95 - (actualIdx * 12))
+          const mockConfidence = getMockConfidence(inc.scenarioId || inc.id, actualIdx)
           let liveType = 'requires_approval'
           if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
           else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'

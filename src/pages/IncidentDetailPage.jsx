@@ -7,7 +7,7 @@ import {
   CheckCircle2, AlertTriangle, TrendingUp, TrendingDown, ArrowUp, ArrowDown, Loader2, Sparkles, X,
 } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
-import { useSimulation } from '../context/SimulationContext'
+import { useSimulation, getMockConfidence } from '../context/SimulationContext'
 import { useSettings } from '../context/SettingsContext'
 import {
   deriveIncidentStatus, chainNodesFor, rootDependencies,
@@ -232,7 +232,7 @@ function MetricsTable({ incident }) {
 function RemediationStep({ p, idx, riskTiers, escalation, incident }) {
   const { approveRemediationStep, rejectRemediationStep } = useSimulation()
 
-  const mockConfidence = Math.max(0, 95 - (idx * 12))
+  const mockConfidence = getMockConfidence(incident?.scenarioId || incident?.id, idx)
   const escalationTarget = resolveEscalationTeam(incident, escalation.routingRules)
   
   let liveType = 'requires_approval'
@@ -377,7 +377,7 @@ export default function IncidentDetailPage() {
       const step = aiAnalysis.remediationPlan[i]
       visible.push(step)
       
-      const mockConfidence = Math.max(0, 95 - (i * 12))
+      const mockConfidence = getMockConfidence(incident?.scenarioId || incident?.id, i)
       let liveType = 'requires_approval'
       if (mockConfidence >= riskTiers.tier1) liveType = 'automated'
       else if (mockConfidence < riskTiers.tier2) liveType = 'escalated'
@@ -388,7 +388,7 @@ export default function IncidentDetailPage() {
       }
     }
     return visible
-  }, [aiAnalysis, riskTiers])
+  }, [aiAnalysis, riskTiers, incident])
 
   useEffect(() => {
     if (!isLive) return undefined
